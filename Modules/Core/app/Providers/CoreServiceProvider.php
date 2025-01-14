@@ -2,8 +2,12 @@
 
 namespace Modules\Core\Providers;
 
+use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
+use Modules\Core\Mixins\BlueprintMixins;
+use Modules\Core\Mixins\RouteMixins;
 use Modules\Core\Services\Application;
 use Nwidart\Modules\Traits\PathNamespace;
 use RecursiveDirectoryIterator;
@@ -37,6 +41,9 @@ class CoreServiceProvider extends ServiceProvider
     {
         $this->app->register(EventServiceProvider::class);
         $this->app->register(RouteServiceProvider::class);
+
+        Route::mixin(new RouteMixins());
+        Blueprint::mixin(new BlueprintMixins());
     }
 
     /**
