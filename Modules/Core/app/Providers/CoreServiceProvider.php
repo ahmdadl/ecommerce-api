@@ -36,7 +36,7 @@ class CoreServiceProvider extends ServiceProvider
         $this->loadMigrationsFrom(module_path($this->name, 'database/migrations'));
 
         Model::shouldBeStrict(! $this->app->environment('production'));
-        DB::prohibitDestructiveCommands(! $this->app->environment('production'));
+        DB::prohibitDestructiveCommands($this->app->environment('production'));
     }
 
     /**
