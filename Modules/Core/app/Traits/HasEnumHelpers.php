@@ -1,5 +1,6 @@
 <?php
 
+namespace Modules\Core\Traits;
 
 use BackedEnum;
 

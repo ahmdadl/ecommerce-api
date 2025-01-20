@@ -1,42 +1,32 @@
 <?php
 
-namespace Modules\Core\Providers;
+namespace Modules\Users\Providers;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Blade;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
-use Modules\Core\Mixins\BlueprintMixins;
-use Modules\Core\Mixins\RouteMixins;
-use Modules\Core\Services\Application;
 use Nwidart\Modules\Traits\PathNamespace;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 
-class CoreServiceProvider extends ServiceProvider
+class UsersServiceProvider extends ServiceProvider
 {
     use PathNamespace;
 
-    protected string $name = 'Core';
+    protected string $name = 'Users';
 
-    protected string $nameLower = 'core';
+    protected string $nameLower = 'users';
 
     /**
      * Boot the application events.
      */
     public function boot(): void
     {
-        $this->registerCommands();
-        $this->registerCommandSchedules();
+        // $this->registerCommands();
+        // $this->registerCommandSchedules();
         $this->registerTranslations();
         $this->registerConfig();
         // $this->registerViews();
         $this->loadMigrationsFrom(module_path($this->name, 'database/migrations'));
-
-        Model::shouldBeStrict(! $this->app->environment('production'));
-        DB::prohibitDestructiveCommands(! $this->app->environment('production'));
     }
 
     /**
@@ -46,14 +36,6 @@ class CoreServiceProvider extends ServiceProvider
     {
         $this->app->register(EventServiceProvider::class);
         $this->app->register(RouteServiceProvider::class);
-
-        Route::mixin(new RouteMixins());
-        Blueprint::mixin(new BlueprintMixins());
-
-        if ($this->app->environment('local') && class_exists(\Laravel\Telescope\TelescopeServiceProvider::class)) {
-            $this->app->register(\Laravel\Telescope\TelescopeServiceProvider::class);
-            $this->app->register(TelescopeServiceProvider::class);
-        }
     }
 
     /**

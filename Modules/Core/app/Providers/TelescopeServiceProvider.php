@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Providers;
+namespace Modules\Core\Providers;
 
-use App\Models\User;
 use Illuminate\Support\Facades\Gate;
 use Laravel\Telescope\IncomingEntry;
 use Laravel\Telescope\Telescope;
 use Laravel\Telescope\TelescopeApplicationServiceProvider;
+use Modules\Users\Models\User;
 
 class TelescopeServiceProvider extends TelescopeApplicationServiceProvider
 {
