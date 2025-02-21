@@ -25,7 +25,7 @@ final class BlueprintMixins
      */
     public function activeState()
     {
-        return fn() => $this->boolean("is_active")->default(true);
+        return fn() => $this->boolean("is_active")->default(true)->index();
     }
 
     /**
@@ -36,5 +36,15 @@ final class BlueprintMixins
     public function sortOrder()
     {
         return fn() => $this->integer("sort_order", false)->default(1);
+    }
+
+    /**
+     * Add a 'id' column as ulid
+     *
+     * @return \Closure
+     */
+    public function uid()
+    {
+        return fn() => $this->ulid("id", 10)->unique()->primary();
     }
 }
