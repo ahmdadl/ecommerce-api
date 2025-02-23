@@ -6,8 +6,13 @@ use Hash;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Modules\Users\Enums\UserGender;
 use Modules\Users\Enums\UserRole;
+use Modules\Users\Models\User;
 use Str;
 
+/**
+ * @extends Factory<User>
+ * @mixin Factory<User>
+ */
 class UserFactory extends Factory
 {
     /**
@@ -44,7 +49,7 @@ class UserFactory extends Factory
      */
     public function unverified(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn(array $attributes) => [
             'email_verified_at' => null,
         ]);
     }
@@ -54,7 +59,7 @@ class UserFactory extends Factory
      */
     public function unActive(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn(array $attributes) => [
             'is_active' => false,
         ]);
     }
@@ -64,7 +69,7 @@ class UserFactory extends Factory
      */
     public function role(UserRole $userRole): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn(array $attributes) => [
             'role' => $userRole,
         ]);
     }
@@ -74,7 +79,7 @@ class UserFactory extends Factory
      */
     public function admin(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn(array $attributes) => [
             'role' => UserRole::ADMIN,
         ]);
     }
@@ -84,7 +89,7 @@ class UserFactory extends Factory
      */
     public function customer(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn(array $attributes) => [
             'role' => UserRole::CUSTOMER,
         ]);
     }
@@ -94,7 +99,7 @@ class UserFactory extends Factory
      */
     public function developer(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn(array $attributes) => [
             'role' => UserRole::DEVELOPER,
         ]);
     }
@@ -104,7 +109,7 @@ class UserFactory extends Factory
      */
     public function male(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn(array $attributes) => [
             'gender' => UserGender::MALE,
         ]);
     }

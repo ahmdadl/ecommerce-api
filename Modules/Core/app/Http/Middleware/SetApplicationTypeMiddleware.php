@@ -11,11 +11,11 @@ class SetApplicationTypeMiddleware
     /**
      * Handle an incoming request.
      */
-    public function handle(Request $request, Closure $next)
+    public function handle(Request $request, Closure $next): mixed
     {
         $applicationType = $request->header(Application::APPLICATION_HEADER);
 
-        abort_if(empty($applicationType), 400, 'Missing required header: '.Application::APPLICATION_HEADER);
+        abort_if(empty($applicationType), 400, 'Missing required header: ' . Application::APPLICATION_HEADER);
 
         Application::setApplicationType($applicationType);
 

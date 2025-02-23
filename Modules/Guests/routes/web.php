@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Modules\Guests\Http\Controllers\GuestsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +13,5 @@ use Modules\Guests\Http\Controllers\GuestsController;
 |
 */
 
-Route::group([], function () {
-    Route::resource('guests', GuestsController::class)->names('guests');
-});
+// Route::group([], function () {
+// });

@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Modules\Core\Http\Controllers\CoreController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,5 +12,3 @@ use Modules\Core\Http\Controllers\CoreController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('test', [CoreController::class, 'test'])->name('core.test');

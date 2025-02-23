@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Modules\Guests\Http\Controllers\GuestsController;
 
 /*
  *--------------------------------------------------------------------------
@@ -15,5 +14,5 @@ use Modules\Guests\Http\Controllers\GuestsController;
 */
 
 Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
-    Route::apiResource('guests', GuestsController::class)->names('guests');
+    // 
 });

@@ -84,6 +84,7 @@ class $CLASS$ extends ServiceProvider
         if (is_dir($configPath)) {
             $iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($configPath));
 
+            /** @var \SplFileInfo $file */
             foreach ($iterator as $file) {
                 if ($file->isFile() && $file->getExtension() === 'php') {
                     $relativePath = str_replace($configPath . DIRECTORY_SEPARATOR, '', $file->getPathname());
@@ -109,12 +110,14 @@ class $CLASS$ extends ServiceProvider
 
         $this->loadViewsFrom(array_merge($this->getPublishableViewPaths(), [$sourcePath]), $this->nameLower);
 
+        // @phpstan-ignore-next-line
         $componentNamespace = $this->module_namespace($this->name, $this->app_path(config('modules.paths.generator.component-class.path')));
         Blade::componentNamespace($componentNamespace, $this->nameLower);
     }
 
     /**
      * Get the services provided by the provider.
+     * @return array<int, string>
      */
     public function provides(): array
     {
@@ -124,7 +127,9 @@ class $CLASS$ extends ServiceProvider
     private function getPublishableViewPaths(): array
     {
         $paths = [];
-        foreach (config('view.paths') as $path) {
+        /** @var array<int, string> $configPaths */
+        $configPaths = config('view.paths');
+        foreach ($configPaths as $path) {        
             if (is_dir($path.'/modules/'.$this->nameLower)) {
                 $paths[] = $path.'/modules/'.$this->nameLower;
             }

@@ -3,7 +3,12 @@
 namespace Modules\Guests\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Modules\Guests\Models\Guest;
 
+/**
+ * @extends Factory<Guest>
+ * @mixin Factory<Guest>
+ */
 class GuestFactory extends Factory
 {
     /**

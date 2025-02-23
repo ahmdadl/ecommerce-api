@@ -3,6 +3,7 @@
 namespace Modules\Core\Models\Scopes;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 
 trait HasActiveState
 {
@@ -11,14 +12,14 @@ trait HasActiveState
      *
      * @return void
      */
-    public function initializeHasActiveState()
+    public function initializeHasActiveState(): void
     {
-        $this->fillable[] = 'is_active';
-        array_merge($this->casts, ['is_active' => 'boolean']);
+        $this->casts = array_merge($this->casts, ['is_active' => 'boolean']);
     }
 
     /**
      * Scope a query to only include is_active records.
+     * @param Builder<Model> $query
      */
     public function scopeActive(Builder $query): void
     {
@@ -27,6 +28,7 @@ trait HasActiveState
 
     /**
      * Scope a query to exclude is_active records.
+     * @param Builder<Model> $query
      */
     public function scopeNotActive(Builder $query): void
     {

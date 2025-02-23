@@ -89,6 +89,7 @@ final class Application
      */
     public static function getApplicationTypeUsingOS(string $os): string
     {
+        /** @var array<string, array<string, string>> $apps */
         $apps = config('auth.apps');
 
         foreach ($apps as $type => $app) {

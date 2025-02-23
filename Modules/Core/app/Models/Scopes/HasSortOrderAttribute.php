@@ -28,13 +28,12 @@ trait HasSortOrderAttribute
      */
     public function initializeHasSortOrderAttribute()
     {
-        $this->fillable[] = 'sort_order';
-
         $this->casts = array_merge($this->casts, ['sort_order' => 'int']);
     }
 
     /**
      * Scope a query order by sort_order
+     * @param Builder<Model> $query
      */
     public function scopeSortOrderAsc(Builder $query): void
     {
@@ -43,6 +42,7 @@ trait HasSortOrderAttribute
 
     /**
      * Scope a query order by sort_order
+     * @param Builder<Model> $query
      */
     public function scopeSortOrder(Builder $query): void
     {

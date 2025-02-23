@@ -6,12 +6,14 @@ parameters:
 
     paths:
         - app/
+        - Modules/
 
     # Level 10 is the highest level
-    level: max
+    level: 9
 
-#    ignoreErrors:
-#        - '#PHPDoc tag @var#'
-#
-#    excludePaths:
-#        - ./*/*/FileToBeExcluded.php
+    ignoreErrors:
+        - 
+            identifier: property.notFound
+
+    excludePaths:
+        - Modules/Core/app/Mixins/

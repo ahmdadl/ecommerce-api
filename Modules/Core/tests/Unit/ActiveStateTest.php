@@ -10,7 +10,7 @@ class ActiveStateTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_can_access_active_records()
+    public function test_can_access_active_records(): void
     {
         User::factory(2)->create();
         User::factory(2)->unActive()->create();
@@ -18,14 +18,14 @@ class ActiveStateTest extends TestCase
         $this->assertEquals(2, User::active()->count());
     }
 
-    public function test_can_access_not_active_records()
+    public function test_can_access_not_active_records(): void
     {
         User::factory(2)->create();
         User::factory(2)->unActive()->create();
         $this->assertEquals(2, User::notActive()->count());
     }
 
-    public function test_can_access_all_records()
+    public function test_can_access_all_records(): void
     {
         User::factory(2)->create();
         User::factory(2)->create();

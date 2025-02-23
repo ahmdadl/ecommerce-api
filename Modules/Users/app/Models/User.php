@@ -49,17 +49,23 @@ class User extends Authenticatable
 
     /**
      * Scope a query to only include users with the specified role.
+     * 
+     * @param Builder<User> $query
      */
-    public function scopeRole(Builder $query, ?UserRole $userRole = null): Builder
+    public function scopeRole(Builder $query, ?UserRole $userRole = null): void
     {
-        return $query->where('role', $userRole ?? $this->role);
+        $query->where('role', $userRole ?? $this->role);
     }
 
     /**
      * Find a user by the given credentials.
+     * 
+     * @param array<string, mixed> $credentials
+     * @param string|null $guard
+     * @param bool $remember
      */
     public static function attempt(array $credentials, ?string $guard = null, bool $remember = false): bool
     {
-        return auth()->guard($guard)->attempt(array_merge($credentials, ['role' => static::$role->value]), $remember);
+        return auth()->guard($guard)->attempt(array_merge($credentials, ['role' => static::$role?->value]), $remember);
     }
 }

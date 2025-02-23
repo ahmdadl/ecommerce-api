@@ -14,6 +14,7 @@ use Modules\Core\Services\Application;
 use Nwidart\Modules\Traits\PathNamespace;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
+use SplFileInfo;
 
 class CoreServiceProvider extends ServiceProvider
 {
@@ -36,7 +37,7 @@ class CoreServiceProvider extends ServiceProvider
         $this->loadMigrationsFrom(module_path($this->name, 'database/migrations'));
 
         Model::shouldBeStrict(! $this->app->environment('production'));
-        DB::prohibitDestructiveCommands($this->app->environment('production'));
+        DB::prohibitDestructiveCommands((bool) $this->app->environment('production'));
         Model::unguard();
     }
 
@@ -81,7 +82,7 @@ class CoreServiceProvider extends ServiceProvider
      */
     public function registerTranslations(): void
     {
-        $langPath = resource_path('lang/modules/'.$this->nameLower);
+        $langPath = resource_path('lang/modules/' . $this->nameLower);
 
         if (is_dir($langPath)) {
             $this->loadTranslationsFrom($langPath, $this->nameLower);
@@ -103,10 +104,11 @@ class CoreServiceProvider extends ServiceProvider
         if (is_dir($configPath)) {
             $iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($configPath));
 
+            /** @var SplFileInfo $file */
             foreach ($iterator as $file) {
                 if ($file->isFile() && $file->getExtension() === 'php') {
-                    $relativePath = str_replace($configPath.DIRECTORY_SEPARATOR, '', $file->getPathname());
-                    $configKey = $this->nameLower.'.'.str_replace([DIRECTORY_SEPARATOR, '.php'], ['.', ''], $relativePath);
+                    $relativePath = str_replace($configPath . DIRECTORY_SEPARATOR, '', $file->getPathname());
+                    $configKey = $this->nameLower . '.' . str_replace([DIRECTORY_SEPARATOR, '.php'], ['.', ''], $relativePath);
                     $key = ($relativePath === 'config.php') ? $this->nameLower : $configKey;
 
                     $this->publishes([$file->getPathname() => config_path($relativePath)], 'config');
@@ -121,31 +123,39 @@ class CoreServiceProvider extends ServiceProvider
      */
     public function registerViews(): void
     {
-        $viewPath = resource_path('views/modules/'.$this->nameLower);
+        $viewPath = resource_path('views/modules/' . $this->nameLower);
         $sourcePath = module_path($this->name, 'resources/views');
 
-        $this->publishes([$sourcePath => $viewPath], ['views', $this->nameLower.'-module-views']);
+        $this->publishes([$sourcePath => $viewPath], ['views', $this->nameLower . '-module-views']);
 
         $this->loadViewsFrom(array_merge($this->getPublishableViewPaths(), [$sourcePath]), $this->nameLower);
 
+        // @phpstan-ignore-next-line
         $componentNamespace = $this->module_namespace($this->name, $this->app_path(config('modules.paths.generator.component-class.path')));
         Blade::componentNamespace($componentNamespace, $this->nameLower);
     }
 
     /**
      * Get the services provided by the provider.
+     * @return array<int, string>
      */
     public function provides(): array
     {
         return [];
     }
 
+    /**
+     * get publishable view paths
+     * @return array<int, string>
+     */
     private function getPublishableViewPaths(): array
     {
         $paths = [];
-        foreach (config('view.paths') as $path) {
-            if (is_dir($path.'/modules/'.$this->nameLower)) {
-                $paths[] = $path.'/modules/'.$this->nameLower;
+        /** @var array<int, string> $configPaths */
+        $configPaths = config('view.paths');
+        foreach ($configPaths as $path) {
+            if (is_dir($path . '/modules/' . $this->nameLower)) {
+                $paths[] = $path . '/modules/' . $this->nameLower;
             }
         }
 
