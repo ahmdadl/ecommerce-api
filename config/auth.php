@@ -1,6 +1,9 @@
 <?php
 
 use Modules\Guests\Models\Guest;
+use Modules\Users\Enums\UserRole;
+use Modules\Users\Models\Admin;
+use Modules\Users\Models\Customer;
 use Modules\Users\Models\User;
 
 return [
@@ -48,6 +51,21 @@ return [
             'driver' => 'session',
             'provider' => 'guests',
         ],
+
+        'admin' => [
+            'driver' => 'session',
+            'provider' => 'admins',
+        ],
+
+        'customer' => [
+            'driver' => 'session',
+            'provider' => 'customers',
+        ],
+
+        // 'developer' => [
+        //     'driver' => 'session',
+        //     'provider' => 'developers',
+        // ],
     ],
 
     /*
@@ -77,6 +95,24 @@ return [
             'driver' => 'eloquent',
             'model' => env('GUEST_AUTH_MODEL', Guest::class),
         ],
+
+        'admins' => [
+            'driver' => 'eloquent',
+            'model' => Admin::class,
+            'role' => UserRole::ADMIN->value,
+        ],
+
+        'customers' => [
+            'driver' => 'eloquent',
+            'model' => Customer::class,
+            'role' => UserRole::CUSTOMER->value,
+        ],
+
+        // 'developers' => [
+        //     'driver' => 'eloquent',
+        //     'model' => Customer::class,
+        //     'role' => UserRole::CUSTOMER->value,
+        // ],
 
     ],
 

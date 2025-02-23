@@ -20,13 +20,13 @@ return new class extends Migration
             $table->string('phoneNumber', 15)->nullable()->unique();
             $table->string('password');
             $table->rememberToken();
-            $table->timestamps();
-            $table->softDeletes();
             $table->enum('role', UserRole::values())->default(UserRole::CUSTOMER);
-            $table->boolean('is_active')->default(true)->index();
+            $table->activeState();
             $table->json("totals")->nullable();
             $table->enum("gender", UserGender::values())->nullable();
-            $table->date("birth_date")->nullable();
+            $table->date('email_verified_at')->nullable();
+            $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {

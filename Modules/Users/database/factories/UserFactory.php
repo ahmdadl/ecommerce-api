@@ -36,7 +36,6 @@ class UserFactory extends Factory
             'role' => UserRole::CUSTOMER,
             'is_active' => true,
             'gender' => null,
-            'birth_date' => fake()->date(),
         ];
     }
 
@@ -61,6 +60,18 @@ class UserFactory extends Factory
     }
 
     /**
+     * Indicate that the model's role.
+     *
+     * @return static
+     */
+    public function role(UserRole $userRole): static
+    {
+        return $this->state(fn(array $attributes) => [
+            'role' => $userRole
+        ]);
+    }
+
+    /**
      * Indicate that the model's role is admin.
      *
      * @return static
@@ -69,6 +80,18 @@ class UserFactory extends Factory
     {
         return $this->state(fn(array $attributes) => [
             'role' => UserRole::ADMIN,
+        ]);
+    }
+
+    /**
+     * Indicate that the model's role is admin.
+     *
+     * @return static
+     */
+    public function customer(): static
+    {
+        return $this->state(fn(array $attributes) => [
+            'role' => UserRole::CUSTOMER,
         ]);
     }
 

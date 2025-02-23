@@ -37,6 +37,7 @@ class CoreServiceProvider extends ServiceProvider
 
         Model::shouldBeStrict(! $this->app->environment('production'));
         DB::prohibitDestructiveCommands($this->app->environment('production'));
+        Model::unguard();
     }
 
     /**

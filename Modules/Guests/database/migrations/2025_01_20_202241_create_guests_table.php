@@ -13,10 +13,7 @@ return new class extends Migration
     {
         Schema::create('guests', function (Blueprint $table) {
             $table->uid();
-
             $table->json('totals')->nullable();
-            $table->string('role', 6)->default('guest');
-
             $table->timestamps();
         });
     }
