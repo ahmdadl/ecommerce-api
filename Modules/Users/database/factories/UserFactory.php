@@ -44,7 +44,7 @@ class UserFactory extends Factory
      */
     public function unverified(): static
     {
-        return $this->state(fn(array $attributes) => [
+        return $this->state(fn (array $attributes) => [
             'email_verified_at' => null,
         ]);
     }
@@ -54,67 +54,57 @@ class UserFactory extends Factory
      */
     public function unActive(): static
     {
-        return $this->state(fn(array $attributes) => [
+        return $this->state(fn (array $attributes) => [
             'is_active' => false,
         ]);
     }
 
     /**
      * Indicate that the model's role.
-     *
-     * @return static
      */
     public function role(UserRole $userRole): static
     {
-        return $this->state(fn(array $attributes) => [
-            'role' => $userRole
+        return $this->state(fn (array $attributes) => [
+            'role' => $userRole,
         ]);
     }
 
     /**
      * Indicate that the model's role is admin.
-     *
-     * @return static
      */
     public function admin(): static
     {
-        return $this->state(fn(array $attributes) => [
+        return $this->state(fn (array $attributes) => [
             'role' => UserRole::ADMIN,
         ]);
     }
 
     /**
      * Indicate that the model's role is admin.
-     *
-     * @return static
      */
     public function customer(): static
     {
-        return $this->state(fn(array $attributes) => [
+        return $this->state(fn (array $attributes) => [
             'role' => UserRole::CUSTOMER,
         ]);
     }
 
     /**
      * Indicate that the model's role is developer.
-     *
-     * @return static
      */
     public function developer(): static
     {
-        return $this->state(fn(array $attributes) => [
+        return $this->state(fn (array $attributes) => [
             'role' => UserRole::DEVELOPER,
         ]);
     }
 
     /**
      * Indicate that the model's gender is male.
-     *
-     * @return static
      */
     public function male(): static
     {
-        return $this->state(fn(array $attributes) => [
+        return $this->state(fn (array $attributes) => [
             'gender' => UserGender::MALE,
         ]);
     }

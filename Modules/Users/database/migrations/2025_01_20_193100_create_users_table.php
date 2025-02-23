@@ -22,8 +22,8 @@ return new class extends Migration
             $table->rememberToken();
             $table->enum('role', UserRole::values())->default(UserRole::CUSTOMER);
             $table->activeState();
-            $table->json("totals")->nullable();
-            $table->enum("gender", UserGender::values())->nullable();
+            $table->json('totals')->nullable();
+            $table->enum('gender', UserGender::values())->nullable();
             $table->date('email_verified_at')->nullable();
             $table->timestamps();
             $table->softDeletes();

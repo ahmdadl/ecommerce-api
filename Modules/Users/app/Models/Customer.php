@@ -2,12 +2,11 @@
 
 namespace Modules\Users\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Modules\Users\Enums\UserRole;
 
 class Customer extends User
 {
-    protected $table = "users";
+    protected $table = 'users';
 
     /**
      * current model role

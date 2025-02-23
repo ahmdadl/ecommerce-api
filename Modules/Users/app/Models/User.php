@@ -2,12 +2,12 @@
 
 namespace Modules\Users\Models;
 
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Attributes\UseFactory;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Modules\Core\Models\Scopes\HasActiveState;
 use Modules\Users\Database\Factories\UserFactory;
@@ -17,7 +17,7 @@ use Modules\Users\Enums\UserRole;
 class User extends Authenticatable
 {
     /** @use HasFactory<\Modules\Users\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable, HasUlids, HasActiveState, SoftDeletes;
+    use HasActiveState, HasFactory, HasUlids, Notifiable, SoftDeletes;
 
     /**
      * current model role
@@ -55,11 +55,10 @@ class User extends Authenticatable
         return $query->where('role', $userRole ?? $this->role);
     }
 
-
     /**
      * Find a user by the given credentials.
      */
-    public static function attempt(array $credentials, string $guard = null, bool $remember = false): bool
+    public static function attempt(array $credentials, ?string $guard = null, bool $remember = false): bool
     {
         return auth()->guard($guard)->attempt(array_merge($credentials, ['role' => static::$role->value]), $remember);
     }

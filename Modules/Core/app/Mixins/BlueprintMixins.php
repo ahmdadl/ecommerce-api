@@ -12,9 +12,9 @@ final class BlueprintMixins
     public function metaTags()
     {
         return function () {
-            $this->json("meta_title")->nullable();
-            $this->json("meta_description")->nullable();
-            $this->text("meta_keywords")->nullable();
+            $this->json('meta_title')->nullable();
+            $this->json('meta_description')->nullable();
+            $this->text('meta_keywords')->nullable();
         };
     }
 
@@ -25,7 +25,7 @@ final class BlueprintMixins
      */
     public function activeState()
     {
-        return fn() => $this->boolean("is_active")->default(true)->index();
+        return fn () => $this->boolean('is_active')->default(true)->index();
     }
 
     /**
@@ -35,7 +35,7 @@ final class BlueprintMixins
      */
     public function sortOrder()
     {
-        return fn() => $this->integer("sort_order", false)->default(1);
+        return fn () => $this->integer('sort_order', false)->default(1);
     }
 
     /**
@@ -45,6 +45,6 @@ final class BlueprintMixins
      */
     public function uid()
     {
-        return fn() => $this->ulid("id", 10)->unique()->primary();
+        return fn () => $this->ulid('id', 10)->unique()->primary();
     }
 }
