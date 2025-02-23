@@ -17,7 +17,7 @@ use Modules\Users\Enums\UserRole;
 class User extends Authenticatable
 {
     /** @use HasFactory<\Modules\Users\Database\Factories\UserFactory> */
-    use HasActiveState, HasFactory, HasUlids, Notifiable, SoftDeletes;
+    use HasActiveState, HasFactory, HasUlids, Notifiable, SoftDeletes, Notifiable;
 
     /**
      * current model role
