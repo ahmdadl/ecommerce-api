@@ -4,6 +4,7 @@ use Modules\Guests\Models\Guest;
 use Modules\Users\Enums\UserRole;
 use Modules\Users\Models\Admin;
 use Modules\Users\Models\Customer;
+use Modules\Users\Models\Developer;
 use Modules\Users\Models\User;
 
 return [
@@ -62,10 +63,10 @@ return [
             'provider' => 'customers',
         ],
 
-        // 'developer' => [
-        //     'driver' => 'session',
-        //     'provider' => 'developers',
-        // ],
+        'developer' => [
+            'driver' => 'session',
+            'provider' => 'developers',
+        ],
     ],
 
     /*
@@ -108,11 +109,11 @@ return [
             'role' => UserRole::CUSTOMER->value,
         ],
 
-        // 'developers' => [
-        //     'driver' => 'eloquent',
-        //     'model' => Customer::class,
-        //     'role' => UserRole::CUSTOMER->value,
-        // ],
+        'developers' => [
+            'driver' => 'eloquent',
+            'model' => Developer::class,
+            'role' => UserRole::DEVELOPER->value,
+        ],
 
     ],
 

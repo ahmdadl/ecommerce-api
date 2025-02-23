@@ -4,10 +4,10 @@ namespace Modules\Users\Models;
 
 use Modules\Users\Enums\UserRole;
 
-class Admin extends User
+class Developer extends User
 {
     /**
      * current model role
      */
-    public static ?UserRole $role = UserRole::ADMIN;
+    public static ?UserRole $role = UserRole::DEVELOPER;
 }
