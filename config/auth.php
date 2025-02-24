@@ -49,22 +49,22 @@ return [
         ],
 
         'guest' => [
-            'driver' => 'session',
+            'driver' => 'sanctum',
             'provider' => 'guests',
         ],
 
         'admin' => [
-            'driver' => 'session',
+            'driver' => 'sanctum',
             'provider' => 'admins',
         ],
 
         'customer' => [
-            'driver' => 'session',
+            'driver' => 'sanctum',
             'provider' => 'customers',
         ],
 
         'developer' => [
-            'driver' => 'session',
+            'driver' => 'sanctum',
             'provider' => 'developers',
         ],
     ],
