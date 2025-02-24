@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\Access\Authorizable;
 use Laravel\Sanctum\HasApiTokens;
+use Modules\Users\Casts\UserTotalCast;
 use Modules\Guests\Database\Factories\GuestFactory;
 
 #[UseFactory(GuestFactory::class)]
@@ -16,4 +17,14 @@ class Guest extends Model
 {
     /** @use HasFactory<\Modules\Guests\Database\Factories\GuestFactory> */
     use Authenticatable, Authorizable, HasApiTokens, HasFactory, HasUlids;
+
+    /**
+     * handle mode casts
+     */
+    protected function casts(): array
+    {
+        return [
+            'totals' => UserTotalCast::class,
+        ];
+    }
 }
