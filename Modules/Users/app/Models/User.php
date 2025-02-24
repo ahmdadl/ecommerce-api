@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 use Modules\Core\Models\Scopes\HasActiveState;
 use Modules\Users\Database\Factories\UserFactory;
 use Modules\Users\Enums\UserRole;
@@ -17,7 +18,7 @@ use Modules\Users\Enums\UserRole;
 class User extends Authenticatable
 {
     /** @use HasFactory<\Modules\Users\Database\Factories\UserFactory> */
-    use HasActiveState, HasFactory, HasUlids, Notifiable, SoftDeletes, Notifiable;
+    use HasActiveState, HasFactory, HasUlids, Notifiable, SoftDeletes, HasApiTokens;
 
     /**
      * current model role

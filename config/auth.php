@@ -100,19 +100,16 @@ return [
         'admins' => [
             'driver' => 'eloquent',
             'model' => Admin::class,
-            'role' => UserRole::ADMIN->value,
         ],
 
         'customers' => [
             'driver' => 'eloquent',
             'model' => Customer::class,
-            'role' => UserRole::CUSTOMER->value,
         ],
 
         'developers' => [
             'driver' => 'eloquent',
             'model' => Developer::class,
-            'role' => UserRole::DEVELOPER->value,
         ],
 
     ],
