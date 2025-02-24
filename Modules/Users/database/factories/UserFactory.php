@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Modules\Users\Enums\UserGender;
 use Modules\Users\Enums\UserRole;
 use Modules\Users\Models\User;
+use Modules\Users\ValueObjects\UserTotals;
 use Str;
 
 /**
@@ -41,6 +42,7 @@ class UserFactory extends Factory
             'role' => UserRole::CUSTOMER,
             'is_active' => true,
             'gender' => null,
+            'totals' => UserTotals::default()
         ];
     }
 

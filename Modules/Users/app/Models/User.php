@@ -11,8 +11,12 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Modules\Core\Models\Scopes\HasActiveState;
+use Modules\Core\Services\Application;
+use Modules\Users\Casts\UserTotalCast;
 use Modules\Users\Database\Factories\UserFactory;
+use Modules\Users\Enums\UserGender;
 use Modules\Users\Enums\UserRole;
+use Modules\Users\ValueObjects\UserTotals;
 
 #[UseFactory(UserFactory::class)]
 class User extends Authenticatable
@@ -45,7 +49,25 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'totals' => UserTotalCast::class,
+            'gender' => UserGender::class,
+            'role' => UserRole::class,
         ];
+    }
+
+    /**
+     * The "booted" method of the model.
+     */
+    protected static function booted(): void
+    {
+        static::creating(function (self $user) {
+            $user->role = static::$role;
+            $user->totals = UserTotals::default();
+
+            if (empty($user->is_active) && $user->is_active !== false) {
+                $user->is_active = true;
+            }
+        });
     }
 
     /**

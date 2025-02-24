@@ -17,9 +17,7 @@ class LoginGuestController extends Controller
     public function __invoke(Request $request): JsonResponse
     {
         /** @var Guest $guest */
-        $guest = Guest::create([
-            'totals' => UserTotals::default(),
-        ]);
+        $guest = Guest::create();
 
         $accessToken = $guest->createToken($request->header('x-device-type', Application::getApplicationType()))->plainTextToken;
 

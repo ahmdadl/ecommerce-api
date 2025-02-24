@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('phoneNumber', 15)->nullable()->unique();
             $table->string('password');
             $table->rememberToken();
-            $table->enum('role', UserRole::values())->default(UserRole::CUSTOMER);
+            $table->enum('role', UserRole::values())->nullable();
             $table->activeState();
             $table->json('totals')->nullable();
             $table->enum('gender', UserGender::values())->nullable();

@@ -11,6 +11,7 @@ use Illuminate\Foundation\Auth\Access\Authorizable;
 use Laravel\Sanctum\HasApiTokens;
 use Modules\Users\Casts\UserTotalCast;
 use Modules\Guests\Database\Factories\GuestFactory;
+use Modules\Users\ValueObjects\UserTotals;
 
 #[UseFactory(GuestFactory::class)]
 class Guest extends Model
@@ -26,5 +27,15 @@ class Guest extends Model
         return [
             'totals' => UserTotalCast::class,
         ];
+    }
+
+    /**
+     * The "booted" method of the model.
+     */
+    protected static function booted(): void
+    {
+        static::creating(function (self $user) {
+            $user->totals = UserTotals::default();
+        });
     }
 }
