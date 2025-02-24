@@ -10,11 +10,9 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Modules\Core\Mixins\BlueprintMixins;
 use Modules\Core\Mixins\RouteMixins;
-use Modules\Core\Services\Application;
 use Nwidart\Modules\Traits\PathNamespace;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
-use SplFileInfo;
 
 class CoreServiceProvider extends ServiceProvider
 {
@@ -104,7 +102,7 @@ class CoreServiceProvider extends ServiceProvider
         if (is_dir($configPath)) {
             $iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($configPath));
 
-            /** @var SplFileInfo $file */
+            /** @var \SplFileInfo $file */
             foreach ($iterator as $file) {
                 if ($file->isFile() && $file->getExtension() === 'php') {
                     $relativePath = str_replace($configPath . DIRECTORY_SEPARATOR, '', $file->getPathname());

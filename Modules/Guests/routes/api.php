@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Modules\Guests\Http\Controllers\LoginGuestController;
 
 /*
  *--------------------------------------------------------------------------
@@ -13,6 +14,6 @@ use Illuminate\Support\Facades\Route;
  *
 */
 
-Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
-    // 
+Route::middleware([])->name('guests.')->group(function () {
+    Route::post('/login/guests', LoginGuestController::class)->name('login');
 });
