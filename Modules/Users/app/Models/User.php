@@ -61,7 +61,9 @@ class User extends Authenticatable
     protected static function booted(): void
     {
         static::creating(function (self $user) {
-            $user->role = static::$role;
+            if (!is_null(static::$role)) {
+                $user->role = static::$role;
+            }
             $user->totals = UserTotals::default();
 
             if (empty($user->is_active) && $user->is_active !== false) {

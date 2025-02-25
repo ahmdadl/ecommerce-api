@@ -19,7 +19,7 @@ class UserFactory extends Factory
     /**
      * The name of the factory's corresponding model.
      */
-    protected $model = \Modules\Users\Models\User::class;
+    protected $model = User::class;
 
     /**
      * The current password being used by the factory.
