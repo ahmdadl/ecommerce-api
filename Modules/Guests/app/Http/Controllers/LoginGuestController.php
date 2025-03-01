@@ -19,7 +19,7 @@ class LoginGuestController extends Controller
         /** @var Guest $guest */
         $guest = Guest::create();
 
-        $accessToken = $guest->createToken($request->header('x-device-type', Application::getApplicationType()))->plainTextToken;
+        $accessToken = $guest->createToken(Application::getApplicationType())->plainTextToken;
 
         $guest->access_token = $accessToken;
 

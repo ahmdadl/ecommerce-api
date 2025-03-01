@@ -11,6 +11,10 @@
 |
 */
 
+use Modules\Guests\Models\Guest;
+
+use function Pest\Laravel\actingAs;
+
 pest()->extend(Tests\TestCase::class)
     ->use(Illuminate\Foundation\Testing\RefreshDatabase::class)
     ->in('../Modules/*/tests/**/*Test.php');
@@ -44,4 +48,13 @@ expect()->extend('toBeOne', function () {
 function something()
 {
     // ..
+}
+
+/**
+ * login as a guest
+ * @return void
+ */
+function asGuest(?Guest $guest = null): void
+{
+    actingAs($guest ?? Guest::factory()->create(), 'guest');
 }

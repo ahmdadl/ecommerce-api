@@ -23,7 +23,7 @@ class GuestFactory extends Factory
     public function definition(): array
     {
         return [
-            'totals' => UserTotals::default()->toArray(),
+            'totals' => UserTotals::default(),
         ];
     }
 }

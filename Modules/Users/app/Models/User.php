@@ -89,8 +89,8 @@ class User extends Authenticatable
      * @param string|null $guard
      * @param bool $remember
      */
-    public static function attempt(array $credentials, ?string $guard = null, bool $remember = false): bool
+    public static function attempt(array $credentials, bool $remember = false): bool
     {
-        return auth()->guard($guard)->attempt(array_merge($credentials, ['role' => static::$role?->value]), $remember);
+        return auth()->guard('web')->attempt(array_merge($credentials, ['role' => static::$role?->value]), $remember);
     }
 }

@@ -3,6 +3,7 @@
 namespace Modules\Guests\Models;
 
 use Illuminate\Auth\Authenticatable;
+use Illuminate\Foundation\Auth\User as AuthenticatableModel;
 use Illuminate\Database\Eloquent\Attributes\UseFactory;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -14,7 +15,7 @@ use Modules\Guests\Database\Factories\GuestFactory;
 use Modules\Users\ValueObjects\UserTotals;
 
 #[UseFactory(GuestFactory::class)]
-class Guest extends Model
+class Guest extends AuthenticatableModel
 {
     /** @use HasFactory<\Modules\Guests\Database\Factories\GuestFactory> */
     use Authenticatable, Authorizable, HasApiTokens, HasFactory, HasUlids;
