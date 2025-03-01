@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Modules\Users\Actions\LoginUserAction;
+use Modules\Users\Actions\RegisterUserAction;
 use Modules\Users\Http\Requests\LoginUserRequest;
+use Modules\Users\Http\Requests\RegisterUserRequest;
 use Modules\Users\Transformers\CustomerResource;
 
 class AuthUserController extends Controller
@@ -22,5 +24,21 @@ class AuthUserController extends Controller
         return api()->success([
             'record' => new CustomerResource($user),
         ]);
+    }
+
+    public function register(RegisterUserRequest $request, RegisterUserAction $action): JsonResponse
+    {
+        $user = $action->handle($request->validated());
+
+        return api()->success([
+            'record' => new CustomerResource($user),
+        ]);
+    }
+
+    public function logout(Request $request): JsonResponse
+    {
+        $request->user()->currentAccessToken()->delete();
+
+        return api()->success();
     }
 }
