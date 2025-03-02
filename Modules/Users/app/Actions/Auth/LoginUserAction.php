@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Users\Actions;
+namespace Modules\Users\Actions\Auth;
 
 use Modules\Core\Services\Application;
 use Modules\Users\Enums\UserRole;

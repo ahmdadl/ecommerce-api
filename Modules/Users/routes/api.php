@@ -17,4 +17,7 @@ use Modules\Users\Http\Controllers\AuthUserController;
 Route::middleware(['auth:guest'])->controller(AuthUserController::class)->name('auth.')->group(function () {
     Route::post('login', 'login')->name('login');
     Route::post('register', 'register')->name('register');
+
+    Route::post('forget-password', 'forgetPassword')->name('forget-password');
+    Route::post('reset-password', 'resetPassword')->name('reset-password');
 });

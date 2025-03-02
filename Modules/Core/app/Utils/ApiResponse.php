@@ -72,7 +72,7 @@ final class ApiResponse
      * @param int $statusCode
      * @return \Illuminate\Http\JsonResponse
      */
-    public function empty(string $message = null, int $statusCode = 204): JsonResponse
+    public function noContent(string $message = null, int $statusCode = 204): JsonResponse
     {
         return response()->json([
             'success' => true,

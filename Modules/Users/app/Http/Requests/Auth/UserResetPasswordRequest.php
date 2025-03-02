@@ -1,10 +1,10 @@
 <?php
 
-namespace Modules\Users\Http\Requests;
+namespace Modules\Users\Http\Requests\Auth;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class LoginUserRequest extends FormRequest
+class UserResetPasswordRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -12,8 +12,9 @@ class LoginUserRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'token' => 'required|string|size:6',
             'email' => 'required|email|max:150',
-            'password' => 'required|string|min:8|max:50|confirmed',
+            'password' => 'required|string|min:8|max:150|confirmed',
         ];
     }
 
@@ -22,6 +23,6 @@ class LoginUserRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        return auth('guest')->check();
     }
 }

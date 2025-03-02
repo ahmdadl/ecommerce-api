@@ -79,7 +79,7 @@ class User extends Authenticatable
      */
     public function scopeRole(Builder $query, ?UserRole $userRole = null): void
     {
-        $query->where('role', $userRole ?? $this->role);
+        $query->where('role', $userRole ?? static::$role?->value);
     }
 
     /**
