@@ -2,6 +2,7 @@
 
 namespace Modules\Users\Models;
 
+use Filament\Panel;
 use Illuminate\Database\Eloquent\Attributes\UseFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
@@ -92,5 +93,13 @@ class User extends Authenticatable
     public static function attempt(array $credentials, bool $remember = false): bool
     {
         return auth()->guard('web')->attempt(array_merge($credentials, ['role' => static::$role?->value]), $remember);
+    }
+
+    /**
+     * who can access admin dashboard
+     */
+    public function canAccessPanel(Panel $panel): bool
+    {
+        return static::$role === UserRole::ADMIN;
     }
 }
