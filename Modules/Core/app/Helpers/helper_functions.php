@@ -1,6 +1,7 @@
 <?php
 
 use Modules\Core\Utils\ApiResponse;
+use Modules\Users\Models\User;
 
 if (!function_exists("api")) {
     /**
@@ -10,5 +11,15 @@ if (!function_exists("api")) {
     function api()
     {
         return app(ApiResponse::class);
+    }
+}
+
+if (!function_exists("user")) {
+    /**
+     * get current user
+     */
+    function user(string $guard = null): ?User
+    {
+        return auth()->guard($guard)->user();
     }
 }

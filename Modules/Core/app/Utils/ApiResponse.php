@@ -135,4 +135,28 @@ final class ApiResponse
     {
         return $this->error($message ?? __('core::core.server_error'), 500);
     }
+
+    /**
+     * Return a record JSON response.
+     *
+     * @param mixed $record
+     * @param string|null $message
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function record($record, string $message = null): JsonResponse
+    {
+        return $this->success(compact('record'), $message);
+    }
+
+    /** 
+     * Return a records JSON response.
+     *
+     * @param mixed $records
+     * @param string|null $message
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function records($records, string $message = null): JsonResponse
+    {
+        return $this->success(compact('records'), $message);
+    }
 }
