@@ -2,6 +2,7 @@
 
 namespace Modules\Core\Providers;
 
+use BezhanSalleh\FilamentLanguageSwitch\LanguageSwitch;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Blade;
@@ -37,6 +38,12 @@ class CoreServiceProvider extends ServiceProvider
         Model::shouldBeStrict(! $this->app->environment('production'));
         DB::prohibitDestructiveCommands((bool) $this->app->environment('production'));
         Model::unguard();
+
+
+        LanguageSwitch::configureUsing(function (LanguageSwitch $switch) {
+            $switch
+                ->locales(['ar', 'en']);
+        });
     }
 
     /**

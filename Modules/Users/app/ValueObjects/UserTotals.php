@@ -2,8 +2,13 @@
 
 namespace Modules\Users\ValueObjects;
 
-final class UserTotals
+use Livewire\Wireable;
+use Modules\Core\Traits\WireableValueObject;
+
+final class UserTotals implements Wireable
 {
+    use WireableValueObject;
+
     /**
      * construct object
      */

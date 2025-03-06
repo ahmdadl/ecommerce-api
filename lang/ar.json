@@ -1,0 +1,9 @@
+{
+    "Id": "ID",
+    "Name": "Name",
+    "Email": "Email",
+    "Phone number": "Phone Number",
+    "Gender": "Gender",
+    "Is active": "Is Active",
+    "customer": "Customer"
+}

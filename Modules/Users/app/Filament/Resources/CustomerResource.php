@@ -5,9 +5,11 @@ namespace Modules\Users\Filament\Resources;
 use Filament\Actions\Action;
 use Filament\Forms\Components as F;
 use Filament\Forms\Form;
+use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns as T;
+use Filament\Infolists\Components as I;
 use Filament\Tables\Table;
 use Modules\Users\Enums\UserGender;
 use Modules\Users\Filament\Resources\CustomerResource\Pages;
@@ -26,17 +28,18 @@ class CustomerResource extends Resource
             ->schema([
                 F\TextInput::make('name')->required()->maxLength(50),
                 F\TextInput::make('email')->email()->required()->maxLength(100),
-                F\TextInput::make('phoneNumber')->nullable()->maxLength(12),
+                F\TextInput::make('phoneNumber')->translateLabel()->nullable()->maxLength(12),
                 F\TextInput::make('password')->password()
+                    ->revealable()
                     ->required(fn($state, $record) => is_null($record->password))
                     ->dehydrated(fn($state) => filled($state))
                     ->maxLength(20)
                     ->minLength(8)
                     ->nullable(),
-                F\Toggle::make('is_active')->label('Active')->default(true),
+                F\Toggle::make('is_active')->translateLabel()->default(true),
                 F\ToggleButtons::make('gender')->enum(UserGender::class)->options([
-                    'male' => UserGender::MALE->value,
-                    'female' => UserGender::FEMALE->value,
+                    'male' => __(UserGender::MALE->value),
+                    'female' => __(UserGender::FEMALE->value),
                 ])->nullable()->inline(),
             ]);
     }
@@ -45,23 +48,40 @@ class CustomerResource extends Resource
     {
         return $table
             ->columns([
-                T\TextColumn::make('id'),
-                T\TextColumn::make('name'),
-                T\TextColumn::make('email')->url(fn(User $record) => "mailto:{$record->email}"),
-                T\TextColumn::make('phoneNumber'),
-                T\IconColumn::make('is_active')->boolean()->label('Active'),
-                T\TextColumn::make('gender'),
+                T\TextColumn::make('id')->translateLabel(),
+                T\TextColumn::make('name')->translateLabel(),
+                T\TextColumn::make('email')->translateLabel()->url(fn(User $record) => "mailto:{$record->email}"),
+                T\TextColumn::make('phoneNumber')->translateLabel(),
+                T\IconColumn::make('is_active')->translateLabel()->boolean()->label('Active'),
+                T\TextColumn::make('gender')->translateLabel()->state(fn($record) => __($record->gender->value)),
             ])
             ->filters([
                 //
             ])
             ->actions([
+                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\DeleteBulkAction::make()->translateLabel(),
                 ]),
+            ]);
+    }
+
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist
+            ->schema([
+                I\TextEntry::make('id')->translateLabel(),
+                I\TextEntry::make('created_at')->label(__('joinedAt')),
+                I\TextEntry::make('name')->translateLabel(),
+                I\TextEntry::make('email')->translateLabel(),
+                I\TextEntry::make('phoneNumber')->translateLabel(),
+                I\IconEntry::make('is_active')->translateLabel()->boolean(),
+                I\TextEntry::make('gender')->translateLabel()->state(fn($record) => __($record->gender->value)),
+                I\KeyValueEntry::make(('totals'))->translateLabel(),
             ]);
     }
 

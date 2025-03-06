@@ -10,13 +10,6 @@ class EditCustomer extends EditRecord
 {
     protected static string $resource = CustomerResource::class;
 
-    protected function mutateFormDataBeforeFill(array $data): array
-    {
-        $data['totals'] = $data['totals']->toArray();
-
-        return $data;
-    }
-
     protected function getHeaderActions(): array
     {
         return [
