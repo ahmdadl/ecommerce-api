@@ -4,7 +4,6 @@ namespace Modules\Users\Actions\Auth;
 
 use Modules\Users\Models\Auth\PasswordResetToken;
 use Modules\Users\Models\Customer;
-use Modules\Users\Models\User;
 use Modules\Users\Utils\UserUtils;
 
 class UserForgetPasswordAction
@@ -13,7 +12,7 @@ class UserForgetPasswordAction
     {
         $user = Customer::role()->active()->whereEmail($email)->first();
 
-        if (!$user) {
+        if (! $user) {
             return false;
         }
 

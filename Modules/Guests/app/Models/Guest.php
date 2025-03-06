@@ -3,15 +3,15 @@
 namespace Modules\Guests\Models;
 
 use Illuminate\Auth\Authenticatable;
-use Illuminate\Foundation\Auth\User as AuthenticatableModel;
 use Illuminate\Database\Eloquent\Attributes\UseFactory;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\Access\Authorizable;
+use Illuminate\Foundation\Auth\User as AuthenticatableModel;
 use Laravel\Sanctum\HasApiTokens;
-use Modules\Users\Casts\UserTotalCast;
 use Modules\Guests\Database\Factories\GuestFactory;
+use Modules\Users\Casts\UserTotalCast;
 use Modules\Users\ValueObjects\UserTotals;
 
 #[UseFactory(GuestFactory::class)]

@@ -9,7 +9,7 @@ it('user_have_columns_by_default', function () {
     $userFactory = User::factory()->customer()->make();
 
     $user = Customer::create([
-        ...$userFactory->only('name', 'email', 'password',)
+        ...$userFactory->only('name', 'email', 'password'),
     ]);
 
     expect($user->totals)->toBeInstanceOf(UserTotals::class);

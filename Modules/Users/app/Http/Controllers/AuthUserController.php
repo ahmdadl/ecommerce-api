@@ -23,7 +23,7 @@ class AuthUserController extends Controller
     {
         $user = $action->handle($request->validated());
 
-        if (!$user) {
+        if (! $user) {
             return api()->unauthorized(__('users::user.invalid_credentials'));
         }
 
@@ -45,7 +45,7 @@ class AuthUserController extends Controller
     }
 
     /**
-     * forget user password 
+     * forget user password
      */
     public function forgetPassword(Request $request, UserForgetPasswordAction $action): JsonResponse
     {
@@ -55,7 +55,7 @@ class AuthUserController extends Controller
 
         $sent = $action->handle($email);
 
-        if (!$sent) {
+        if (! $sent) {
             return api()->error(__('users::user.email_not_found'));
         }
 

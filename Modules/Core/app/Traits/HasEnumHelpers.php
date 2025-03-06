@@ -11,7 +11,7 @@ trait HasEnumHelpers
      * array.
      *
      * @return array<mixed> The `values()` method is returning an array of values extracted from the "value"
-     *               key of each element in the array returned by the `cases()` method.
+     *                      key of each element in the array returned by the `cases()` method.
      */
     public static function values(): array
     {
@@ -28,7 +28,7 @@ trait HasEnumHelpers
     public static function tryFromName(string $name): ?static
     {
         return collect(static::cases())->first(
-            fn(BackedEnum $case) => $case->name === $name
+            fn (BackedEnum $case) => $case->name === $name
         );
     }
 }

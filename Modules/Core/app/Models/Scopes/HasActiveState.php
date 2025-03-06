@@ -9,8 +9,6 @@ trait HasActiveState
 {
     /**
      * initialize trait
-     *
-     * @return void
      */
     public function initializeHasActiveState(): void
     {
@@ -19,7 +17,8 @@ trait HasActiveState
 
     /**
      * Scope a query to only include is_active records.
-     * @param Builder<Model> $query
+     *
+     * @param  Builder<Model>  $query
      */
     public function scopeActive(Builder $query): void
     {
@@ -28,7 +27,8 @@ trait HasActiveState
 
     /**
      * Scope a query to exclude is_active records.
-     * @param Builder<Model> $query
+     *
+     * @param  Builder<Model>  $query
      */
     public function scopeNotActive(Builder $query): void
     {

@@ -2,9 +2,8 @@
 
 namespace Modules\Users\Filament\Resources\CustomerResource\Pages;
 
-use Modules\Users\Filament\Resources\CustomerResource;
-use Filament\Actions;
 use Filament\Resources\Pages\CreateRecord;
+use Modules\Users\Filament\Resources\CustomerResource;
 
 class CreateCustomer extends CreateRecord
 {

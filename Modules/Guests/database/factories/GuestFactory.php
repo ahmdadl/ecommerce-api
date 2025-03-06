@@ -8,6 +8,7 @@ use Modules\Users\ValueObjects\UserTotals;
 
 /**
  * @extends Factory<Guest>
+ *
  * @mixin Factory<Guest>
  */
 class GuestFactory extends Factory

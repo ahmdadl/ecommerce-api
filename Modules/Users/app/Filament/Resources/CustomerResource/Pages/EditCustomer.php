@@ -2,9 +2,9 @@
 
 namespace Modules\Users\Filament\Resources\CustomerResource\Pages;
 
-use Modules\Users\Filament\Resources\CustomerResource;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
+use Modules\Users\Filament\Resources\CustomerResource;
 
 class EditCustomer extends EditRecord
 {

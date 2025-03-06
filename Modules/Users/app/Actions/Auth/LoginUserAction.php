@@ -3,7 +3,6 @@
 namespace Modules\Users\Actions\Auth;
 
 use Modules\Core\Services\Application;
-use Modules\Users\Enums\UserRole;
 use Modules\Users\Models\Customer;
 use Modules\Users\Models\User;
 
@@ -11,7 +10,7 @@ class LoginUserAction
 {
     public function handle(array $credentials): ?User
     {
-        if (!Customer::attempt($credentials)) {
+        if (! Customer::attempt($credentials)) {
             return null;
         }
 

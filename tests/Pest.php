@@ -52,7 +52,6 @@ function something()
 
 /**
  * login as a guest
- * @return void
  */
 function asGuest(?Guest $guest = null): void
 {

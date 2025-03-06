@@ -3,14 +3,11 @@
 namespace Modules\Guests\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use DB;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Modules\Core\Services\Application;
 use Modules\Guests\Models\Guest;
 use Modules\Guests\Transformers\GuestResource;
-use Modules\Users\ValueObjects\UserTotals;
 
 class LoginGuestController extends Controller
 {

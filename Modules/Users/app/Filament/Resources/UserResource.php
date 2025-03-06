@@ -2,17 +2,12 @@
 
 namespace Modules\Users\Filament\Resources;
 
-use Modules\Users\Filament\Resources\UserResource\Pages;
-use Modules\Users\Filament\Resources\UserResource\RelationManagers;
-use Modules\Users\Models\User;
-use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Filament\Forms\Components;
+use Modules\Users\Filament\Resources\UserResource\Pages;
+use Modules\Users\Models\User;
 
 class UserResource extends Resource
 {

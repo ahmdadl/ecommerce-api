@@ -23,7 +23,7 @@ class AppServiceProvider extends ServiceProvider
         // @phpstan-ignore-next-line
         ResetPassword::createUrlUsing(function (object $notifiable, string $token) {
             // @phpstan-ignore-next-line
-            return config('app.frontend_url') . "/password-reset/$token?email={$notifiable->getEmailForPasswordReset()}";
+            return config('app.frontend_url')."/password-reset/$token?email={$notifiable->getEmailForPasswordReset()}";
         });
     }
 }

@@ -14,9 +14,9 @@ class UpdateProfileRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:150',
-            'email' => 'required|email|max:150|unique:users,email,' . auth('customer')->id(),
-            'phoneNumber' => 'required|string|max:20|unique:users,phoneNumber,' . auth('customer')->id(),
-            'gender' => 'required|enum:' . UserGender::class,
+            'email' => 'required|email|max:150|unique:users,email,'.auth('customer')->id(),
+            'phoneNumber' => 'required|string|max:20|unique:users,phoneNumber,'.auth('customer')->id(),
+            'gender' => 'required|enum:'.UserGender::class,
         ];
     }
 

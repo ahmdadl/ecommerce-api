@@ -92,7 +92,6 @@ test('guest_can_register_with_valid_data', function () {
         ->assertSee('access_token');
 });
 
-
 test('only_guest_can_reset_password', function () {
     postJson(route('api.auth.forget-password'))->assertUnauthorized();
     postJson(route('api.auth.reset-password'))->assertUnauthorized();
@@ -124,7 +123,6 @@ test('user_cannot_reset_password_with_invalid_data', function () {
         'password_confirmation' => $password,
         'token' => str()->random(6),
     ]))->assertStatus(400)->assertSee(__('users::user.invalid_token'));
-
 
     // test token expired
     $passwordReset = PasswordResetToken::where('email', $user->email)->latest()->first();
