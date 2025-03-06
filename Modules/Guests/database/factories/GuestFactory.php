@@ -24,7 +24,7 @@ class GuestFactory extends Factory
     public function definition(): array
     {
         return [
-            'totals' => UserTotals::default(),
+            "totals" => UserTotals::default(),
         ];
     }
 }

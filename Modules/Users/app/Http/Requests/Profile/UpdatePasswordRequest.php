@@ -12,8 +12,8 @@ class UpdatePasswordRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'old_password' => 'required|string|size:8|current_password',
-            'password' => 'required|string|size:8|confirmed',
+            "old_password" => "required|string|size:8|current_password",
+            "password" => "required|string|size:8|confirmed",
         ];
     }
 
@@ -22,6 +22,6 @@ class UpdatePasswordRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return auth('customer')->check();
+        return auth("customer")->check();
     }
 }

@@ -9,7 +9,7 @@ class Users extends Cluster
 {
     public static function getModuleName(): string
     {
-        return 'Users';
+        return "Users";
     }
 
     public static function getModule(): \Nwidart\Modules\Module
@@ -19,11 +19,11 @@ class Users extends Cluster
 
     public static function getNavigationLabel(): string
     {
-        return __('Users');
+        return __("Users");
     }
 
     public static function getNavigationIcon(): ?string
     {
-        return 'heroicon-o-squares-2x2';
+        return "heroicon-o-squares-2x2";
     }
 }

@@ -11,6 +11,6 @@ class CreateCustomer extends CreateRecord
 
     protected function getRedirectUrl(): string
     {
-        return $this->getResource()::getUrl('index'); // Redirect to resource index
+        return $this->getResource()::getUrl("index"); // Redirect to resource index
     }
 }

@@ -11,7 +11,7 @@ class UpdateProfileAction
         /**
          * @var User $user
          */
-        $user = auth('customer')->user();
+        $user = auth("customer")->user();
 
         $user->update($data);
 

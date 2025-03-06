@@ -8,6 +8,6 @@ enum UserGender: string
 {
     use HasEnumHelpers;
 
-    case MALE = 'male';
-    case FEMALE = 'female';
+    case MALE = "male";
+    case FEMALE = "female";
 }

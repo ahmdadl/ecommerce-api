@@ -10,7 +10,7 @@ final class Application
      *
      * @const string
      */
-    const APP_ADMIN = 'awui';
+    const APP_ADMIN = "awui";
 
     /**
      * Website Application
@@ -18,7 +18,7 @@ final class Application
      *
      * @const string
      */
-    const APP_WEBSITE = 'wui';
+    const APP_WEBSITE = "wui";
 
     /**
      * Website Test Application on production database
@@ -26,31 +26,31 @@ final class Application
      *
      * @const string
      */
-    const APP_WEBSITE_TEST = 'wuiTest';
+    const APP_WEBSITE_TEST = "wuiTest";
 
     /**
      * Android Application
      *
      * @const string
      */
-    const APP_ANDROID = 'android';
+    const APP_ANDROID = "android";
 
     /**
      * Ios Application
      *
      * @const string
      */
-    const APP_IOS = 'ios';
+    const APP_IOS = "ios";
 
     /**
      * application header to set the value
      */
-    const APPLICATION_HEADER = 'X-Application-Type';
+    const APPLICATION_HEADER = "X-Application-Type";
 
     /**
      * Current application type
      */
-    public static string $currentApplicationType = '';
+    public static string $currentApplicationType = "";
 
     /**
      * Set the current application type
@@ -90,15 +90,15 @@ final class Application
     public static function getApplicationTypeUsingOS(string $os): string
     {
         /** @var array<string, array<string, string>> $apps */
-        $apps = config('auth.apps');
+        $apps = config("auth.apps");
 
         foreach ($apps as $type => $app) {
-            if ($app['os'] === $os) {
+            if ($app["os"] === $os) {
                 return $type;
             }
         }
 
-        return '';
+        return "";
     }
 
     /**
@@ -106,6 +106,6 @@ final class Application
      */
     public static function isUiInDevelopmentMode(): bool
     {
-        return request()->header('app-env') === 'development';
+        return request()->header("app-env") === "development";
     }
 }

@@ -13,10 +13,14 @@ class UpdateProfileRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:150',
-            'email' => 'required|email|max:150|unique:users,email,'.auth('customer')->id(),
-            'phoneNumber' => 'required|string|max:20|unique:users,phoneNumber,'.auth('customer')->id(),
-            'gender' => 'required|enum:'.UserGender::class,
+            "name" => "required|string|max:150",
+            "email" =>
+                "required|email|max:150|unique:users,email," .
+                auth("customer")->id(),
+            "phoneNumber" =>
+                "required|string|max:20|unique:users,phoneNumber," .
+                auth("customer")->id(),
+            "gender" => "required|enum:" . UserGender::class,
         ];
     }
 
@@ -25,6 +29,6 @@ class UpdateProfileRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return auth('customer')->check();
+        return auth("customer")->check();
     }
 }

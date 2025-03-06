@@ -3,7 +3,7 @@
 use Modules\Core\Utils\ApiResponse;
 use Modules\Users\Models\User;
 
-if (! function_exists('api')) {
+if (!function_exists("api")) {
     /**
      * api response
      *
@@ -15,7 +15,7 @@ if (! function_exists('api')) {
     }
 }
 
-if (! function_exists('user')) {
+if (!function_exists("user")) {
     /**
      * get current user
      */

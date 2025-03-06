@@ -6,11 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class PasswordResetToken extends Model
 {
-    protected $table = 'password_reset_tokens';
+    protected $table = "password_reset_tokens";
 
     public $timestamps = false;
 
-    public $primaryKey = 'email';
+    public $primaryKey = "email";
 
     /**
      * cast attributes
@@ -18,7 +18,7 @@ class PasswordResetToken extends Model
     protected function casts(): array
     {
         return [
-            'created_at' => 'datetime',
+            "created_at" => "datetime",
         ];
     }
 }

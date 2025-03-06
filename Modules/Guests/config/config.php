@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'name' => 'Guests',
+    "name" => "Guests",
 ];

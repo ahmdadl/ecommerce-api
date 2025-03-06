@@ -14,10 +14,14 @@ class UserTotalCast implements CastsAttributes
      *
      * @param  array<string, mixed>  $attributes
      */
-    public function get(Model $model, string $key, mixed $value, array $attributes): mixed
-    {
-        if (! json_validate($value)) {
-            throw new \Exception('User Totals value is invalid JSON format');
+    public function get(
+        Model $model,
+        string $key,
+        mixed $value,
+        array $attributes
+    ): mixed {
+        if (!json_validate($value)) {
+            throw new \Exception("User Totals value is invalid JSON format");
         }
 
         return UserTotals::fromArray(json_decode($value, true));
@@ -28,10 +32,16 @@ class UserTotalCast implements CastsAttributes
      *
      * @param  array<string, mixed>  $attributes
      */
-    public function set(Model $model, string $key, mixed $value, array $attributes): mixed
-    {
-        if (! $value instanceof UserTotals) {
-            throw new InvalidArgumentException('The provided value is not an instance of UserTotals.');
+    public function set(
+        Model $model,
+        string $key,
+        mixed $value,
+        array $attributes
+    ): mixed {
+        if (!$value instanceof UserTotals) {
+            throw new InvalidArgumentException(
+                "The provided value is not an instance of UserTotals."
+            );
         }
 
         return json_encode($value->toArray());

@@ -26,7 +26,7 @@ class Guest extends AuthenticatableModel
     protected function casts(): array
     {
         return [
-            'totals' => UserTotalCast::class,
+            "totals" => UserTotalCast::class,
         ];
     }
 

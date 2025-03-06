@@ -16,7 +16,7 @@ trait HasSortOrderAttribute
     {
         static::creating(function (Model $model) {
             if (empty($model->sort_order)) {
-                $model->sort_order = $model::max('sort_order') + 1;
+                $model->sort_order = $model::max("sort_order") + 1;
             }
         });
     }
@@ -28,7 +28,7 @@ trait HasSortOrderAttribute
      */
     public function initializeHasSortOrderAttribute()
     {
-        $this->casts = array_merge($this->casts, ['sort_order' => 'int']);
+        $this->casts = array_merge($this->casts, ["sort_order" => "int"]);
     }
 
     /**
@@ -38,7 +38,7 @@ trait HasSortOrderAttribute
      */
     public function scopeSortOrderAsc(Builder $query): void
     {
-        $query->orderBy('sort_order', 'asc');
+        $query->orderBy("sort_order", "asc");
     }
 
     /**
@@ -48,6 +48,6 @@ trait HasSortOrderAttribute
      */
     public function scopeSortOrder(Builder $query): void
     {
-        $query->orderBy('sort_order', 'desc');
+        $query->orderBy("sort_order", "desc");
     }
 }

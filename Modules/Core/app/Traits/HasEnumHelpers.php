@@ -15,7 +15,7 @@ trait HasEnumHelpers
      */
     public static function values(): array
     {
-        return array_column(self::cases(), 'value');
+        return array_column(self::cases(), "value");
     }
 
     /**
@@ -28,7 +28,7 @@ trait HasEnumHelpers
     public static function tryFromName(string $name): ?static
     {
         return collect(static::cases())->first(
-            fn (BackedEnum $case) => $case->name === $name
+            fn(BackedEnum $case) => $case->name === $name
         );
     }
 }

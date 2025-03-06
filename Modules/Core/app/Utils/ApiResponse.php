@@ -12,43 +12,57 @@ final class ApiResponse
      *
      * @param  mixed  $data
      */
-    public function success($data = null, ?string $message = null, int $statusCode = 200): JsonResponse
-    {
-        return response()->json([
-            'success' => true,
-            'message' => $message ?? __('core::core.success'),
-            'data' => $data,
-        ], $statusCode);
+    public function success(
+        $data = null,
+        ?string $message = null,
+        int $statusCode = 200
+    ): JsonResponse {
+        return response()->json(
+            [
+                "success" => true,
+                "message" => $message ?? __("core::core.success"),
+                "data" => $data,
+            ],
+            $statusCode
+        );
     }
 
     /**
      * Return an error JSON response.
      */
-    public function error(?string $message = null, int $statusCode = 400, array $errors = []): JsonResponse
-    {
-        return response()->json([
-            'success' => false,
-            'message' => $message ?? __('core::core.error'),
-            'errors' => $errors,
-        ], $statusCode);
+    public function error(
+        ?string $message = null,
+        int $statusCode = 400,
+        array $errors = []
+    ): JsonResponse {
+        return response()->json(
+            [
+                "success" => false,
+                "message" => $message ?? __("core::core.error"),
+                "errors" => $errors,
+            ],
+            $statusCode
+        );
     }
 
     /**
      * Return a paginated JSON response.
      */
-    public function paginate(LengthAwarePaginator $paginator, ?string $message = null): JsonResponse
-    {
+    public function paginate(
+        LengthAwarePaginator $paginator,
+        ?string $message = null
+    ): JsonResponse {
         return response()->json([
-            'success' => true,
-            'message' => $message ?? __('core::core.pagination_success'),
-            'data' => $paginator->items(),
-            'pagination' => [
-                'total' => $paginator->total(),
-                'per_page' => $paginator->perPage(),
-                'current_page' => $paginator->currentPage(),
-                'last_page' => $paginator->lastPage(),
-                'from' => $paginator->firstItem(),
-                'to' => $paginator->lastItem(),
+            "success" => true,
+            "message" => $message ?? __("core::core.pagination_success"),
+            "data" => $paginator->items(),
+            "pagination" => [
+                "total" => $paginator->total(),
+                "per_page" => $paginator->perPage(),
+                "current_page" => $paginator->currentPage(),
+                "last_page" => $paginator->lastPage(),
+                "from" => $paginator->firstItem(),
+                "to" => $paginator->lastItem(),
             ],
         ]);
     }
@@ -56,20 +70,31 @@ final class ApiResponse
     /**
      * Return a success JSON response with no data.
      */
-    public function noContent(?string $message = null, int $statusCode = 204): JsonResponse
-    {
-        return response()->json([
-            'success' => true,
-            'message' => $message ?? __('core::core.empty_success'),
-        ], $statusCode);
+    public function noContent(
+        ?string $message = null,
+        int $statusCode = 204
+    ): JsonResponse {
+        return response()->json(
+            [
+                "success" => true,
+                "message" => $message ?? __("core::core.empty_success"),
+            ],
+            $statusCode
+        );
     }
 
     /**
      * Return a validation error JSON response.
      */
-    public function validationError(array $errors, ?string $message = null): JsonResponse
-    {
-        return $this->error($message ?? __('core::core.validation_error'), 422, $errors);
+    public function validationError(
+        array $errors,
+        ?string $message = null
+    ): JsonResponse {
+        return $this->error(
+            $message ?? __("core::core.validation_error"),
+            422,
+            $errors
+        );
     }
 
     /**
@@ -77,7 +102,7 @@ final class ApiResponse
      */
     public function notFound(?string $message = null): JsonResponse
     {
-        return $this->error($message ?? __('core::core.not_found'), 404);
+        return $this->error($message ?? __("core::core.not_found"), 404);
     }
 
     /**
@@ -85,7 +110,7 @@ final class ApiResponse
      */
     public function unauthorized(?string $message = null): JsonResponse
     {
-        return $this->error($message ?? __('core::core.unauthorized'), 401);
+        return $this->error($message ?? __("core::core.unauthorized"), 401);
     }
 
     /**
@@ -93,7 +118,7 @@ final class ApiResponse
      */
     public function forbidden(?string $message = null): JsonResponse
     {
-        return $this->error($message ?? __('core::core.forbidden'), 403);
+        return $this->error($message ?? __("core::core.forbidden"), 403);
     }
 
     /**
@@ -101,7 +126,7 @@ final class ApiResponse
      */
     public function serverError(?string $message = null): JsonResponse
     {
-        return $this->error($message ?? __('core::core.server_error'), 500);
+        return $this->error($message ?? __("core::core.server_error"), 500);
     }
 
     /**
@@ -111,7 +136,7 @@ final class ApiResponse
      */
     public function record($record, ?string $message = null): JsonResponse
     {
-        return $this->success(compact('record'), $message);
+        return $this->success(compact("record"), $message);
     }
 
     /**
@@ -121,6 +146,6 @@ final class ApiResponse
      */
     public function records($records, ?string $message = null): JsonResponse
     {
-        return $this->success(compact('records'), $message);
+        return $this->success(compact("records"), $message);
     }
 }

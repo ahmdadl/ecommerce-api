@@ -15,7 +15,11 @@ class SetApplicationTypeMiddleware
     {
         $applicationType = $request->header(Application::APPLICATION_HEADER);
 
-        abort_if(empty($applicationType), 400, 'Missing required header: '.Application::APPLICATION_HEADER);
+        abort_if(
+            empty($applicationType),
+            400,
+            "Missing required header: " . Application::APPLICATION_HEADER
+        );
 
         Application::setApplicationType($applicationType);
 

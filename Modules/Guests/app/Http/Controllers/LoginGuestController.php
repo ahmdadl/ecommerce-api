@@ -16,12 +16,13 @@ class LoginGuestController extends Controller
         /** @var Guest $guest */
         $guest = Guest::create();
 
-        $accessToken = $guest->createToken(Application::getApplicationType())->plainTextToken;
+        $accessToken = $guest->createToken(Application::getApplicationType())
+            ->plainTextToken;
 
         $guest->access_token = $accessToken;
 
         return api()->success([
-            'record' => new GuestResource($guest),
+            "record" => new GuestResource($guest),
         ]);
     }
 }

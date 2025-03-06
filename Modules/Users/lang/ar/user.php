@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'invalid_credentials' => 'Invalid credentials.',
+    "invalid_credentials" => "Invalid credentials.",
 ];

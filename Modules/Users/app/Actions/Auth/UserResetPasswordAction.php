@@ -11,22 +11,24 @@ class UserResetPasswordAction
 {
     public function handle(array $data): ?Throwable
     {
-        ['email' => $email, 'password' => $password, 'token' => $token] = $data;
+        ["email" => $email, "password" => $password, "token" => $token] = $data;
 
         $user = Customer::role()->active()->whereEmail($email)->first();
 
-        if (! $user) {
-            throw new \Exception(__('users::user.invalid_credentials'));
+        if (!$user) {
+            throw new \Exception(__("users::user.invalid_credentials"));
         }
 
-        $passwordReset = PasswordResetToken::whereToken($token)->whereEmail($email)->first();
+        $passwordReset = PasswordResetToken::whereToken($token)
+            ->whereEmail($email)
+            ->first();
 
-        if (! $passwordReset) {
-            throw new \Exception(__('users::user.invalid_token'));
+        if (!$passwordReset) {
+            throw new \Exception(__("users::user.invalid_token"));
         }
 
         if ($passwordReset->created_at->addMinutes(5)->isPast()) {
-            throw new \Exception(__('users::user.token_expired'));
+            throw new \Exception(__("users::user.token_expired"));
         }
 
         $user->password = Hash::make($password);

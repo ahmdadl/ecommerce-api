@@ -12,7 +12,7 @@ class UserForgetPasswordAction
     {
         $user = Customer::role()->active()->whereEmail($email)->first();
 
-        if (! $user) {
+        if (!$user) {
             return false;
         }
 
@@ -20,9 +20,9 @@ class UserForgetPasswordAction
 
         PasswordResetToken::whereEmail($email)->delete();
         PasswordResetToken::create([
-            'email' => $email,
-            'token' => $token,
-            'created_at' => now(),
+            "email" => $email,
+            "token" => $token,
+            "created_at" => now(),
         ]);
 
         // Send the email

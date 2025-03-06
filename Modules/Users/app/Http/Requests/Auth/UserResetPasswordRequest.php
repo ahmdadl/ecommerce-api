@@ -12,9 +12,9 @@ class UserResetPasswordRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'token' => 'required|string|size:6',
-            'email' => 'required|email|max:150',
-            'password' => 'required|string|min:8|max:150|confirmed',
+            "token" => "required|string|size:6",
+            "email" => "required|email|max:150",
+            "password" => "required|string|min:8|max:150|confirmed",
         ];
     }
 
@@ -23,6 +23,6 @@ class UserResetPasswordRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return auth('guest')->check();
+        return auth("guest")->check();
     }
 }

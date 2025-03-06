@@ -11,8 +11,11 @@ trait HasMetaTags
      */
     public function initializeHasMetaTags()
     {
-        $this->translatable = array_merge($this->translatable, ['meta_title', 'meta_description']);
+        $this->translatable = array_merge($this->translatable, [
+            "meta_title",
+            "meta_description",
+        ]);
 
-        $this->casts = array_merge($this->casts, ['meta_keywords' => 'array']);
+        $this->casts = array_merge($this->casts, ["meta_keywords" => "array"]);
     }
 }

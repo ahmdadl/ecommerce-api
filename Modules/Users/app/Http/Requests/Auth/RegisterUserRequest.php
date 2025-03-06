@@ -12,11 +12,11 @@ class RegisterUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'firstName' => 'required|string|max:150',
-            'lastName' => 'required|string|max:150',
-            'email' => 'required|string|email|max:150|unique:users',
-            'phoneNumber' => 'required|string|max:12',
-            'password' => 'required|string|min:8|max:150|confirmed',
+            "firstName" => "required|string|max:150",
+            "lastName" => "required|string|max:150",
+            "email" => "required|string|email|max:150|unique:users",
+            "phoneNumber" => "required|string|max:12",
+            "password" => "required|string|min:8|max:150|confirmed",
         ];
     }
 
@@ -25,6 +25,6 @@ class RegisterUserRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return auth('guest')->check();
+        return auth("guest")->check();
     }
 }

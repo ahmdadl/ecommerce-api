@@ -12,7 +12,7 @@ trait HasActiveState
      */
     public function initializeHasActiveState(): void
     {
-        $this->casts = array_merge($this->casts, ['is_active' => 'boolean']);
+        $this->casts = array_merge($this->casts, ["is_active" => "boolean"]);
     }
 
     /**
@@ -22,7 +22,7 @@ trait HasActiveState
      */
     public function scopeActive(Builder $query): void
     {
-        $query->where('is_active', 1);
+        $query->where("is_active", 1);
     }
 
     /**
@@ -32,6 +32,6 @@ trait HasActiveState
      */
     public function scopeNotActive(Builder $query): void
     {
-        $query->where('is_active', 0);
+        $query->where("is_active", 0);
     }
 }

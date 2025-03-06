@@ -10,14 +10,15 @@ class LoginUserAction
 {
     public function handle(array $credentials): ?User
     {
-        if (! Customer::attempt($credentials)) {
+        if (!Customer::attempt($credentials)) {
             return null;
         }
 
         /** @var User $user */
-        $user = auth('customer')->user();
+        $user = auth("customer")->user();
 
-        $accessToken = $user->createToken(Application::getApplicationType())->plainTextToken;
+        $accessToken = $user->createToken(Application::getApplicationType())
+            ->plainTextToken;
 
         $user->access_token = $accessToken;
 

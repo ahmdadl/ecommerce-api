@@ -14,7 +14,7 @@ class UpdatePasswordAction
         $user = user();
 
         $user->update([
-            'password' => Hash::make($data['password']),
+            "password" => Hash::make($data["password"]),
         ]);
     }
 }

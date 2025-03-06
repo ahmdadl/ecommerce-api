@@ -13,16 +13,22 @@ class UsersDatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory()->admin()->male()->create([
-            'name' => 'Ahmed Adel',
-            'email' => 'ahmdadl.dev@gmail.com',
-            'password' => Hash::make('123123123'),
-        ]);
+        User::factory()
+            ->admin()
+            ->male()
+            ->create([
+                "name" => "Ahmed Adel",
+                "email" => "ahmdadl.dev@gmail.com",
+                "password" => Hash::make("123123123"),
+            ]);
 
-        User::factory()->admin()->male()->create([
-            'name' => 'Ahmed Admin',
-            'email' => 'admin@gmail.com',
-            'password' => Hash::make('123123123'),
-        ]);
+        User::factory()
+            ->admin()
+            ->male()
+            ->create([
+                "name" => "Ahmed Admin",
+                "email" => "admin@gmail.com",
+                "password" => Hash::make("123123123"),
+            ]);
     }
 }

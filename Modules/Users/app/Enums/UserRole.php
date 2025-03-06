@@ -8,7 +8,7 @@ enum UserRole: string
 {
     use HasEnumHelpers;
 
-    case ADMIN = 'admin';
-    case CUSTOMER = 'customer';
-    case DEVELOPER = 'developer';
+    case ADMIN = "admin";
+    case CUSTOMER = "customer";
+    case DEVELOPER = "developer";
 }

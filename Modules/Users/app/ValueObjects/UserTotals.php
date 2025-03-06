@@ -17,7 +17,7 @@ final class UserTotals implements Wireable
         public int $wishlistItems,
         public int $comparedItems,
         public int $orders,
-        public int $totalPurchased,
+        public int $totalPurchased
     ) {}
 
     /**
@@ -28,11 +28,11 @@ final class UserTotals implements Wireable
     public function toArray(): array
     {
         return [
-            'cartItems' => $this->cartItems,
-            'wishlistItems' => $this->wishlistItems,
-            'comparedItems' => $this->comparedItems,
-            'orders' => $this->orders,
-            'totalPurchased' => $this->totalPurchased,
+            "cartItems" => $this->cartItems,
+            "wishlistItems" => $this->wishlistItems,
+            "comparedItems" => $this->comparedItems,
+            "orders" => $this->orders,
+            "totalPurchased" => $this->totalPurchased,
         ];
     }
 
@@ -44,11 +44,11 @@ final class UserTotals implements Wireable
     public static function fromArray(array $data): self
     {
         return new self(
-            cartItems: $data['cartItems'],
-            wishlistItems: $data['wishlistItems'],
-            comparedItems: $data['comparedItems'],
-            orders: $data['orders'],
-            totalPurchased: $data['totalPurchased'],
+            cartItems: $data["cartItems"],
+            wishlistItems: $data["wishlistItems"],
+            comparedItems: $data["comparedItems"],
+            orders: $data["orders"],
+            totalPurchased: $data["totalPurchased"]
         );
     }
 
@@ -62,7 +62,7 @@ final class UserTotals implements Wireable
             wishlistItems: 0,
             comparedItems: 0,
             orders: 0,
-            totalPurchased: 0,
+            totalPurchased: 0
         );
     }
 
@@ -77,7 +77,7 @@ final class UserTotals implements Wireable
             wishlistItems: 0,
             comparedItems: 0,
             orders: 0,
-            totalPurchased: 0,
+            totalPurchased: 0
         );
     }
 

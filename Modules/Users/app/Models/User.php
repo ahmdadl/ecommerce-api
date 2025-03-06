@@ -17,12 +17,19 @@ use Modules\Users\Database\Factories\UserFactory;
 use Modules\Users\Enums\UserGender;
 use Modules\Users\Enums\UserRole;
 use Modules\Users\ValueObjects\UserTotals;
+use Spatie\Permission\Traits\HasRoles;
 
 #[UseFactory(UserFactory::class)]
 class User extends Authenticatable
 {
     /** @use HasFactory<\Modules\Users\Database\Factories\UserFactory> */
-    use HasActiveState, HasApiTokens, HasFactory, HasUlids, Notifiable, SoftDeletes;
+    use HasActiveState,
+        HasApiTokens,
+        HasFactory,
+        HasUlids,
+        Notifiable,
+        SoftDeletes,
+        HasRoles;
 
     /**
      * current model role
@@ -34,10 +41,7 @@ class User extends Authenticatable
      *
      * @var list<string>
      */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
+    protected $hidden = ["password", "remember_token"];
 
     /**
      * Get the attributes that should be cast.
@@ -47,11 +51,11 @@ class User extends Authenticatable
     protected function casts(): array
     {
         return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-            'totals' => UserTotalCast::class,
-            'gender' => UserGender::class,
-            'role' => UserRole::class,
+            "email_verified_at" => "datetime",
+            "password" => "hashed",
+            "totals" => UserTotalCast::class,
+            "gender" => UserGender::class,
+            "role" => UserRole::class,
         ];
     }
 
@@ -61,7 +65,7 @@ class User extends Authenticatable
     protected static function booted(): void
     {
         static::creating(function (self $user) {
-            if (! is_null(static::$role)) {
+            if (!is_null(static::$role)) {
                 $user->role = static::$role;
             }
             $user->totals = UserTotals::default();
@@ -79,7 +83,7 @@ class User extends Authenticatable
      */
     public function scopeRole(Builder $query, ?UserRole $userRole = null): void
     {
-        $query->where('role', $userRole ?? static::$role?->value);
+        $query->where("role", $userRole ?? static::$role?->value);
     }
 
     /**
@@ -88,9 +92,16 @@ class User extends Authenticatable
      * @param  array<string, mixed>  $credentials
      * @param  string|null  $guard
      */
-    public static function attempt(array $credentials, bool $remember = false): bool
-    {
-        return auth()->guard('web')->attempt(array_merge($credentials, ['role' => static::$role?->value]), $remember);
+    public static function attempt(
+        array $credentials,
+        bool $remember = false
+    ): bool {
+        return auth()
+            ->guard("web")
+            ->attempt(
+                array_merge($credentials, ["role" => static::$role?->value]),
+                $remember
+            );
     }
 
     /**

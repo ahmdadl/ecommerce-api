@@ -12,12 +12,12 @@ class UsersPlugin implements Plugin
 
     public function getModuleName(): string
     {
-        return 'Users';
+        return "Users";
     }
 
     public function getId(): string
     {
-        return 'users';
+        return "users";
     }
 
     public function boot(Panel $panel): void

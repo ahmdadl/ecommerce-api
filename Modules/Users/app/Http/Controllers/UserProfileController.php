@@ -15,8 +15,10 @@ class UserProfileController extends Controller
     /**
      * update user profile
      */
-    public function updateProfile(UpdateProfileRequest $request, UpdateProfileAction $action)
-    {
+    public function updateProfile(
+        UpdateProfileRequest $request,
+        UpdateProfileAction $action
+    ) {
         $user = $action->handle($request->validated());
 
         return api()->record(new CustomerResource($user));
@@ -25,8 +27,10 @@ class UserProfileController extends Controller
     /**
      * update user password
      */
-    public function updatePassword(UpdatePasswordRequest $request, UpdatePasswordAction $action): JsonResponse
-    {
+    public function updatePassword(
+        UpdatePasswordRequest $request,
+        UpdatePasswordAction $action
+    ): JsonResponse {
         $action->handle($request->validated());
 
         return api()->noContent();
