@@ -165,24 +165,6 @@ class UserResource extends Resource
                     "female" => __("female"),
                 ])
                 ->translateLabel(),
-            // Filter for active state with options array
-            SelectFilter::make("active")
-                ->label("Status")
-                ->options([
-                    "1" => __("active"),
-                    "0" => __("inactive"),
-                ])
-                ->query(function (Builder $query, array $data): Builder {
-                    return $query
-                        ->when(
-                            $data["value"] === "1",
-                            fn($query) => $query->active()
-                        )
-                        ->when(
-                            $data["value"] === "0",
-                            fn($query) => $query->notActive()
-                        );
-                }),
 
             // Filter for soft deleted records with options array
             SelectFilter::make("trashed")
@@ -227,7 +209,11 @@ class UserResource extends Resource
                                 $date
                             )
                         );
-                }),
+                })
+                ->columns(2),
+
+            // Filter for active state with options array
+            activeToggler(),
         ];
     }
 
