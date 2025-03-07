@@ -6,6 +6,8 @@ use Modules\Users\Enums\UserRole;
 
 class Admin extends User
 {
+    protected $table = "users";
+
     /**
      * current model role
      */
