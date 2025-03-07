@@ -9,6 +9,7 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Enums\FiltersLayout;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -30,9 +31,8 @@ class AdminResource extends Resource
     {
         return $table
             ->columns(UserResource::userTableColumns())
-            ->filters([
-                //
-            ])
+            ->filters(array_merge([], UserResource::userTableFilters()))
+            ->filtersLayout(FiltersLayout::AboveContentCollapsible)
             ->actions([
                 Tables\Actions\Action::make("select_role")
                     ->translateLabel()

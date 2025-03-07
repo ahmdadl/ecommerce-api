@@ -8,5 +8,15 @@
     "customer": "Customer",
     "male": "Male",
     "female": "Female",
-    "joinedAt": "Joined At"
+    "joinedAt": "Joined At",
+    "all": "All",
+    "Created from": "Created From",
+    "Created until": "Created Until",
+    "not-deleted": "Not Deleted",
+    "deleted": "Deleted",
+    "verified": "Verified",
+    "unverified": "Unverified",
+    "active": "Active",
+    "inactive": "Inactive",
+    "Select role": "Select Role"
 }

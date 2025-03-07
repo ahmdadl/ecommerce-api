@@ -30,9 +30,7 @@ class CustomerResource extends Resource
     {
         return $table
             ->columns(UserResource::userTableColumns())
-            ->filters([
-                //
-            ])
+            ->filters(array_merge([], UserResource::userTableFilters()))
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
