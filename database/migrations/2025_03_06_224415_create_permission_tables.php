@@ -103,14 +103,16 @@ return new class extends Migration {
                     "model_has_permissions_permission_model_type_primary"
                 );
             } else {
-                $table->primary(
-                    [
-                        $pivotPermission,
-                        $columnNames["model_morph_key"],
-                        "model_type",
-                    ],
-                    "model_has_permissions_permission_model_type_primary"
-                );
+                if (!app()->environment("testing")) {
+                    $table->primary(
+                        [
+                            $pivotPermission,
+                            $columnNames["model_morph_key"],
+                            "model_type",
+                        ],
+                        "model_has_permissions_permission_model_type_primary"
+                    );
+                }
             }
         });
 
