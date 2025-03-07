@@ -24,3 +24,34 @@ if (!function_exists("user")) {
         return auth()->guard($guard)->user();
     }
 }
+
+if (!function_exists("settings")) {
+    function settings(string $group = null)
+    {
+        $settings = Cache::rememberForever(
+            "settings",
+            fn() => \Modules\Settings\Models\Setting::getInstance()->data
+        );
+
+        if ($group === null) {
+            return $settings;
+        }
+
+        $data = $settings[$group] ?? [];
+        return match ($group) {
+            "general"
+                => \Modules\Settings\ValueObjects\GeneralSettings::fromArray(
+                $data
+            ),
+            "contact"
+                => \Modules\Settings\ValueObjects\ContactSettings::fromArray(
+                $data
+            ),
+            "social"
+                => \Modules\Settings\ValueObjects\SocialSettings::fromArray(
+                $data
+            ),
+            default => $data,
+        };
+    }
+}

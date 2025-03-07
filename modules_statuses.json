@@ -1,5 +1,6 @@
 {
     "Core": true,
     "Users": true,
-    "Guests": true
+    "Guests": true,
+    "Settings": true
 }

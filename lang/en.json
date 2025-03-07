@@ -18,5 +18,16 @@
     "unverified": "Unverified",
     "active": "Active",
     "inactive": "Inactive",
-    "Select role": "Select Role"
+    "Select role": "Select Role",
+    "general": "General",
+    "social": "Social",
+    "contact": "Contact",
+    "address": "Address",
+    "SiteName": "Site Name",
+    "SiteDescription": "Site Description",
+    "MaintenanceMode": "Maintenance Mode",
+    "email": "Email",
+    "phoneNumbers": "Phone Numbers",
+    "googleMapUrl": "Google Map Url",
+    "facebook": "Facebook"
 }
