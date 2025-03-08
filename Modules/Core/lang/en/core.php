@@ -10,4 +10,5 @@ return [
     "unauthorized" => "You are not authorized to perform this action.",
     "forbidden" => "You do not have permission to perform this action.",
     "server_error" => "An internal server error occurred.",
+    "file_not_found" => "The requested file was not found.",
 ];

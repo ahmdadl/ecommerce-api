@@ -15,7 +15,7 @@ class GeneralSettings
         return new self(
             name: $data["name"][app()->getLocale()] ?? "Application Name",
             description: $data["description"][app()->getLocale()] ?? "",
-            maintenanceMode: (bool) $data["maintenance_mode"] ?? false
+            maintenanceMode: (bool) $data["maintenanceMode"] ?? false
         );
     }
 
