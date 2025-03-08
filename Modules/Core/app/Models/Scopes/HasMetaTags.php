@@ -16,6 +16,6 @@ trait HasMetaTags
             "meta_description",
         ]);
 
-        $this->casts = array_merge($this->casts, ["meta_keywords" => "array"]);
+        $this->casts = array_merge($this->casts, ["meta_keywords" => "json"]);
     }
 }

@@ -11,6 +11,7 @@ use Filament\Tables;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Filters\TernaryFilter;
+use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Modules\Users\Enums\UserGender;
@@ -167,23 +168,7 @@ class UserResource extends Resource
                 ->translateLabel(),
 
             // Filter for soft deleted records with options array
-            SelectFilter::make("trashed")
-                ->label("Deleted Status")
-                ->options([
-                    "deleted" => __("deleted"),
-                    "not-deleted" => __("not-deleted"),
-                ])
-                ->query(function (Builder $query, array $data): Builder {
-                    return $query
-                        ->when(
-                            $data["value"] === "deleted",
-                            fn($query) => $query->onlyTrashed()
-                        )
-                        ->when(
-                            $data["value"] === "not-deleted",
-                            fn($query) => $query->withoutTrashed()
-                        );
-                }),
+            TrashedFilter::make("trashed")->translateLabel(),
 
             // Date range filter for creation date
             Filter::make("created_at")

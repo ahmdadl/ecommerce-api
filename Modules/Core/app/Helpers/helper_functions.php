@@ -61,14 +61,17 @@ if (!function_exists("multiLangInput")) {
         $name = $input->getName();
         $label = $input->getLabel();
 
+        $enLabel = __("english_label", compact("label"));
+        $arLabel = __("arabic_label", compact("label"));
+
         return [
             $input
                 ->make($name . ".en")
-                ->label(__("english_label", compact("label")))
+                ->label($enLabel)
                 ->required($input->isRequired()),
             $clone
                 ->make($name . ".ar")
-                ->label(__("arabic_label", compact("label")))
+                ->label($arLabel)
                 ->required($input->isRequired()),
         ];
     }
@@ -83,20 +86,19 @@ if (!function_exists("metaTabInputs")) {
             ->icon("heroicon-m-queue-list")
             ->schema([
                 ...multiLangInput(
-                    Filament\Forms\Components\TextInput::make("meta_title")
-                        ->label("meta_title")
-                        ->translateLabel()
+                    Filament\Forms\Components\TextInput::make(
+                        "meta_title"
+                    )->translateLabel()
                 ),
                 ...multiLangInput(
-                    Filament\Forms\Components\Textarea::make("meta_description")
-                        ->label("meta_description")
-                        ->translateLabel()
+                    Filament\Forms\Components\Textarea::make(
+                        "meta_description"
+                    )->translateLabel()
                 ),
                 Filament\Forms\Components\TagsInput::make("meta_keywords")
                     ->columnSpanFull()
-                    ->label("meta_keywords")
-                    ->placeholder(__("meta_keywords"))
-                    ->translateLabel(),
+                    ->translateLabel()
+                    ->placeholder(__("meta_keywords")),
             ])
             ->columns(2);
     }
@@ -198,5 +200,27 @@ if (!function_exists("testMail")) {
     function testMail(\Illuminate\Mail\Mailable $mailable)
     {
         return $mailable->toMail((object) [])->render();
+    }
+}
+
+if (!function_exists("sortOrderInput")) {
+    function sortOrderInput(string $model): Filament\Forms\Components\TextInput
+    {
+        return Filament\Forms\Components\TextInput::make("sort_order")
+            ->translateLabel()
+            ->numeric()
+            ->default(fn() => $model::max("sort_order") + 1)
+            ->suffixAction(
+                Filament\Forms\Components\Actions\Action::make(
+                    "latestSortOrder"
+                )
+                    ->icon("heroicon-m-wrench-screwdriver")
+                    ->label(__("SetToLatest"))
+                    ->action(function (Filament\Forms\Set $set, $state) use (
+                        $model
+                    ) {
+                        $set("sort_order", $model::max("sort_order") + 1);
+                    })
+            );
     }
 }

@@ -13,7 +13,7 @@ return new class extends Migration {
         Schema::create("categories", function (Blueprint $table) {
             $table->uid();
             $table->json("title");
-            $table->json("description");
+            $table->json("description")->nullable();
             $table->string("slug")->nullable();
             $table->boolean("is_main")->default(false);
             $table->json("image")->nullable();

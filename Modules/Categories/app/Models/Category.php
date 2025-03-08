@@ -42,8 +42,6 @@ class Category extends Model
 
     protected function casts(): array
     {
-        return [
-            "is_main" => "boolean",
-        ];
+        return ["is_main" => "boolean"];
     }
 }
