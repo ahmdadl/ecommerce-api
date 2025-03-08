@@ -1,21 +1,21 @@
 <?php
 
-namespace Modules\Categories\Filament\Resources;
+namespace Modules\Brands\Filament\Resources;
 
-use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
-use Filament\Tables\Enums\FiltersLayout;
-use Modules\Categories\Filament\Resources\CategoryResource\Pages;
+use Modules\Brands\Filament\Resources\BrandResource\Pages;
+use Modules\Brands\Filament\Resources\BrandResource\RelationManagers;
+use Modules\Brands\Models\Brand;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Support\Enums\MaxWidth;
 use Filament\Tables;
+use Filament\Tables\Enums\FiltersLayout;
 use Filament\Tables\Table;
-use Modules\Categories\Models\Category;
+use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 
-class CategoryResource extends Resource implements HasShieldPermissions
+class BrandResource extends Resource implements HasShieldPermissions
 {
-    protected static ?string $model = Category::class;
+    protected static ?string $model = Brand::class;
 
     protected static ?string $navigationIcon = "heroicon-o-rectangle-stack";
 
@@ -27,7 +27,7 @@ class CategoryResource extends Resource implements HasShieldPermissions
     public static function form(Form $form): Form
     {
         return $form->schema([
-            Forms\Components\Tabs::make("categoryDetails")
+            Forms\Components\Tabs::make("brandDetails")
                 ->translateLabel()
                 ->tabs([
                     Forms\Components\Tabs\Tab::make("content")
@@ -234,9 +234,9 @@ class CategoryResource extends Resource implements HasShieldPermissions
     public static function getPages(): array
     {
         return [
-            "index" => Pages\ListCategories::route("/"),
-            "create" => Pages\CreateCategory::route("/create"),
-            "edit" => Pages\EditCategory::route("/{record}/edit"),
+            "index" => Pages\ListBrands::route("/"),
+            "create" => Pages\CreateBrand::route("/create"),
+            "edit" => Pages\EditBrand::route("/{record}/edit"),
         ];
     }
 
