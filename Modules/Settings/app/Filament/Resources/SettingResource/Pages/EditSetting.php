@@ -5,6 +5,9 @@ namespace Modules\Settings\Filament\Resources\SettingResource\Pages;
 use Modules\Settings\Filament\Resources\SettingResource;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
+use Illuminate\Support\Facades\Cache;
+use Modules\Settings\Models\Setting;
+use Modules\Settings\Utils\SettingUtils;
 
 class EditSetting extends EditRecord
 {
@@ -27,5 +30,11 @@ class EditSetting extends EditRecord
         }
 
         $this->form->fill($this->record->toArray());
+    }
+
+    protected function afterSave(): void
+    {
+        // revalidate and recache
+        SettingUtils::revalidateCachedSettings();
     }
 }

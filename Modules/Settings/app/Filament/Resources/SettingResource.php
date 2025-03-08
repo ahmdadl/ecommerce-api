@@ -29,23 +29,28 @@ class SettingResource extends Resource
                         Forms\Components\Tabs\Tab::make("general")
                             ->translateLabel()
                             ->schema([
-                                Forms\Components\TextInput::make(
-                                    "data.general.name"
-                                )
-                                    ->label(__("SiteName"))
-                                    ->required()
-                                    ->maxLength(255),
-                                Forms\Components\Textarea::make(
-                                    "data.general.description"
-                                )
-                                    ->label(__("SiteDescription"))
-                                    ->maxLength(500),
+                                ...multiLangInput(
+                                    Forms\Components\TextInput::make(
+                                        "data.general.name"
+                                    )
+                                        ->label(__("SiteName"))
+                                        ->required()
+                                        ->maxLength(255)
+                                ),
+                                ...multiLangInput(
+                                    Forms\Components\Textarea::make(
+                                        "data.general.description"
+                                    )
+                                        ->label(__("SiteDescription"))
+                                        ->maxLength(500)
+                                ),
                                 Forms\Components\Toggle::make(
                                     "data.general.maintenance_mode"
                                 )
                                     ->label(__("MaintenanceMode"))
                                     ->default(false),
-                            ]),
+                            ])
+                            ->columns(2),
                         Forms\Components\Tabs\Tab::make("contact")
                             ->translateLabel()
                             ->schema([
@@ -100,17 +105,5 @@ class SettingResource extends Resource
     public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
     {
         return parent::getEloquentQuery()->where("id", 1); // Always use the first record
-    }
-
-    protected function afterSave(): void
-    {
-        // Clear the specific cache key used for settings
-        Cache::forget("settings");
-
-        // recache the settings
-        Cache::rememberForever(
-            "settings",
-            fn() => \Modules\Settings\Models\Setting::getInstance()->data
-        );
     }
 }

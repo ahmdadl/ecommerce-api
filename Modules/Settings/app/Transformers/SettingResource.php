@@ -15,23 +15,6 @@ class SettingResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        // Ensure the resource is the Setting model instance
-        if (!$this->resource) {
-            return [];
-        }
-
-        // Extract the data column
-        $data = $this->data ?? [];
-
-        // Transform each group using value objects
-        $generalSettings = GeneralSettings::fromArray($data["general"] ?? []);
-        $socialSettings = SocialSettings::fromArray($data["social"] ?? []);
-        $contactSettings = ContactSettings::fromArray($data["contact"] ?? []);
-
-        return [
-            "general" => $generalSettings->toArray(),
-            "social" => $socialSettings->toArray(),
-            "contact" => $contactSettings->toArray(),
-        ];
+        return settings();
     }
 }

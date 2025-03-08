@@ -13,8 +13,8 @@ class GeneralSettings
     public static function fromArray(array $data): self
     {
         return new self(
-            name: $data["name"] ?? "Application Name",
-            description: $data["description"] ?? "",
+            name: $data["name"][app()->getLocale()] ?? "Application Name",
+            description: $data["description"][app()->getLocale()] ?? "",
             maintenanceMode: (bool) $data["maintenance_mode"] ?? false
         );
     }

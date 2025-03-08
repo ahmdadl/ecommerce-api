@@ -3,6 +3,7 @@
 namespace Modules\Settings\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Translatable\HasTranslations;
 
 class Setting extends Model
 {
