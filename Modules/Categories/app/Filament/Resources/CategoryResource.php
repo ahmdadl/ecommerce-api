@@ -2,6 +2,7 @@
 
 namespace Modules\Categories\Filament\Resources;
 
+use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 use Filament\Tables\Enums\FiltersLayout;
 use Modules\Categories\Filament\Resources\CategoryResource\Pages;
 use Filament\Forms;
@@ -11,11 +12,16 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Modules\Categories\Models\Category;
 
-class CategoryResource extends Resource
+class CategoryResource extends Resource implements HasShieldPermissions
 {
     protected static ?string $model = Category::class;
 
     protected static ?string $navigationIcon = "heroicon-o-rectangle-stack";
+
+    public static function getNavigationBadge(): ?string
+    {
+        return (string) static::$model::count();
+    }
 
     public static function form(Form $form): Form
     {
@@ -230,5 +236,10 @@ class CategoryResource extends Resource
             "create" => Pages\CreateCategory::route("/create"),
             "edit" => Pages\EditCategory::route("/{record}/edit"),
         ];
+    }
+
+    public static function getPermissionPrefixes(): array
+    {
+        return ["view", "create", "update", "delete", "restore", "replicate"];
     }
 }
