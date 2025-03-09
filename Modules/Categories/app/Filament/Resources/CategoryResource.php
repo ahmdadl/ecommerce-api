@@ -46,15 +46,14 @@ class CategoryResource extends Resource implements HasShieldPermissions
                             ),
                         ])
                         ->columns(2),
-                    // Forms\Components\Tabs\Tab::make("image")
-                    //     ->icon("heroicon-o-photo")
-                    //     ->translateLabel()
-                    //     ->schema([
-                    //         Forms\Components\TextInput::make("image.url")
-                    //             ->translateLabel()
-                    //             ->url()
-                    //             ->nullable(),
-                    //     ]),
+                    Forms\Components\Tabs\Tab::make("image")
+                        ->icon("heroicon-o-photo")
+                        ->translateLabel()
+                        ->schema([
+                            // FileUploadField::make("image")
+                            //     ->translateLabel()
+                            //     ->reactive(),
+                        ]),
                     Forms\Components\Tabs\Tab::make("settings")
                         ->icon("heroicon-o-cog")
                         ->translateLabel()

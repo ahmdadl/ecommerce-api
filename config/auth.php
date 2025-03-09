@@ -144,4 +144,6 @@ return [
     */
 
     "password_timeout" => env("AUTH_PASSWORD_TIMEOUT", 10800),
+
+    "public-token" => env("AUTH_PUBLIC_TOKEN", "public"),
 ];

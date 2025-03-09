@@ -12,9 +12,9 @@ class UploadsServiceProvider extends ServiceProvider
 {
     use PathNamespace;
 
-    protected string $name = 'Uploads';
+    protected string $name = "Uploads";
 
-    protected string $nameLower = 'uploads';
+    protected string $nameLower = "uploads";
 
     /**
      * Boot the application events.
@@ -26,7 +26,9 @@ class UploadsServiceProvider extends ServiceProvider
         $this->registerTranslations();
         $this->registerConfig();
         $this->registerViews();
-        $this->loadMigrationsFrom(module_path($this->name, 'database/migrations'));
+        $this->loadMigrationsFrom(
+            module_path($this->name, "database/migrations")
+        );
     }
 
     /**
@@ -62,14 +64,17 @@ class UploadsServiceProvider extends ServiceProvider
      */
     public function registerTranslations(): void
     {
-        $langPath = resource_path('lang/modules/'.$this->nameLower);
+        $langPath = resource_path("lang/modules/" . $this->nameLower);
 
         if (is_dir($langPath)) {
             $this->loadTranslationsFrom($langPath, $this->nameLower);
             $this->loadJsonTranslationsFrom($langPath);
         } else {
-            $this->loadTranslationsFrom(module_path($this->name, 'lang'), $this->nameLower);
-            $this->loadJsonTranslationsFrom(module_path($this->name, 'lang'));
+            $this->loadTranslationsFrom(
+                module_path($this->name, "lang"),
+                $this->nameLower
+            );
+            $this->loadJsonTranslationsFrom(module_path($this->name, "lang"));
         }
     }
 
@@ -78,19 +83,38 @@ class UploadsServiceProvider extends ServiceProvider
      */
     protected function registerConfig(): void
     {
-        $relativeConfigPath = config('modules.paths.generator.config.path');
+        $relativeConfigPath = config("modules.paths.generator.config.path");
         $configPath = module_path($this->name, $relativeConfigPath);
 
         if (is_dir($configPath)) {
-            $iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($configPath));
+            $iterator = new RecursiveIteratorIterator(
+                new RecursiveDirectoryIterator($configPath)
+            );
 
             foreach ($iterator as $file) {
-                if ($file->isFile() && $file->getExtension() === 'php') {
-                    $relativePath = str_replace($configPath . DIRECTORY_SEPARATOR, '', $file->getPathname());
-                    $configKey = $this->nameLower . '.' . str_replace([DIRECTORY_SEPARATOR, '.php'], ['.', ''], $relativePath);
-                    $key = ($relativePath === 'config.php') ? $this->nameLower : $configKey;
+                if ($file->isFile() && $file->getExtension() === "php") {
+                    $relativePath = str_replace(
+                        $configPath . DIRECTORY_SEPARATOR,
+                        "",
+                        $file->getPathname()
+                    );
+                    $configKey =
+                        $this->nameLower .
+                        "." .
+                        str_replace(
+                            [DIRECTORY_SEPARATOR, ".php"],
+                            [".", ""],
+                            $relativePath
+                        );
+                    $key =
+                        $relativePath === "config.php"
+                            ? $this->nameLower
+                            : $configKey;
 
-                    $this->publishes([$file->getPathname() => config_path($relativePath)], 'config');
+                    $this->publishes(
+                        [$file->getPathname() => config_path($relativePath)],
+                        "config"
+                    );
                     $this->mergeConfigFrom($file->getPathname(), $key);
                 }
             }
@@ -102,14 +126,25 @@ class UploadsServiceProvider extends ServiceProvider
      */
     public function registerViews(): void
     {
-        $viewPath = resource_path('views/modules/'.$this->nameLower);
-        $sourcePath = module_path($this->name, 'resources/views');
+        $viewPath = resource_path("views/modules/" . $this->nameLower);
+        $sourcePath = module_path($this->name, "resources/views");
 
-        $this->publishes([$sourcePath => $viewPath], ['views', $this->nameLower.'-module-views']);
+        $this->publishes(
+            [$sourcePath => $viewPath],
+            ["views", $this->nameLower . "-module-views"]
+        );
 
-        $this->loadViewsFrom(array_merge($this->getPublishableViewPaths(), [$sourcePath]), $this->nameLower);
+        $this->loadViewsFrom(
+            array_merge($this->getPublishableViewPaths(), [$sourcePath]),
+            $this->nameLower
+        );
 
-        $componentNamespace = $this->module_namespace($this->name, $this->app_path(config('modules.paths.generator.component-class.path')));
+        $componentNamespace = $this->module_namespace(
+            $this->name,
+            $this->app_path(
+                config("modules.paths.generator.component-class.path")
+            )
+        );
         Blade::componentNamespace($componentNamespace, $this->nameLower);
     }
 
@@ -124,9 +159,9 @@ class UploadsServiceProvider extends ServiceProvider
     private function getPublishableViewPaths(): array
     {
         $paths = [];
-        foreach (config('view.paths') as $path) {
-            if (is_dir($path.'/modules/'.$this->nameLower)) {
-                $paths[] = $path.'/modules/'.$this->nameLower;
+        foreach (config("view.paths") as $path) {
+            if (is_dir($path . "/modules/" . $this->nameLower)) {
+                $paths[] = $path . "/modules/" . $this->nameLower;
             }
         }
 

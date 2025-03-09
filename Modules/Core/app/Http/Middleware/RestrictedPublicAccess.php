@@ -13,7 +13,7 @@ class RestrictedPublicAccess
     public function handle(Request $request, Closure $next)
     {
         $secret = $request->header("X-PUBLIC-TOKEN");
-        $validSecret = env("APP_PUBLIC_TOKEN", "your-secret-key");
+        $validSecret = env("AUTH_PUBLIC_TOKEN", "your-secret-key");
 
         if ($secret !== $validSecret) {
             return api()->unauthorized("Invalid token");
