@@ -16,7 +16,7 @@ return new class extends Migration {
             $table->json("description")->nullable();
             $table->string("slug")->nullable();
             $table->boolean("is_main")->default(false);
-            $table->json("image")->nullable();
+            $table->string("image")->nullable();
             $table->activeState();
             $table->sortOrder();
             $table->metaTags();

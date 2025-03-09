@@ -149,9 +149,9 @@ if (!function_exists("uploads_url")) {
     function uploads_url(?string $path = null): string
     {
         if (!$path) {
-            return url("storage/uploads");
+            return config("app.uploads_url");
         }
-        return url("storage/uploads/" . $path);
+        return config("app.uploads_url") . "/" . $path;
     }
 }
 

@@ -53,6 +53,10 @@ return [
 
     "url" => env("APP_URL", "http://localhost"),
 
+    "front_url" => env("FRONTEND_URL"),
+
+    "uploads_url" => env("APP_UPLOADS_URL"),
+
     /*
     |--------------------------------------------------------------------------
     | Application Timezone

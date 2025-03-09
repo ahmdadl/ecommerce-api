@@ -11,7 +11,10 @@ use Filament\Resources\Resource;
 use Filament\Support\Enums\MaxWidth;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\File;
 use Modules\Categories\Models\Category;
+use Modules\Uploads\Actions\StoreUploadAction;
 
 class CategoryResource extends Resource implements HasShieldPermissions
 {
@@ -50,9 +53,36 @@ class CategoryResource extends Resource implements HasShieldPermissions
                         ->icon("heroicon-o-photo")
                         ->translateLabel()
                         ->schema([
-                            // FileUploadField::make("image")
-                            //     ->translateLabel()
-                            //     ->reactive(),
+                            Forms\Components\FileUpload::make("image")
+                                ->translateLabel()
+                                ->image()
+                                ->maxSize(1 * 1024)
+                                ->disk("public")
+                                ->helperText("Maximum file size: 1MB.")
+                                ->storeFiles(false)
+                                ->dehydrateStateUsing(function ($state) {
+                                    if (is_array($state)) {
+                                        /** @var \Livewire\Features\SupportFileUploads\TemporaryUploadedFile $file */
+                                        $file = $state[array_key_first($state)];
+
+                                        $action = new StoreUploadAction();
+
+                                        $fileRecord = $action->handle(
+                                            new UploadedFile(
+                                                $file->path(),
+                                                $file->getClientOriginalName(),
+                                                $file->getMimeType()
+                                            )
+                                        );
+
+                                        // delete temp file
+                                        $file->delete();
+
+                                        return $fileRecord->id;
+                                    }
+
+                                    return null;
+                                }),
                         ]),
                     Forms\Components\Tabs\Tab::make("settings")
                         ->icon("heroicon-o-cog")
@@ -81,6 +111,15 @@ class CategoryResource extends Resource implements HasShieldPermissions
                     ->label("ID")
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\ImageColumn::make("image")
+                    ->translateLabel()
+                    ->checkFileExistence(false)
+                    ->getStateUsing(
+                        fn($record): ?string => $record->image
+                            ? uploads_url($record->image)
+                            : null
+                    )
+                    ->circular(),
                 Tables\Columns\TextColumn::make("title")
                     ->translateLabel()
                     ->searchable()
