@@ -62,6 +62,7 @@ class AdminPanelProvider extends PanelProvider
             ->authMiddleware([Authenticate::class])
             ->plugins([
                 ModulesPlugin::make(),
+
                 \BezhanSalleh\FilamentShield\FilamentShieldPlugin::make()
                     ->gridColumns([
                         "default" => 1,

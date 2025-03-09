@@ -12,6 +12,7 @@ use Filament\Tables;
 use Filament\Tables\Enums\FiltersLayout;
 use Filament\Tables\Table;
 use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
+use Modules\Core\Utils\FilamentUtils;
 
 class BrandResource extends Resource implements HasShieldPermissions
 {
@@ -46,15 +47,23 @@ class BrandResource extends Resource implements HasShieldPermissions
                             ),
                         ])
                         ->columns(2),
-                    // Forms\Components\Tabs\Tab::make("image")
-                    //     ->icon("heroicon-o-photo")
-                    //     ->translateLabel()
-                    //     ->schema([
-                    //         Forms\Components\TextInput::make("image.url")
-                    //             ->translateLabel()
-                    //             ->url()
-                    //             ->nullable(),
-                    //     ]),
+                    Forms\Components\Tabs\Tab::make("image")
+                        ->icon("heroicon-o-photo")
+                        ->translateLabel()
+                        ->schema([
+                            Forms\Components\FileUpload::make("image")
+                                ->translateLabel()
+                                ->image()
+                                ->maxSize(1 * 1024)
+                                ->disk("public")
+                                ->helperText("Maximum file size: 1MB.")
+                                ->storeFiles(false)
+                                ->dehydrateStateUsing(
+                                    fn(
+                                        $state
+                                    ) => FilamentUtils::storeSingleFile($state)
+                                ),
+                        ]),
                     Forms\Components\Tabs\Tab::make("settings")
                         ->icon("heroicon-o-cog")
                         ->translateLabel()
@@ -82,6 +91,15 @@ class BrandResource extends Resource implements HasShieldPermissions
                     ->label("ID")
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\ImageColumn::make("image")
+                    ->translateLabel()
+                    ->checkFileExistence(false)
+                    ->getStateUsing(
+                        fn($record): ?string => $record->image
+                            ? uploads_url($record->image)
+                            : null
+                    )
+                    ->circular(),
                 Tables\Columns\TextColumn::make("title")
                     ->translateLabel()
                     ->searchable()
