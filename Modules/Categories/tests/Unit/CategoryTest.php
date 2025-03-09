@@ -1,6 +1,7 @@
 <?php
 
 use Modules\Categories\Models\Category;
+use Modules\Products\Models\Product;
 
 test("category_have_translated_attrs", function () {
     $category = Category::factory()->create([
@@ -31,4 +32,12 @@ test("category_have_slug", function () {
     ]);
 
     expect($category->slug)->toBe("english-title");
+});
+
+test('category_have_products', function () {
+    $category = Category::factory()->create();
+
+    $products = Product::factory()->for($category)->count(5)->create();
+
+    expect($category->products->count())->toBe(5);
 });
