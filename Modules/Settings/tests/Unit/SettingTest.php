@@ -12,7 +12,15 @@ test("settings_have_groups", function () {
         description: ($description = fake()->sentence),
         maintenanceMode: ($maintenanceMode = false)
     );
-    $settings->updateGroup("general", $generalSettings->toArray());
+    $settings->updateGroup("general", [
+        "name" => [
+            "en" => $name,
+        ],
+        "description" => [
+            "en" => $description,
+        ],
+        "maintenanceMode" => $maintenanceMode,
+    ]);
 
     // Get the settings instance
     $settings = Setting::getInstance();
@@ -44,7 +52,15 @@ test("settings_have_transformer", function () {
         description: ($description = fake()->sentence),
         maintenanceMode: ($maintenanceMode = false)
     );
-    $settings->updateGroup("general", $generalSettings->toArray());
+    $settings->updateGroup("general", [
+        "name" => [
+            "en" => $name,
+        ],
+        "description" => [
+            "en" => $description,
+        ],
+        "maintenanceMode" => $maintenanceMode,
+    ]);
 
     // Transform the settings instance
     $resource = new \Modules\Settings\Transformers\SettingResource($settings);
@@ -52,7 +68,7 @@ test("settings_have_transformer", function () {
     // Get the transformed data
     $data = $resource->toArray(request());
 
-    expect($data["general"]["name"])->toBe($name);
-    expect($data["general"]["description"])->toBe($description);
-    expect($data["general"]["maintenanceMode"])->toBe($maintenanceMode);
+    expect($data["general"]->name)->toBe($name);
+    expect($data["general"]->description)->toBe($description);
+    expect($data["general"]->maintenanceMode)->toBe($maintenanceMode);
 });
