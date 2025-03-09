@@ -1,11 +1,11 @@
 <?php
 
-namespace Modules\Categories\Transformers;
+namespace Modules\Brands\Transformers;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class CategoryResource extends JsonResource
+class BrandResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -24,8 +24,6 @@ class CategoryResource extends JsonResource
             "meta_title" => $this->meta_title,
             "meta_description" => $this->meta_description,
             "meta_keywords" => $this->meta_keywords,
-            // "created_at" => $this->created_at,
-            // "updated_at" => $this->updated_at,
         ];
     }
 }

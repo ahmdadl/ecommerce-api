@@ -103,6 +103,14 @@ class Product extends Model
         );
     }
 
+    /**
+     * product has stock
+     */
+    public function hasStock(): Attribute
+    {
+        return Attribute::make(get: fn() => $this->stock > 0);
+    }
+
     /** Relations */
 
     /**
