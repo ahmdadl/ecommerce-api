@@ -26,6 +26,15 @@ class CouponResource extends Resource
 
     protected static ?string $navigationIcon = "heroicon-o-rectangle-stack";
 
+    public static function getNavigationBadge(): ?string
+    {
+        return (string) static::$model
+            ::active()
+            ->whereDate("starts_At", "<=", now())
+            ->whereDate("ends_at", ">=", now())
+            ->count();
+    }
+
     public static function form(Form $form): Form
     {
         return $form
