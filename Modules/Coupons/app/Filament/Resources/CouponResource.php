@@ -2,6 +2,7 @@
 
 namespace Modules\Coupons\Filament\Resources;
 
+use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 use Filament\Tables\Filters\SelectFilter;
 use Modules\Coupons\Filament\Resources\CouponResource\Pages;
 use Modules\Coupons\Filament\Resources\CouponResource\RelationManagers;
@@ -20,7 +21,7 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Modules\Coupons\Actions\ValidateCouponAction;
 use Modules\Coupons\Enums\CouponDiscountType;
 
-class CouponResource extends Resource
+class CouponResource extends Resource implements HasShieldPermissions
 {
     protected static ?string $model = Coupon::class;
 

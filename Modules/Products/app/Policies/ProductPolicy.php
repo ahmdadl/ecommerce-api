@@ -41,4 +41,20 @@ class ProductPolicy
     {
         return $user->can("delete_product");
     }
+
+    /**
+     * Determine whether the user can restore.
+     */
+    public function restore(User $user, Product $product): bool
+    {
+        return $user->can("restore_product");
+    }
+
+    /**
+     * Determine whether the user can replicate.
+     */
+    public function replicate(User $user, Product $product): bool
+    {
+        return $user->can("replicate_product");
+    }
 }
