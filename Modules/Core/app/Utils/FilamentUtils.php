@@ -13,22 +13,47 @@ class FilamentUtils
             /** @var \Livewire\Features\SupportFileUploads\TemporaryUploadedFile $file */
             $file = $state[array_key_first($state)];
 
-            $action = new StoreUploadAction();
-
-            $fileRecord = $action->handle(
-                new UploadedFile(
-                    $file->path(),
-                    $file->getClientOriginalName(),
-                    $file->getMimeType()
-                )
-            );
-
-            // delete temp file
-            $file->delete();
-
-            return $fileRecord->id;
+            return static::storeTempFile($file);
         }
 
         return null;
+    }
+
+    /**
+     * store multiple file
+     */
+    public static function storeMultipleFile($state): ?array
+    {
+        if (!is_array($state)) {
+            return null;
+        }
+
+        $files = $state;
+
+        return array_map(function ($file) {
+            return static::storeTempFile($file);
+        }, $files);
+    }
+
+    /**
+     * store temp file
+     */
+    public static function storeTempFile(
+        \Livewire\Features\SupportFileUploads\TemporaryUploadedFile $file
+    ): string {
+        $action = new StoreUploadAction();
+
+        $fileRecord = $action->handle(
+            new UploadedFile(
+                $file->path(),
+                $file->getClientOriginalName(),
+                $file->getMimeType()
+            )
+        );
+
+        // delete temp file
+        $file->delete();
+
+        return $fileRecord->id;
     }
 }

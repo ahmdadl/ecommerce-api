@@ -37,7 +37,7 @@ if (!function_exists("settings")) {
 
 if (!function_exists("multiLangInput")) {
     function multiLangInput(
-        Filament\Forms\Components\TextInput|Filament\Forms\Components\Textarea $input
+        Filament\Forms\Components\TextInput|Filament\Forms\Components\Textarea|Filament\Forms\Components\RichEditor $input
     ) {
         $clone = clone $input;
         $name = $input->getName();

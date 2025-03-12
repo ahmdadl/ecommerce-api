@@ -19,6 +19,8 @@ class CategoryResource extends Resource implements HasShieldPermissions
 
     protected static ?string $navigationIcon = "heroicon-o-rectangle-stack";
 
+    protected static ?string $navigationGroup = "Catalog";
+
     public static function getNavigationBadge(): ?string
     {
         return (string) static::$model::count();
