@@ -47,5 +47,20 @@
     "settings": "Settings",
     "meta": "Meta",
     "meta_keywords": "Meta Keywords",
-    "SetToLatest": "Set to Latest"
+    "SetToLatest": "Set to Latest",
+    "Code": "Code",
+    "Starts at": "Starts At",
+    "Ends at": "Ends At",
+    "Discount type": "Discount Type",
+    "Percentage": "Percentage",
+    "Fixed": "Fixed",
+    "Amount": "Amount",
+    "Value": "Value",
+    "Max discount": "Max Discount",
+    "Leave blank for no maximum discount limit.": "Leave blank for no maximum discount limit.",
+    "Currently Active": "Currently Active",
+    "is_used": "Is Used",
+    "can_be_used": "Can Be Used",
+    "active_dates": "Active Dates",
+    "validated": "Validated"
 }

@@ -92,7 +92,6 @@ if (!function_exists("activeToggler")) {
         return Filament\Tables\Filters\Filter::make("is_active")
             ->form([
                 Filament\Forms\Components\ToggleButtons::make("is_active")
-                    ->label("Active")
                     ->translateLabel()
                     ->grouped()
                     ->options([

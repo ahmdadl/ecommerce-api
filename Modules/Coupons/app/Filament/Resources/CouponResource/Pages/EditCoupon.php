@@ -1,14 +1,14 @@
 <?php
 
-namespace Modules\Products\Filament\Resources\ProductResource\Pages;
+namespace Modules\Coupons\Filament\Resources\CouponResource\Pages;
 
-use Modules\Products\Filament\Resources\ProductResource;
+use Modules\Coupons\Filament\Resources\CouponResource;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
 
-class EditProduct extends EditRecord
+class EditCoupon extends EditRecord
 {
-    protected static string $resource = ProductResource::class;
+    protected static string $resource = CouponResource::class;
 
     protected function getHeaderActions(): array
     {
