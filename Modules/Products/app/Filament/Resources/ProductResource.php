@@ -16,11 +16,6 @@ use Filament\Tables\Table;
 use Filament\Tables;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\SelectFilter;
-use Filament\Tables\Filters\TernaryFilter;
-use Modules\Brands\Filament\Resources\BrandResource;
-use Modules\Brands\Models\Brand;
-use Modules\Categories\Filament\Resources\CategoryResource;
-use Modules\Categories\Models\Category;
 
 class ProductResource extends Resource
 {
