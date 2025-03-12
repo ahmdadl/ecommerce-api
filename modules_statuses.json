@@ -6,5 +6,6 @@
     "Categories": true,
     "Brands": true,
     "Uploads": true,
-    "Products": true
+    "Products": true,
+    "Coupons": true
 }
