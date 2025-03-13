@@ -19,4 +19,15 @@ class EditCategory extends EditRecord
     {
         return $this->getResource()::getUrl("index"); // Redirect to resource index
     }
+
+    protected function mutateFormDataBeforeFill(array $data): array
+    {
+        $data["media"] = basename($data["media"]);
+
+        $data["media"] = \Modules\Uploads\Models\Upload::find(
+            $data["media"]
+        )?->path;
+
+        return $data;
+    }
 }

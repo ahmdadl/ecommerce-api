@@ -62,5 +62,7 @@
     "is_used": "Is Used",
     "can_be_used": "Can Be Used",
     "active_dates": "Active Dates",
-    "validated": "Validated"
+    "validated": "Validated",
+    "Action": "Action",
+    "Actionable": "Actionable"
 }

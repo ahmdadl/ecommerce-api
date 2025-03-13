@@ -4,6 +4,7 @@ namespace Modules\Core\Utils;
 
 use Illuminate\Http\UploadedFile;
 use Modules\Uploads\Actions\StoreUploadAction;
+use Modules\Uploads\Models\Upload;
 
 class FilamentUtils
 {
@@ -15,6 +16,10 @@ class FilamentUtils
 
         /** @var \Livewire\Features\SupportFileUploads\TemporaryUploadedFile $file */
         $file = $state[array_key_first($state)];
+
+        if (is_string($file)) {
+            return Upload::firstWhere("path", $file)?->id;
+        }
 
         return static::storeTempFile($file);
     }

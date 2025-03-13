@@ -96,11 +96,6 @@ class BrandResource extends Resource implements HasShieldPermissions
                 Tables\Columns\ImageColumn::make("image")
                     ->translateLabel()
                     ->checkFileExistence(false)
-                    ->getStateUsing(
-                        fn($record): ?string => $record->image
-                            ? uploads_url($record->image)
-                            : null
-                    )
                     ->circular(),
                 Tables\Columns\TextColumn::make("title")
                     ->translateLabel()

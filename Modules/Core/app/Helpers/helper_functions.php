@@ -173,7 +173,7 @@ if (!function_exists("sendMail")) {
 }
 
 if (!function_exists("enumOptions")) {
-    function enumOptions(BackedEnum|UnitEnum $enum): array
+    function enumOptions(mixed $enum): array
     {
         $options = [];
         foreach ($enum::cases() as $case) {

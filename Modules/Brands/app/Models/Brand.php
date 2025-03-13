@@ -14,6 +14,7 @@ use Modules\Core\Models\Scopes\HasActiveState;
 use Modules\Core\Models\Scopes\HasMetaTags;
 use Modules\Core\Models\Scopes\HasSortOrderAttribute;
 use Modules\Products\Models\Product;
+use Modules\Uploads\Casts\UploadablePathCast;
 use Spatie\Translatable\HasTranslations;
 
 #[UseFactory(BrandFactory::class)]
@@ -45,7 +46,7 @@ class Brand extends Model
 
     protected function casts(): array
     {
-        return ["is_main" => "boolean"];
+        return ["is_main" => "boolean", "image" => UploadablePathCast::class];
     }
 
     /**
