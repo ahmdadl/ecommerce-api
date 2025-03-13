@@ -3,6 +3,7 @@
 namespace Modules\Users\Actions\Profile;
 
 use Illuminate\Support\Facades\Hash;
+use Modules\Users\Models\User;
 
 class UpdatePasswordAction
 {
@@ -11,6 +12,7 @@ class UpdatePasswordAction
      */
     public function handle(array $data): void
     {
+        /** @var User $user */
         $user = user();
 
         $user->update([

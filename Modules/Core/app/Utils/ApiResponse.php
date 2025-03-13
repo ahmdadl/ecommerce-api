@@ -47,6 +47,11 @@ final class ApiResponse
 
     /**
      * Return a paginated JSON response.
+     *
+     * @template TModel of \Illuminate\Database\Eloquent\Model
+     * @param \Illuminate\Pagination\LengthAwarePaginator<TModel> $paginator
+     * @param ?string $message
+     * @return JsonResponse
      */
     public function paginate(
         LengthAwarePaginator $paginator,

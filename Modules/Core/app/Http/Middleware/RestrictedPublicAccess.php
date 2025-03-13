@@ -10,10 +10,10 @@ class RestrictedPublicAccess
     /**
      * Handle an incoming request.
      */
-    public function handle(Request $request, Closure $next)
+    public function handle(Request $request, Closure $next): mixed
     {
         $secret = $request->header("X-PUBLIC-TOKEN");
-        $validSecret = env("AUTH_PUBLIC_TOKEN", "your-secret-key");
+        $validSecret = config("auth.public-token");
 
         if ($secret !== $validSecret) {
             return api()->unauthorized("Invalid token");

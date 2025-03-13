@@ -8,6 +8,7 @@ class SettingUtils
 {
     public static function getGroupedSettings(): array
     {
+        /** @var array $settings */
         $settings = Setting::getInstance()->data;
 
         $groups = [
@@ -25,11 +26,16 @@ class SettingUtils
         return $settings;
     }
 
+    /**
+     * get cached settings
+     */
     public static function getCachedSettings(): array
     {
         $currentLocale = app()->getLocale();
 
-        foreach (config("app.supported_locales") as $locale) {
+        /** @var array<string> $locales */
+        $locales = config("app.supported_locales", []);
+        foreach ($locales as $locale) {
             app()->setLocale($locale);
             cache()->rememberForever(
                 "settings_$locale",
@@ -39,14 +45,17 @@ class SettingUtils
 
         app()->setLocale($currentLocale);
 
-        return cache("settings_" . $currentLocale);
+        /** @var array */
+        return cache("settings_" . $currentLocale, []);
     }
 
     public static function revalidateCachedSettings(): void
     {
         $currentLocale = app()->getLocale();
 
-        foreach (config("app.supported_locales") as $locale) {
+        /** @var array<string> $locales */
+        $locales = config("app.supported_locales", []);
+        foreach ($locales as $locale) {
             app()->setLocale($locale);
             cache()->forget("settings_$locale");
             self::getCachedSettings();

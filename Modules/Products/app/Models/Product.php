@@ -21,6 +21,7 @@ use Spatie\Translatable\HasTranslations;
 #[UseFactory(ProductFactory::class)]
 class Product extends Model
 {
+    /** @use HasFactory<ProductFactory> */
     use HasFactory,
         HasUlids,
         HasActiveState,
@@ -31,8 +32,10 @@ class Product extends Model
 
     /**
      * translatable fields
+     *
+     * @var array<int, string>
      */
-    public $translatable = ["title", "description"];
+    public array $translatable = ["title", "description"];
 
     /**
      * Return the sluggable configuration array for this model.
@@ -75,6 +78,8 @@ class Product extends Model
 
     /**
      * product with discount
+     *
+     * @param  Builder<Product>  $query
      */
     public function scopeHasDiscount(Builder $query): void
     {
@@ -85,6 +90,8 @@ class Product extends Model
 
     /**
      * product has discount
+     *
+     * @return Attribute<float, void>
      */
     public function isDiscounted(): Attribute
     {
@@ -93,6 +100,8 @@ class Product extends Model
 
     /**
      * product discounted price
+     *
+     * @return Attribute<float, void>
      */
     public function discountedPrice(): Attribute
     {
@@ -105,6 +114,8 @@ class Product extends Model
 
     /**
      * product has stock
+     *
+     * @return Attribute<int, void>
      */
     public function hasStock(): Attribute
     {
@@ -115,6 +126,8 @@ class Product extends Model
 
     /**
      * parent category
+     *
+     * @return BelongsTo<Category, $this>
      */
     public function category(): BelongsTo
     {
@@ -123,9 +136,11 @@ class Product extends Model
 
     /**
      * parent brand
+     *
+     * @return BelongsTo<Brand, $this>
      */
     public function brand(): BelongsTo
     {
-        return $this->belongsTo(Brand::class);
+        return $this->belongsTo(related: Brand::class);
     }
 }

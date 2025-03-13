@@ -19,6 +19,7 @@ use Spatie\Translatable\HasTranslations;
 #[UseFactory(BrandFactory::class)]
 class Brand extends Model
 {
+    /** @use HasFactory<BrandFactory> */
     use HasFactory,
         HasUlids,
         HasActiveState,
@@ -28,7 +29,7 @@ class Brand extends Model
         Sluggable,
         SoftDeletes;
 
-    public $translatable = ["title", "description"];
+    public array $translatable = ["title", "description"];
 
     /**
      * Return the sluggable configuration array for this model.
@@ -49,6 +50,8 @@ class Brand extends Model
 
     /**
      * products relation
+     *
+     * @return HasMany<Product, $this>
      */
     public function products(): HasMany
     {

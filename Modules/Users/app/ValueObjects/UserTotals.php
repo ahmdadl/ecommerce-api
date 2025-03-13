@@ -22,8 +22,6 @@ final class UserTotals implements Wireable
 
     /**
      * Convert the object to an array
-     *
-     * @return array{cartItems: int, comparedItems: int, orders: int, totalPurchased: int, wishlistItems: int}
      */
     public function toArray(): array
     {
@@ -38,8 +36,6 @@ final class UserTotals implements Wireable
 
     /**
      * Create a Totals object from an array
-     *
-     * @param  array{cartItems: int, comparedItems: int, orders: int, totalPurchased: int, wishlistItems: int}  $data
      */
     public static function fromArray(array $data): self
     {
@@ -84,10 +80,10 @@ final class UserTotals implements Wireable
     /**
      * turn object to json string
      *
-     * @return bool|string
+     * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
-        return json_encode($this->toArray());
+        return (string) json_encode($this->toArray());
     }
 }

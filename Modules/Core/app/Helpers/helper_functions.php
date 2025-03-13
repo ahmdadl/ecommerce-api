@@ -16,14 +16,15 @@ if (!function_exists("user")) {
     /**
      * get current user
      */
-    function user(?string $guard = null): ?\Modules\Users\Models\User
-    {
+    function user(
+        ?string $guard = null
+    ): Modules\Guests\Models\Guest|Modules\Users\Models\User|null {
         return auth()->guard($guard)->user();
     }
 }
 
 if (!function_exists("settings")) {
-    function settings(string $group = null)
+    function settings(string $group = null): mixed
     {
         $settings = \Modules\Settings\Utils\SettingUtils::getCachedSettings();
 
@@ -38,12 +39,14 @@ if (!function_exists("settings")) {
 if (!function_exists("multiLangInput")) {
     function multiLangInput(
         Filament\Forms\Components\TextInput|Filament\Forms\Components\Textarea|Filament\Forms\Components\RichEditor $input
-    ) {
+    ): array {
         $clone = clone $input;
         $name = $input->getName();
         $label = $input->getLabel();
 
+        // @phpstan-ignore-next-line
         $enLabel = __("english_label", compact("label"));
+        // @phpstan-ignore-next-line
         $arLabel = __("arabic_label", compact("label"));
 
         return [
@@ -87,7 +90,7 @@ if (!function_exists("metaTabInputs")) {
 }
 
 if (!function_exists("activeToggler")) {
-    function activeToggler()
+    function activeToggler(): mixed
     {
         return Filament\Tables\Filters\Filter::make("is_active")
             ->form([
@@ -147,10 +150,13 @@ if (!function_exists("activeToggler")) {
 if (!function_exists("uploads_url")) {
     function uploads_url(?string $path = null): string
     {
+        /** @var string $uploadsUrl */
+        $uploadsUrl = config("app.uploads_url", "");
+
         if (!$path) {
-            return config("app.uploads_url");
+            return $uploadsUrl;
         }
-        return config("app.uploads_url") . "/" . $path;
+        return $uploadsUrl . "/" . $path;
     }
 }
 
@@ -158,7 +164,7 @@ if (!function_exists("sendMail")) {
     function sendMail(string $to, Illuminate\Mail\Mailable $mail): void
     {
         try {
-            \Mail::to($to)->send($mail);
+            Illuminate\Support\Facades\Mail::to($to)->send($mail);
         } catch (\Throwable $th) {
             logger()->error($th->getMessage());
             throw $th;
@@ -167,7 +173,7 @@ if (!function_exists("sendMail")) {
 }
 
 if (!function_exists("enumOptions")) {
-    function enumOptions($enum)
+    function enumOptions(BackedEnum|UnitEnum $enum): array
     {
         $options = [];
         foreach ($enum::cases() as $case) {
@@ -178,8 +184,9 @@ if (!function_exists("enumOptions")) {
 }
 
 if (!function_exists("testMail")) {
-    function testMail(\Illuminate\Mail\Mailable $mailable)
+    function testMail(\Illuminate\Mail\Mailable $mailable): mixed
     {
+        // @phpstan-ignore-next-line
         return $mailable->toMail((object) [])->render();
     }
 }

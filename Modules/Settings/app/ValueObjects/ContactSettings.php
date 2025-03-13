@@ -6,7 +6,7 @@ class ContactSettings
 {
     public function __construct(
         public readonly string $email,
-        public readonly array $phoneNumbers = [],
+        public readonly array $phoneNumbers,
         public readonly string $address,
         public readonly string $googleMapUrl
     ) {}
@@ -25,7 +25,7 @@ class ContactSettings
     {
         return [
             "email" => $this->email,
-            "phoneNumbers" => $this->phoneNumbers,
+            "phoneNumbers" => $this->phoneNumbers ?? [],
             "address" => $this->address,
             "googleMapUrl" => $this->googleMapUrl,
         ];

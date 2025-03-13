@@ -2,7 +2,7 @@
 
 namespace Modules\Coupons\Models;
 
-use Illuminate\Contracts\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Attributes\UseFactory;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Model;
@@ -15,6 +15,7 @@ use Modules\Coupons\Database\Factories\CouponFactory;
 #[UseFactory(CouponFactory::class)]
 class Coupon extends Model
 {
+    /** @use HasFactory<CouponFactory> */
     use HasFactory, HasUlids, HasActiveState, SoftDeletes;
 
     protected function casts(): array
@@ -31,9 +32,11 @@ class Coupon extends Model
 
     /**
      * find coupon by its code
+     *
+     * @param  Builder<Coupon>  $query
      */
-    public function scopeByCode($query, $code): Builder
+    public function scopeByCode(Builder $query, string $code): void
     {
-        return $query->where("code", $code);
+        $query->where("code", $code);
     }
 }

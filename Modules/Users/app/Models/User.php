@@ -88,9 +88,6 @@ class User extends Authenticatable
 
     /**
      * Find a user by the given credentials.
-     *
-     * @param  array<string, mixed>  $credentials
-     * @param  string|null  $guard
      */
     public static function attempt(
         array $credentials,

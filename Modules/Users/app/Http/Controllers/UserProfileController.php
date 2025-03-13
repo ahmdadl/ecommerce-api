@@ -18,7 +18,7 @@ class UserProfileController extends Controller
     public function updateProfile(
         UpdateProfileRequest $request,
         UpdateProfileAction $action
-    ) {
+    ): JsonResponse {
         $user = $action->handle($request->validated());
 
         return api()->record(new CustomerResource($user));

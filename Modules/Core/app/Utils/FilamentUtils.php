@@ -7,27 +7,28 @@ use Modules\Uploads\Actions\StoreUploadAction;
 
 class FilamentUtils
 {
-    public static function storeSingleFile($state): ?string
-    {
-        if (is_array($state)) {
-            /** @var \Livewire\Features\SupportFileUploads\TemporaryUploadedFile $file */
-            $file = $state[array_key_first($state)];
-
-            return static::storeTempFile($file);
-        }
-
-        return null;
-    }
-
-    /**
-     * store multiple file
-     */
-    public static function storeMultipleFile($state): ?array
+    public static function storeSingleFile(mixed $state): ?string
     {
         if (!is_array($state)) {
             return null;
         }
 
+        /** @var \Livewire\Features\SupportFileUploads\TemporaryUploadedFile $file */
+        $file = $state[array_key_first($state)];
+
+        return static::storeTempFile($file);
+    }
+
+    /**
+     * store multiple file
+     */
+    public static function storeMultipleFile(mixed $state): ?array
+    {
+        if (!is_array($state)) {
+            return null;
+        }
+
+        /** @var \Livewire\Features\SupportFileUploads\TemporaryUploadedFile[] $files */
         $files = $state;
 
         return array_map(function ($file) {
@@ -54,6 +55,7 @@ class FilamentUtils
         // delete temp file
         $file->delete();
 
+        // @phpstan-ignore-next-line
         return $fileRecord->id;
     }
 }

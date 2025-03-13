@@ -3,14 +3,16 @@
 namespace Modules\Products\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Modules\Products\Models\Product;
 
 class ProductsController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): JsonResponse
     {
         //
 
@@ -20,7 +22,7 @@ class ProductsController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request): JsonResponse
     {
         //
 
@@ -30,7 +32,7 @@ class ProductsController extends Controller
     /**
      * Show the specified resource.
      */
-    public function show($id)
+    public function show(Product $id): JsonResponse
     {
         //
 
@@ -40,7 +42,7 @@ class ProductsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Product $id): JsonResponse
     {
         //
 
@@ -50,10 +52,10 @@ class ProductsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function destroy(Product $id): JsonResponse
     {
         //
 
-        return response()->json([]);
+        return api()->success();
     }
 }

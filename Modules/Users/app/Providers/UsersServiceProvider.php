@@ -141,9 +141,9 @@ class UsersServiceProvider extends ServiceProvider
             $this->nameLower
         );
 
-        // @phpstan-ignore-next-line
         $componentNamespace = $this->module_namespace(
             $this->name,
+            // @phpstan-ignore-next-line
             $this->app_path(
                 config("modules.paths.generator.component-class.path")
             )

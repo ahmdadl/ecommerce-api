@@ -24,6 +24,7 @@ class UploadController extends Controller
             "file" => "required|file|mimes:png,jpg,jpeg,webp,pdf|max:3024", // 3MB
         ]);
 
+        // @phpstan-ignore-next-line
         $upload = $action->handle($request->file("file"));
 
         return api()->record(new UploadResource($upload));
@@ -38,6 +39,7 @@ class UploadController extends Controller
         ShowUploadAction $action
     ): mixed {
         try {
+            /** @var array{content: string, mime_type: string} */
             $result = $action->handle($upload);
 
             // Return the file content with the appropriate MIME type

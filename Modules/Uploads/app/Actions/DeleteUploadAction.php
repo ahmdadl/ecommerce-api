@@ -7,7 +7,7 @@ use Modules\Uploads\Models\Upload;
 
 class DeleteUploadAction
 {
-    public function handle(Upload $upload)
+    public function handle(Upload $upload): bool|null
     {
         Storage::disk("public")->delete($upload->path);
         return $upload->delete();

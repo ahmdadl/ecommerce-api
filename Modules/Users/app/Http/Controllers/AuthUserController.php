@@ -83,11 +83,4 @@ class AuthUserController extends Controller
 
         return api()->noContent();
     }
-
-    public function logout(Request $request): JsonResponse
-    {
-        $request->user()->currentAccessToken()->delete();
-
-        return api()->noContent();
-    }
 }

@@ -16,7 +16,9 @@ trait HasSortOrderAttribute
     {
         static::creating(function (Model $model) {
             if (empty($model->sort_order)) {
-                $model->sort_order = $model::max("sort_order") + 1;
+                /** @var int $maxSortOrder */
+                $maxSortOrder = $model::max("sort_order");
+                $model->sort_order = $maxSortOrder + 1;
             }
         });
     }

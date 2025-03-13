@@ -3,14 +3,16 @@
 namespace Modules\Categories\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Modules\Categories\Models\Category;
 
 class CategoriesController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): JsonResponse
     {
         //
 
@@ -20,7 +22,7 @@ class CategoriesController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request): JsonResponse
     {
         //
 
@@ -30,7 +32,7 @@ class CategoriesController extends Controller
     /**
      * Show the specified resource.
      */
-    public function show($id)
+    public function show(Category $id): JsonResponse
     {
         //
 
@@ -40,7 +42,7 @@ class CategoriesController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Category $id): JsonResponse
     {
         //
 
@@ -50,7 +52,7 @@ class CategoriesController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function destroy(Category $id): JsonResponse
     {
         //
 

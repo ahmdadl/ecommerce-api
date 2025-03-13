@@ -11,14 +11,16 @@ class ValidateCouponAction
         mixed $couponOrCode,
         float $totalPrice
     ): true|Throwable {
-        /** @var Coupon $coupon */
+        /** @var ?Coupon $coupon */
+        $coupon = null;
+
         if ($couponOrCode instanceof Coupon) {
             $coupon = $couponOrCode;
-        } else {
-            $coupon = Coupon::byCode($couponOrCode)->first();
+        } elseif (is_string($couponOrCode)) {
+            $coupon = Coupon::byCode((string) $couponOrCode)->first();
         }
 
-        if (!$coupon || !$coupon?->is_active) {
+        if (!$coupon || !$coupon->is_active) {
             throw new \Exception(__("coupons::t.invalid_coupon"));
         }
 

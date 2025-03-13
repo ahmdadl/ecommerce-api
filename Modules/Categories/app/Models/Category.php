@@ -19,6 +19,7 @@ use Spatie\Translatable\HasTranslations;
 #[UseFactory(CategoryFactory::class)]
 class Category extends Model
 {
+    /** @use HasFactory<CategoryFactory> */
     use HasFactory,
         HasUlids,
         HasActiveState,
@@ -31,7 +32,7 @@ class Category extends Model
     /**
      * translatable fields
      */
-    public $translatable = ["title", "description"];
+    public array $translatable = ["title", "description"];
 
     /**
      * Return the sluggable configuration array for this model.
@@ -55,6 +56,8 @@ class Category extends Model
 
     /**
      * products relation
+     *
+     * @return HasMany<Product, $this>
      */
     public function products(): HasMany
     {

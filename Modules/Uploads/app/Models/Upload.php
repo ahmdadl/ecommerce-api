@@ -12,11 +12,17 @@ use Modules\Uploads\Database\Factories\UploadFactory;
 #[UseFactory(UploadFactory::class)]
 class Upload extends Model
 {
+    /** @use HasFactory<UploadFactory> */
     use HasUlids, HasFactory;
 
+    /**
+     * get public url for file
+     * @return Attribute<string, void>
+     */
     public function url(): Attribute
     {
         return Attribute::make(
+            // @phpstan-ignore-next-line
             get: fn() => config("app.url") . "/uploads/" . $this->id
         );
     }

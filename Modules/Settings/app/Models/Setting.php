@@ -17,7 +17,7 @@ class Setting extends Model
     /**
      * Singleton-like access (assuming one row for global settings)
      */
-    public static function getInstance()
+    public static function getInstance(): Setting
     {
         return static::firstOrCreate(["id" => 1], ["data" => []]);
     }

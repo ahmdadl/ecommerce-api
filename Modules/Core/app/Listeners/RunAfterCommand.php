@@ -21,9 +21,11 @@ class RunAfterCommand
     public function handle(CommandFinished $event): void
     {
         if ($event->command === "module:make") {
+            // @phpstan-ignore-next-line
             $module = $event->input->getArgument("name");
 
             Artisan::call("module:filament:install", [
+                // @phpstan-ignore-next-line
                 "module" => $module[0],
                 "-n" => true,
             ]);

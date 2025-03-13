@@ -15,8 +15,9 @@ trait WireableValueObject
     /**
      * get from livewire wireable
      */
-    public static function fromLivewire($value): static
+    public static function fromLivewire(mixed $value): static
     {
+        // @phpstan-ignore-next-line
         return static::fromArray($value);
     }
 }

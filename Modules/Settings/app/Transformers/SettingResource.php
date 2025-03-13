@@ -15,6 +15,9 @@ class SettingResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return settings();
+        /** @var array $data */
+        $data = settings();
+
+        return $data;
     }
 }

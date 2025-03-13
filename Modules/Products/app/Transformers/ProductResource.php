@@ -14,13 +14,16 @@ class ProductResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        // @phpstan-ignore-next-line
+        $images = collect($this->images)->map("uploads_url");
+
         return [
             "id" => $this->id,
             "title" => $this->title,
             "description" => $this->description,
             "slug" => $this->slug,
             "is_main" => $this->is_main,
-            "images" => collect($this->images)->map("uploads_url"),
+            "images" => $images,
             "price" => $this->price,
             "sale_price" => $this->salePrice,
             "is_discounted" => $this->isDiscounted,

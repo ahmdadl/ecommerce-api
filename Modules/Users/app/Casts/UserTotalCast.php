@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 use InvalidArgumentException;
 use Modules\Users\ValueObjects\UserTotals;
 
+/**
+ * @implements CastsAttributes<UserTotals, UserTotals>
+ */
 class UserTotalCast implements CastsAttributes
 {
     /**
@@ -20,10 +23,12 @@ class UserTotalCast implements CastsAttributes
         mixed $value,
         array $attributes
     ): mixed {
+        // @phpstan-ignore-next-line
         if (!json_validate($value)) {
             throw new \Exception("User Totals value is invalid JSON format");
         }
 
+        // @phpstan-ignore-next-line
         return UserTotals::fromArray(json_decode($value, true));
     }
 
