@@ -1,15 +1,15 @@
 <?php
 
-namespace Modules\Governments\Database\Factories;
+namespace Modules\Cities\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class GovernmentFactory extends Factory
+class CityFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      */
-    protected $model = \Modules\Governments\Models\Government::class;
+    protected $model = \Modules\Cities\Models\City::class;
 
     /**
      * Define the model's default state.
@@ -17,11 +17,11 @@ class GovernmentFactory extends Factory
     public function definition(): array
     {
         return [
+            "government_id" => fn() => \Modules\Governments\Models\Government::factory(),
             "title" => [
                 "en" => fake()->city,
-                "ar" => fake("ar")->city,
+                "ar" => fake()->city,
             ],
-            "shippingFees" => fake()->randomFloat(2, 0, 100),
             "is_active" => true,
         ];
     }

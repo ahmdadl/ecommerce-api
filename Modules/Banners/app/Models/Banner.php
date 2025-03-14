@@ -40,7 +40,7 @@ class Banner extends Model
     /**
      * actionable type
      *
-     * @return MorphTo<Model, Banner>
+     * @return MorphTo<Model, $this>
      */
     public function actionable(): MorphTo
     {

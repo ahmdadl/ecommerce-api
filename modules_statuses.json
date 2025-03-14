@@ -9,5 +9,6 @@
     "Products": true,
     "Coupons": true,
     "Banners": true,
-    "Governments": true
+    "Governments": true,
+    "Cities": true
 }

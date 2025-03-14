@@ -14,10 +14,11 @@ class FilamentUtils
             return null;
         }
 
-        /** @var \Livewire\Features\SupportFileUploads\TemporaryUploadedFile $file */
+        /** @var \Livewire\Features\SupportFileUploads\TemporaryUploadedFile|string $file */
         $file = $state[array_key_first($state)];
 
         if (is_string($file)) {
+            // @phpstan-ignore-next-line
             return Upload::firstWhere("path", $file)?->id;
         }
 

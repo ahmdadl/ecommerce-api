@@ -5,12 +5,16 @@ namespace Modules\Uploads\Casts;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @implements CastsAttributes<string, string>
+ */
 class UploadablePathCast implements CastsAttributes
 {
     /**
      * Cast the given value.
      *
      * @param  array<string, mixed>  $attributes
+     * @param string $value
      */
     public function get(
         Model $model,
@@ -32,6 +36,6 @@ class UploadablePathCast implements CastsAttributes
         mixed $value,
         array $attributes
     ): string {
-        return $value;
+        return $value ?? "";
     }
 }

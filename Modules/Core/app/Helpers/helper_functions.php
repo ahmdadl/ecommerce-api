@@ -173,10 +173,16 @@ if (!function_exists("sendMail")) {
 }
 
 if (!function_exists("enumOptions")) {
+    /**
+     * get localized enum options
+     * @param BackedEnum $enum
+     * @return array<array|string|null>
+     */
     function enumOptions(mixed $enum): array
     {
         $options = [];
         foreach ($enum::cases() as $case) {
+            // @phpstan-ignore-next-line
             $options[$case->value] = __($case->value);
         }
         return $options;
