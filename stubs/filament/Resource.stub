@@ -5,10 +5,12 @@ namespace {{ namespace }};
 {{ clusterImport }}use {{ resource }}\Pages;
 use {{ resource }}\RelationManagers;
 use {{ model }};
-use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Tables;
+use Filament\Forms\Components as I;
+use Filament\Tables\Columns as C;
+use Filament\Tables\Filters as F;
+use Filament\Tables\Actions as A;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -30,7 +32,7 @@ class {{ resourceClass }} extends Resource implements HasShieldPermissions
     {
         return $form
             ->schema([
-                Forms\Components\Toggle::make("is_active")
+                I::make("is_active")
                                 ->translateLabel()
                                 ->default(true),
                             sortOrderInput(static::$model),
@@ -42,7 +44,7 @@ class {{ resourceClass }} extends Resource implements HasShieldPermissions
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make("id")
+                C\TextColumn::make("id")
                     ->translateLabel()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -51,12 +53,12 @@ class {{ resourceClass }} extends Resource implements HasShieldPermissions
             ->filters([
 {{ tableFilters }}
 
-Tables\Filters\Filter::make("created_at")
+F\Filter::make("created_at")
                         ->form([
-                            Forms\Components\DatePicker::make(
+                            I\DatePicker::make(
                                 "created_from"
                             )->translateLabel(),
-                            Forms\Components\DatePicker::make(
+                            I\DatePicker::make(
                                 "created_until"
                             )->translateLabel(),
                         ])
@@ -96,13 +98,13 @@ Tables\Filters\Filter::make("created_at")
             ->actions([
 {{ tableActions }}
 
-Tables\Actions\EditAction::make()->iconButton(),
-                Tables\Actions\DeleteAction::make()->iconButton(),
-                Tables\Actions\RestoreAction::make(),
-                Tables\Actions\ReplicateAction::make(),
+A\EditAction::make()->iconButton(),
+                A\DeleteAction::make()->iconButton(),
+                A\RestoreAction::make(),
+                A\ReplicateAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
+                A\BulkActionGroup::make([
 {{ tableBulkActions }}
                 ]),
             ]);
