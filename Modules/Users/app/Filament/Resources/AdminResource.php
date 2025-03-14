@@ -22,6 +22,8 @@ class AdminResource extends Resource
 
     protected static ?string $navigationIcon = "heroicon-o-users";
 
+    protected static ?string $navigationGroup = "Permissions";
+
     public static function form(Form $form): Form
     {
         return $form->schema([UserResource::userFormSchema()]);

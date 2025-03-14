@@ -21,6 +21,8 @@ class GovernmentResource extends Resource implements HasShieldPermissions
 
     protected static ?string $navigationIcon = "heroicon-o-rectangle-stack";
 
+    protected static ?string $navigationGroup = "localization";
+
     public static function getPermissionPrefixes(): array
     {
         return ["view", "create", "update", "delete", "restore", "replicate"];

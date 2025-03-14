@@ -69,5 +69,15 @@
     "category": "Category",
     "banner": "Banner",
     "coupon": "Coupon",
-    "brand": "Brand"
+    "brand": "Brand",
+    "localization": "Localization",
+    "government": "Government",
+    "city": "City",
+    "Government id": "Government Id",
+    "New User": "New User",
+    "Edit User": "Edit User",
+    "Create User": "Create User",
+    "New city": "New City",
+    "cities": "Cities",
+    "governments": "Governments"
 }

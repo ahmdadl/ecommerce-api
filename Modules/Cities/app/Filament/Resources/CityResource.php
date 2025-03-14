@@ -25,6 +25,8 @@ class CityResource extends Resource implements HasShieldPermissions
 
     protected static ?string $navigationIcon = "heroicon-o-rectangle-stack";
 
+    protected static ?string $navigationGroup = "localization";
+
     public static function getPermissionPrefixes(): array
     {
         return ["view", "create", "update", "delete", "restore", "replicate"];
@@ -36,7 +38,7 @@ class CityResource extends Resource implements HasShieldPermissions
             I\Select::make("government_id")
                 ->relationship("government", "title")
                 ->required()
-                ->translateLabel()
+                ->label(__("government"))
                 ->columnSpanFull(),
 
             ...multiLangInput(
@@ -59,7 +61,9 @@ class CityResource extends Resource implements HasShieldPermissions
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
 
-                C\TextColumn::make("government.title")->searchable(),
+                C\TextColumn::make("government.title")
+                    ->label(__("government"))
+                    ->searchable(),
 
                 C\IconColumn::make("is_active")->boolean(),
 
@@ -83,7 +87,7 @@ class CityResource extends Resource implements HasShieldPermissions
                     F\SelectFilter::make("government_id")
                         ->relationship("government", "title")
                         ->searchable()
-                        ->translateLabel(),
+                        ->label(__("government")),
 
                     F\Filter::make("title")
                         ->form([
