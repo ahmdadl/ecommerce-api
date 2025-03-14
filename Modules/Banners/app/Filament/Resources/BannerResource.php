@@ -72,7 +72,8 @@ class BannerResource extends Resource implements HasShieldPermissions
                 ->hidden(fn(callable $get) => $get("action") === "media"),
             Forms\Components\TextInput::make("sort_order")
                 ->numeric()
-                ->default(1),
+                ->default(fn() => Banner::max("sort_order") + 1)
+                ->nullable(),
             Forms\Components\Toggle::make("is_active")->default(true),
             Forms\Components\FileUpload::make("media")
                 ->translateLabel()

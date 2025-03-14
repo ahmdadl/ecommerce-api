@@ -23,7 +23,7 @@ enum BannerActionType: string
             self::CATEGORY => "info",
             self::PRODUCT => "warning",
             self::BRAND => "success",
-            self::MEDIA => "primary",
+            self::MEDIA => "danger",
         };
     }
 }

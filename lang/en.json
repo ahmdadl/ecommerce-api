@@ -64,5 +64,10 @@
     "active_dates": "Active Dates",
     "validated": "Validated",
     "Action": "Action",
-    "Actionable": "Actionable"
+    "Actionable": "Actionable",
+    "product": "Product",
+    "category": "Category",
+    "banner": "Banner",
+    "coupon": "Coupon",
+    "brand": "Brand"
 }
