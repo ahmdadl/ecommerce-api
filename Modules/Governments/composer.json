@@ -1,0 +1,30 @@
+{
+    "name": "nwidart/governments",
+    "description": "",
+    "authors": [
+        {
+            "name": "Nicolas Widart",
+            "email": "n.widart@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [],
+            "aliases": {
+
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\Governments\\": "app/",
+            "Modules\\Governments\\Database\\Factories\\": "database/factories/",
+            "Modules\\Governments\\Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Modules\\Governments\\Tests\\": "tests/"
+        }
+    }
+}

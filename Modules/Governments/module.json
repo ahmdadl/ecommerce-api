@@ -1,0 +1,11 @@
+{
+    "name": "Governments",
+    "alias": "governments",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Governments\\Providers\\GovernmentsServiceProvider"
+    ],
+    "files": []
+}

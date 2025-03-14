@@ -8,5 +8,6 @@
     "Uploads": true,
     "Products": true,
     "Coupons": true,
-    "Banners": true
+    "Banners": true,
+    "Governments": true
 }
