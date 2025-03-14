@@ -10,5 +10,6 @@
     "Coupons": true,
     "Banners": true,
     "Governments": true,
-    "Cities": true
+    "Cities": true,
+    "Addresses": true
 }
