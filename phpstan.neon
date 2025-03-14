@@ -24,3 +24,4 @@ parameters:
         - Modules/*/app/Providers/*ServiceProvider.php
         - Modules/*/database/factories/*Factory.php
         - Modules/*/vendor/*
+        - stubs/*/*
