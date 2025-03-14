@@ -2,7 +2,9 @@
 
 namespace $CLASS_NAMESPACE$;
 
-enum $CLASS$
+enum $CLASS$: string
 {
+    use Modules\Core\Traits\HasEnumHelpers;
+
     //
 }

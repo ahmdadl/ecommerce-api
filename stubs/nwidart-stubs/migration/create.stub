@@ -12,9 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('$TABLE$', function (Blueprint $table) {
-            $table->id();
+            $table->uid();
             $FIELDS$
+
+            // $table->activeState();
+            // $table->sortOrder();
+            // $table->metaTags();
             $table->timestamps();
+            // $table->softDeletes();
         });
     }
 
