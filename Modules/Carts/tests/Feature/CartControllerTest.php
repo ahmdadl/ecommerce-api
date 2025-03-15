@@ -15,7 +15,7 @@ test("user_can_add_product_to_cart", function () {
 
     $response = $response->assertOk()->json()["data"];
 
-    expect($response["totals"]["total"])->toBe(300);
+    expect($response["cart"]["totals"]["total"])->toBe(300);
 });
 
 test("user_adding_twice_to_cart_will_update_quantity", function () {
@@ -30,7 +30,7 @@ test("user_adding_twice_to_cart_will_update_quantity", function () {
 
     $response = $response->assertOk()->json()["data"];
 
-    expect($response["totals"]["total"])->toBe(600);
+    expect($response["cart"]["totals"]["total"])->toBe(600);
 });
 
 test("user_can_get_cart", function () {
@@ -45,7 +45,7 @@ test("user_can_get_cart", function () {
         ->assertOk()
         ->json()["data"];
 
-    expect($response["totals"]["total"])->toBe(300);
+    expect($response["cart"]["totals"]["total"])->toBe(300);
 });
 
 test("user_can_remove_product_from_cart", function () {
@@ -60,7 +60,7 @@ test("user_can_remove_product_from_cart", function () {
         ->assertOk()
         ->json()["data"];
 
-    expect($response["totals"]["total"])->toBe(0);
+    expect($response["cart"]["totals"]["total"])->toBe(0);
 });
 
 test("user_can_update_product_quantity_in_cart", function () {
@@ -77,5 +77,5 @@ test("user_can_update_product_quantity_in_cart", function () {
         ->assertOk()
         ->json()["data"];
 
-    expect($response["totals"]["total"])->toBe(600);
+    expect($response["cart"]["totals"]["total"])->toBe(600);
 });

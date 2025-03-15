@@ -16,10 +16,12 @@ class CartResource extends JsonResource
             "id" => $this->id,
             // 'cartable_id' => $this->customer_id,
             // 'cartable_type' => $this->customer_type,
+            "address_id" => $this->address_id,
+            "coupon_id" => $this->coupon_id,
+            "totals" => $this->totals,
             "user" => user(),
             "address" => $this->whenLoaded("address", $this->address),
             "coupon" => $this->whenLoaded("coupon", $this->coupon),
-            "totals" => $this->totals,
             "items" => $this->whenLoaded(
                 "items",
                 CartItemResource::collection($this->items)
