@@ -41,9 +41,8 @@ class CouponFactory extends Factory
     {
         return $this->state(
             fn(array $attrs) => [
-                "ends_at" => fake()
-                    ->dateTimeBetween("now", "-1 month")
-                    ->format("Y-m-d"),
+                "starts_at" => now()->format("Y-m-d"),
+                "ends_at" => now()->subYear()->format("Y-m-d"),
             ]
         );
     }

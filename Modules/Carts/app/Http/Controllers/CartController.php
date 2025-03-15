@@ -5,6 +5,7 @@ namespace Modules\Carts\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Modules\Addresses\Transformers\AddressResource;
 use Modules\Carts\Actions\AddToCartAction;
+use Modules\Carts\Actions\ApplyCartCouponAction;
 use Modules\Carts\Actions\RemoveFromCartAction;
 use Modules\Carts\Actions\UpdateCartAction;
 use Modules\Carts\Models\CartItem;
@@ -15,6 +16,8 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Modules\Addresses\Models\Address;
 use Modules\Carts\Actions\SetCartAddressAction;
+use Modules\Coupons\Actions\ValidateCouponAction;
+use Modules\Coupons\Models\Coupon;
 
 class CartController extends Controller
 {
@@ -129,7 +132,36 @@ class CartController extends Controller
         Request $request,
         CartService $cartService
     ): JsonResponse {
-        cartService()->removeAddress();
+        $cartService->removeAddress();
+
+        return $this->index($request, $cartService);
+    }
+
+    /**
+     * set cart coupon
+     */
+    public function applyCartCoupon(
+        Request $request,
+        Coupon $coupon,
+        ApplyCartCouponAction $action
+    ): JsonResponse {
+        try {
+            $action->handle($coupon);
+
+            return $this->index($request, $action->cartService);
+        } catch (\Exception $e) {
+            return api()->error($e);
+        }
+    }
+
+    /**
+     * remove cart coupon
+     */
+    public function removeCartCoupon(
+        Request $request,
+        CartService $cartService
+    ): JsonResponse {
+        $cartService->removeCoupon();
 
         return $this->index($request, $cartService);
     }
