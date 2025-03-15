@@ -6,10 +6,11 @@ use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Attributes\UseFactory;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Foundation\Auth\Access\Authorizable;
 use Illuminate\Foundation\Auth\User as AuthenticatableModel;
 use Laravel\Sanctum\HasApiTokens;
+use Modules\Carts\Models\Cart;
 use Modules\Guests\Database\Factories\GuestFactory;
 use Modules\Users\Casts\UserTotalCast;
 use Modules\Users\ValueObjects\UserTotals;
@@ -38,5 +39,14 @@ class Guest extends AuthenticatableModel
         static::creating(function (self $user) {
             $user->totals = UserTotals::default();
         });
+    }
+
+    /**
+     * user cart
+     * @return MorphOne<Cart, $this>
+     */
+    public function cart(): MorphOne
+    {
+        return $this->morphOne(Cart::class, "cartable");
     }
 }

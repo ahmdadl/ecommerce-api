@@ -2,13 +2,13 @@
 
 namespace Modules\Users\Database\Factories;
 
-use Hash;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use Modules\Users\Enums\UserGender;
 use Modules\Users\Enums\UserRole;
 use Modules\Users\Models\User;
 use Modules\Users\ValueObjects\UserTotals;
-use Str;
 
 /**
  * @extends Factory<User>

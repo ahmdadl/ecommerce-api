@@ -11,7 +11,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Modules\Brands\Models\Brand;
+use Modules\Carts\Models\CartItem;
 use Modules\Categories\Models\Category;
 use Modules\Core\Models\Scopes\HasActiveState;
 use Modules\Core\Models\Scopes\HasMetaTags;
@@ -70,7 +72,7 @@ class Product extends Model
         parent::boot();
 
         static::creating(function (Product $product) {
-            if (empty($product->salePrice)) {
+            if (empty($product->salePrice) || $product->salePrice <= 0) {
                 $product->salePrice = $product->price;
             }
         });
@@ -142,5 +144,14 @@ class Product extends Model
     public function brand(): BelongsTo
     {
         return $this->belongsTo(related: Brand::class);
+    }
+
+    /**
+     * product cart items
+     * @return HasMany<CartItem, $this>
+     */
+    public function cartItems(): HasMany
+    {
+        return $this->hasMany(CartItem::class);
     }
 }

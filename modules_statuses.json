@@ -11,5 +11,6 @@
     "Banners": true,
     "Governments": true,
     "Cities": true,
-    "Addresses": true
+    "Addresses": true,
+    "Carts": true
 }
