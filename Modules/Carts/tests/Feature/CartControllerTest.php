@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Modules\Addresses\Models\Address;
 use Modules\Products\Models\Product;
 use Modules\Users\Models\User;
 
@@ -78,4 +79,28 @@ test("user_can_update_product_quantity_in_cart", function () {
         ->json()["data"];
 
     expect($response["cart"]["totals"]["total"])->toBe(600);
+});
+
+test("cart_address_can_be_set_and_removed", function () {
+    $product = Product::factory()->create(["salePrice" => 300]);
+    /** @var Authenticatable $user */
+    $user = User::factory()->create();
+
+    actingAs($user)->postJson(route("api.cart.add", [$product]));
+
+    $address = Address::factory()->withShippingFee(150)->create();
+
+    $response = actingAs($user)
+        ->patchJson(route("api.cart.set-address", [$address]))
+        ->assertOk()
+        ->json();
+
+    expect($response["data"]["cart"]["totals"]["total"])->toBe(450);
+
+    $response = actingAs($user)
+        ->deleteJson(route("api.cart.remove-address"))
+        ->assertOk()
+        ->json();
+
+    expect($response["data"]["cart"]["totals"]["total"])->toBe(300);
 });

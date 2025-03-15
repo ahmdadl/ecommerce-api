@@ -18,13 +18,21 @@ Route::middleware(["auth:customer,guest"])
     ->prefix("cart")
     ->name("cart.")
     ->group(function () {
+        // address routes
+        Route::patch("address/{address}", "setCartAddress")->name(
+            "set-address"
+        );
+        Route::delete("address", "removeCartAddress")->name("remove-address");
+
         Route::get("", "index")->name("index");
         Route::post("{product}", "add")->name("add");
+
         Route::patch("{product}/by-product", "updateByProduct")->name(
             "update-by-product"
         );
         Route::patch("{cartItem}", "update")->name("update");
-        Route::delete("{product}", "removeByProduct")->name(
+
+        Route::delete("{product}/by-product", "removeByProduct")->name(
             "remove-by-product"
         );
         Route::delete("{cartItem}", "remove")->name("remove");

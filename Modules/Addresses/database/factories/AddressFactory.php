@@ -3,6 +3,7 @@
 namespace Modules\Addresses\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Modules\Governments\Models\Government;
 use Modules\Users\Models\User;
 
 class AddressFactory extends Factory
@@ -17,15 +18,40 @@ class AddressFactory extends Factory
      */
     public function definition(): array
     {
+        $government = Government::factory()->create();
+
         return [
             "user_id" => fn() => User::factory(),
-            "government_id" => fn() => \Modules\Governments\Models\Government::factory(),
-            "city_id" => fn() => \Modules\Cities\Models\City::factory(),
+            "government_id" => $government,
+            "city_id" => fn() => \Modules\Cities\Models\City::factory()->for(
+                $government
+            ),
             "firstName" => fake()->name,
             "lastName" => fake()->name,
             "title" => fake()->sentence(1),
             "address" => fake()->address,
             "phoneNumber" => fake()->phoneNumber,
         ];
+    }
+
+    /**
+     * Set the shipping fee for the associated Government.
+     *
+     * @param float $fee
+     * @return $this
+     */
+    public function withShippingFee(float $fee)
+    {
+        return $this->state(function (array $attributes) use ($fee) {
+            $government = Government::factory()->create([
+                "shipping_fees" => $fee,
+            ]);
+            return [
+                "government_id" => $government->id,
+                "city_id" => fn() => \Modules\Cities\Models\City::factory()->for(
+                    $government
+                ),
+            ];
+        });
     }
 }

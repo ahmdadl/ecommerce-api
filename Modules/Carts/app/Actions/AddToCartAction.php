@@ -8,6 +8,7 @@ use Modules\Products\Models\Product;
 final class AddToCartAction
 {
     public function __construct(public readonly CartService $cartService) {}
+
     public function handle(Product $product, int $quantity = 1)
     {
         if ($quantity < 1) {

@@ -14,6 +14,7 @@ use Modules\Carts\Services\CartService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Modules\Addresses\Models\Address;
+use Modules\Carts\Actions\SetCartAddressAction;
 
 class CartController extends Controller
 {
@@ -106,5 +107,30 @@ class CartController extends Controller
         $action->usingProduct($product);
 
         return $this->index($request, $action->cartService);
+    }
+
+    /**
+     * set cart address
+     */
+    public function setCartAddress(
+        Request $request,
+        Address $address,
+        SetCartAddressAction $action
+    ): JsonResponse {
+        $action->handle($address);
+
+        return $this->index($request, $action->cartService);
+    }
+
+    /**
+     * remove cart address
+     */
+    public function removeCartAddress(
+        Request $request,
+        CartService $cartService
+    ): JsonResponse {
+        cartService()->removeAddress();
+
+        return $this->index($request, $cartService);
     }
 }
