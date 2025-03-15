@@ -3,6 +3,8 @@
 namespace Modules\Carts\ValueObjects;
 
 use Modules\Carts\Models\Cart;
+use Modules\Coupons\Actions\CalculateCouponDiscountAction;
+use Modules\Coupons\Utils\CouponUtils;
 use Modules\Products\Models\Product;
 
 final class CartTotals
@@ -116,7 +118,13 @@ final class CartTotals
         $shipping = 0;
         $total = 0;
 
-        foreach ($cart->items()->get() as $item) {
+        foreach (
+            $cart
+                ->loadMissing(["coupon", "address"])
+                ->items()
+                ->get()
+            as $item
+        ) {
             $original += $item->totals->original;
             $discount += $item->totals->discount;
             $products += $item->totals->products;
@@ -128,6 +136,21 @@ final class CartTotals
             $total += $item->totals->total;
         }
 
+        // calculate coupon discount if found
+        if ($cart->coupon) {
+            $action = app(CalculateCouponDiscountAction::class);
+            $discountedPrice = $action->handle($cart->coupon, $total);
+
+            $coupon = $discountedPrice;
+            $total = round($total - $discountedPrice, 2);
+        }
+
+        // calculate shipping
+        if ($cart->address) {
+            $shipping = $cart->address->government->shipping_fees;
+            $total = round($total + $shipping, 2);
+        }
+
         return new self(
             original: $original,
             discount: $discount,
@@ -137,7 +160,7 @@ final class CartTotals
             coupon: $coupon,
             shipping: $shipping,
             taxes: $taxes,
-            total: $total
+            total: round($total)
         );
     }
 

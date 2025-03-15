@@ -1,8 +1,13 @@
 <?php
 
+use Modules\Addresses\Models\Address;
 use Modules\Carts\Models\Cart;
 use Modules\Carts\Models\CartItem;
 use Modules\Carts\Services\CartService;
+use Modules\Cities\Models\City;
+use Modules\Coupons\Enums\CouponDiscountType;
+use Modules\Coupons\Models\Coupon;
+use Modules\Governments\Models\Government;
 use Modules\Products\Models\Product;
 
 test("cart_totals_updated_after_adding_item", function () {
@@ -53,4 +58,81 @@ it("cart_totals_updated_after_adding_items_to_old_cart", function () {
 
     expect($cart->totals->products)->toBe(3);
     $this->assertGreaterThanOrEqual(3, $cart->totals->items);
+});
+
+test("cart_totals_calculate_after_coupon_applied", function () {
+    $cart = Cart::factory()->create();
+
+    $cartService = new CartService($cart);
+
+    $productA = Product::factory()->create([
+        "price" => 100,
+        "salePrice" => 50,
+    ]);
+
+    $cartService->addItem($productA);
+
+    expect($cart->totals->total)->toBe((float) 50);
+
+    $fixedCoupon = Coupon::factory()->fixed(25)->create();
+
+    $cartService->applyCoupon($fixedCoupon);
+
+    expect($cart->totals->total)->toBe((float) 25);
+
+    $cartService->removeCoupon();
+
+    expect($cart->totals->total)->toBe((float) 50);
+
+    $percentageCoupon = Coupon::factory()->percentage(50)->create();
+
+    $cartService->applyCoupon($percentageCoupon);
+
+    expect($cart->totals->total)->toBe((float) 25);
+});
+
+test("cart_totals_calculate_after_coupon_removed", function () {
+    $cart = Cart::factory()->create();
+
+    $cartService = new CartService($cart);
+
+    $productA = Product::factory()->create([
+        "price" => 100,
+        "salePrice" => 50,
+    ]);
+
+    $cartService->addItem($productA);
+
+    expect($cart->totals->total)->toBe((float) 50);
+
+    $coupon = Coupon::factory()->fixed(25)->create();
+
+    $cartService->applyCoupon($coupon);
+
+    expect($cart->totals->total)->toBe((float) 25);
+
+    $cartService->removeCoupon();
+
+    expect($cart->totals->total)->toBe((float) 50);
+});
+
+test("calculate_shipping_fees_after_address", function () {
+    $cart = Cart::factory()->create();
+    $cartService = new CartService($cart);
+
+    $cartService->addItem(
+        Product::factory()->create([
+            "salePrice" => 50,
+        ])
+    );
+
+    $government = Government::factory()->create([
+        "shipping_fees" => 200,
+    ]);
+    $city = City::factory()->for($government)->create();
+    $address = Address::factory()->for($city)->for($government)->create();
+
+    $cartService->setAddress($address);
+
+    expect($cart->totals->total)->toBe((float) 250);
 });

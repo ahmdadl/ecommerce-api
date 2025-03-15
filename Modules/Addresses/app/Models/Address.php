@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Modules\Addresses\Database\Factories\AddressFactory;
+use Modules\Cities\Models\City;
+use Modules\Governments\Models\Government;
 use Modules\Users\Models\User;
 
 #[UseFactory(AddressFactory::class)]
@@ -18,11 +20,26 @@ class Address extends Model
     use HasFactory, HasUlids, SoftDeletes;
 
     /**
-     * owner of address
      * @return BelongsTo<User, $this>
      */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * @return BelongsTo<Government, $this>
+     */
+    public function government(): BelongsTo
+    {
+        return $this->belongsTo(Government::class);
+    }
+
+    /**
+     * @return BelongsTo<City, $this>
+     */
+    public function city(): BelongsTo
+    {
+        return $this->belongsTo(City::class);
     }
 }

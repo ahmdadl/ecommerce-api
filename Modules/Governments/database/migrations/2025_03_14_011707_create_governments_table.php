@@ -13,7 +13,7 @@ return new class extends Migration {
         Schema::create("governments", function (Blueprint $table) {
             $table->uid();
             $table->json("title");
-            $table->float("shippingFees")->default(0);
+            $table->float("shipping_fees")->default(0);
             $table->activeState();
             $table->timestamps();
             $table->softDeletes();

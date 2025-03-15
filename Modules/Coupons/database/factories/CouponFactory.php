@@ -26,10 +26,8 @@ class CouponFactory extends Factory
             "ends_at" => fake()
                 ->dateTimeBetween("now", "+3 months")
                 ->format("Y-m-d"),
-            "discount_type" => fake()->randomElement(
-                CouponDiscountType::values()
-            ),
-            "value" => fake()->randomFloat(2, 5, 100),
+            "discount_type" => CouponDiscountType::FIXED,
+            "value" => 50,
             "max_discount" => fake()->optional(0.3)->randomFloat(2, 50, 500),
             "used_count" => fake()->numberBetween(0, 50),
             "is_active" => true,
@@ -58,6 +56,32 @@ class CouponFactory extends Factory
         return $this->state(
             fn(array $attrs) => [
                 "is_active" => false,
+            ]
+        );
+    }
+
+    /**
+     * fixed discount
+     */
+    public function fixed(float|int $value): static
+    {
+        return $this->state(
+            fn(array $attrs) => [
+                "discount_type" => CouponDiscountType::FIXED,
+                "value" => $value,
+            ]
+        );
+    }
+
+    /**
+     * percentage discount
+     */
+    public function percentage(float|int $value): static
+    {
+        return $this->state(
+            fn(array $attrs) => [
+                "discount_type" => CouponDiscountType::PERCENTAGE,
+                "value" => $value,
             ]
         );
     }

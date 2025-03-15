@@ -21,7 +21,7 @@ class GovernmentFactory extends Factory
                 "en" => fake()->city,
                 "ar" => fake("ar")->city,
             ],
-            "shippingFees" => fake()->randomFloat(2, 0, 100),
+            "shipping_fees" => fake()->randomFloat(2, 0, 100),
             "is_active" => true,
         ];
     }

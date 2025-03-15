@@ -3,9 +3,11 @@
 namespace Modules\Carts\Services;
 
 use Illuminate\Support\Facades\DB;
+use Modules\Addresses\Models\Address;
 use Modules\Carts\Models\Cart;
 use Modules\Carts\Models\CartItem;
 use Modules\Carts\ValueObjects\CartTotals;
+use Modules\Coupons\Models\Coupon;
 use Modules\Products\Models\Product;
 
 final readonly class CartService
@@ -107,6 +109,54 @@ final readonly class CartService
     }
 
     /**
+     * set cart address
+     */
+    public function setAddress(Address $address): void
+    {
+        DB::transaction(function () use ($address) {
+            $this->cart->setRelation("address", $address);
+
+            $this->save();
+        });
+    }
+
+    /**
+     * remove cart address
+     */
+    public function removeAddress(): void
+    {
+        DB::transaction(function () {
+            $this->cart->setRelation("address", null);
+
+            $this->save();
+        });
+    }
+
+    /**
+     * apply coupon
+     */
+    public function applyCoupon(Coupon $coupon): void
+    {
+        DB::transaction(function () use ($coupon) {
+            $this->cart->setRelation("coupon", $coupon);
+
+            $this->save();
+        });
+    }
+
+    /**
+     * remove coupon
+     */
+    public function removeCoupon(): void
+    {
+        DB::transaction(function () {
+            $this->cart->setRelation("coupon", null);
+
+            $this->save();
+        });
+    }
+
+    /**
      * Saves the current state of the cart and calculates the totals.
      */
     public function save(): void
@@ -174,18 +224,20 @@ final readonly class CartService
      */
     private function calculateItemTotals(): self
     {
-        $updatedItems = $this->cart->items->map(function (CartItem $cartItem) {
-            return [
-                "id" => $cartItem->id,
-                "cart_id" => $cartItem->cart_id,
-                "product_id" => $cartItem->product_id,
-                "quantity" => $cartItem->quantity,
-                "totals" => (string) CartTotals::calculateFromProduct(
-                    $cartItem->product,
-                    $cartItem->quantity
-                ),
-            ];
-        });
+        $updatedItems = $this->cart
+            ->loadMissing(["coupon", "address"])
+            ->items->map(function (CartItem $cartItem) {
+                return [
+                    "id" => $cartItem->id,
+                    "cart_id" => $cartItem->cart_id,
+                    "product_id" => $cartItem->product_id,
+                    "quantity" => $cartItem->quantity,
+                    "totals" => (string) CartTotals::calculateFromProduct(
+                        $cartItem->product,
+                        $cartItem->quantity
+                    ),
+                ];
+            });
 
         if ($updatedItems->isNotEmpty()) {
             CartItem::upsert(
