@@ -14,13 +14,16 @@ class UpdateCartAction
     public function handle(CartItem $cartItem, int $quantity)
     {
         if ($quantity < 1) {
-            throw new ApiException("Quantity must be at least 1");
+            throw new ApiException(
+                __("carts::t.quantity_must_be_at_least_one")
+            );
         }
 
         if ($cartItem->product->stock < $quantity) {
             throw new ApiException(
-                "Product is out of stock, you can not add more than " .
-                    $cartItem->product->stock
+                __("carts::t.product_stock_is_not_enough", [
+                    "stock" => $cartItem->product->stock,
+                ])
             );
         }
 
@@ -35,7 +38,7 @@ class UpdateCartAction
         $cartItem = $this->cartService->findCartItemByProduct($product);
 
         if (!$cartItem) {
-            throw new ApiException("Product not found in cart");
+            throw new ApiException(__("carts::t.product_not_found_in_cart"));
         }
 
         return $this->handle($cartItem, $quantity);

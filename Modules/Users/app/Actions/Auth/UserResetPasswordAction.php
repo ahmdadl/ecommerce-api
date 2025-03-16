@@ -17,7 +17,7 @@ class UserResetPasswordAction
         $user = Customer::role()->active()->whereEmail($email)->first();
 
         if (!$user) {
-            throw new ApiException(__("users::user.invalid_credentials"));
+            throw new ApiException(__("users::t.invalid_credentials"));
         }
 
         $passwordReset = PasswordResetToken::whereToken($token)
@@ -25,11 +25,11 @@ class UserResetPasswordAction
             ->first();
 
         if (!$passwordReset) {
-            throw new ApiException(__("users::user.invalid_token"));
+            throw new ApiException(__("users::t.invalid_token"));
         }
 
         if ($passwordReset->created_at->addMinutes(5)->isPast()) {
-            throw new ApiException(__("users::user.token_expired"));
+            throw new ApiException(__("users::t.token_expired"));
         }
 
         $user->password = Hash::make($password);

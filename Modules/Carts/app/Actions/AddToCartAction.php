@@ -13,13 +13,16 @@ final class AddToCartAction
     public function handle(Product $product, int $quantity = 1)
     {
         if ($quantity < 1) {
-            throw new ApiException("Quantity must be at least 1");
+            throw new ApiException(
+                __("carts::t.quantity_must_be_at_least_one")
+            );
         }
 
         if ($product->stock < $quantity) {
             throw new ApiException(
-                "Product is out of stock, you can not add more than " .
-                    $product->stock
+                __("carts::t.product_stock_is_not_enough", [
+                    "stock" => $product->stock,
+                ])
             );
         }
 

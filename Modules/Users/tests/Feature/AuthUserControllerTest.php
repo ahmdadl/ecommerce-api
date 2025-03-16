@@ -110,7 +110,7 @@ test("user_cannot_reset_password_with_invalid_data", function () {
 
     postJson(route("api.auth.forget-password"), ["email" => fake()->email])
         ->assertStatus(400)
-        ->assertSee(__("users::user.email_not_found"));
+        ->assertSee(__("users::t.email_not_found"));
     postJson(
         route("api.auth.reset-password", [
             "email" => fake()->email,
@@ -120,7 +120,7 @@ test("user_cannot_reset_password_with_invalid_data", function () {
         ])
     )
         ->assertStatus(400)
-        ->assertSee(__("users::user.invalid_credentials"));
+        ->assertSee(__("users::t.invalid_credentials"));
 
     $user = User::factory()->customer()->create();
     postJson(route("api.auth.forget-password"), [
@@ -137,7 +137,7 @@ test("user_cannot_reset_password_with_invalid_data", function () {
         ])
     )
         ->assertStatus(400)
-        ->assertSee(__("users::user.invalid_token"));
+        ->assertSee(__("users::t.invalid_token"));
 
     // test token expired
     $passwordReset = PasswordResetToken::where("email", $user->email)
@@ -155,7 +155,7 @@ test("user_cannot_reset_password_with_invalid_data", function () {
         ])
     )
         ->assertStatus(400)
-        ->assertSee(__("users::user.token_expired"));
+        ->assertSee(__("users::t.token_expired"));
 });
 
 test("user_can_reset_password", function () {

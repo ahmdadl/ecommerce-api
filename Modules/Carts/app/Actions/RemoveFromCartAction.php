@@ -24,7 +24,7 @@ class RemoveFromCartAction
         $cartItem = $this->cartService->findCartItemByProduct($product);
 
         if (!$cartItem) {
-            throw new ApiException("Product not found in cart");
+            throw new ApiException(__("carts::t.product_not_found_in_cart"));
         }
 
         return $this->handle($cartItem);
