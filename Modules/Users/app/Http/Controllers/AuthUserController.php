@@ -75,11 +75,7 @@ class AuthUserController extends Controller
         UserResetPasswordRequest $request,
         UserResetPasswordAction $action
     ): JsonResponse {
-        try {
-            $action->handle($request->validated());
-        } catch (\Exception $e) {
-            return api()->error($e->getMessage());
-        }
+        $action->handle($request->validated());
 
         return api()->noContent();
     }

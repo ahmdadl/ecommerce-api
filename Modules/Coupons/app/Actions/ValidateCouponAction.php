@@ -2,6 +2,7 @@
 
 namespace Modules\Coupons\Actions;
 
+use Modules\Core\Exceptions\ApiException;
 use Modules\Coupons\Models\Coupon;
 use Throwable;
 
@@ -21,17 +22,17 @@ class ValidateCouponAction
         }
 
         if (!$coupon || !$coupon->is_active) {
-            throw new \Exception(__("coupons::t.invalid_coupon"));
+            throw new ApiException(__("coupons::t.invalid_coupon"));
         }
 
         $now = now();
 
         if ($now->lt($coupon->starts_at) || $now->gt($coupon->ends_at)) {
-            throw new \Exception(__("coupons::t.coupon_expired"));
+            throw new ApiException(__("coupons::t.coupon_expired"));
         }
 
         if ($totalPrice < 0) {
-            throw new \Exception(__("coupons::t.invalid_total_price"));
+            throw new ApiException(__("coupons::t.invalid_total_price"));
         }
 
         if (!empty($coupon->max_discount)) {
@@ -41,7 +42,7 @@ class ValidateCouponAction
             );
 
             if ($discountedPrice > $coupon->max_discount) {
-                throw new \Exception(__("coupons::t.max_discount_reached"));
+                throw new ApiException(__("coupons::t.max_discount_reached"));
             }
         }
 

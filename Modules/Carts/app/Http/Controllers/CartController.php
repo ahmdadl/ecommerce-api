@@ -145,13 +145,9 @@ class CartController extends Controller
         Coupon $coupon,
         ApplyCartCouponAction $action
     ): JsonResponse {
-        try {
-            $action->handle($coupon);
+        $action->handle($coupon);
 
-            return $this->index($request, $action->cartService);
-        } catch (\Exception $e) {
-            return api()->error($e);
-        }
+        return $this->index($request, $action->cartService);
     }
 
     /**

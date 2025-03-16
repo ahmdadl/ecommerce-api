@@ -4,13 +4,14 @@ use Modules\Carts\Actions\UpdateCartAction;
 use Modules\Carts\Models\Cart;
 use Modules\Carts\Models\CartItem;
 use Modules\Carts\Services\CartService;
+use Modules\Core\Exceptions\ApiException;
 use Modules\Products\Models\Product;
 
 test("update_cart_fails_if_quantity_less_than_one", function () {
     $cartService = new CartService(Cart::factory()->create());
     $action = new UpdateCartAction($cartService);
 
-    $this->expectException(\Exception::class);
+    $this->expectException(ApiException::class);
     $action->handle(
         $cartItem = CartItem::factory()->for($cartService->cart)->create(),
         -1
@@ -35,7 +36,7 @@ test(
         $cartService->refresh();
         expect($cartService->cart->totals->items)->toBe(1);
 
-        $this->expectException(\Exception::class);
+        $this->expectException(ApiException::class);
         $action->handle($cartItem, 3);
     }
 );
@@ -55,7 +56,7 @@ test("update_cart_using_product_fails_if_product_not_in_cart", function () {
     $cartService = new CartService(Cart::factory()->create());
     $action = new UpdateCartAction($cartService);
 
-    $this->expectException(\Exception::class);
+    $this->expectException(ApiException::class);
     $action->usingProduct(Product::factory()->create(), 3);
 });
 

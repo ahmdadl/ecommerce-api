@@ -4,6 +4,7 @@ namespace Modules\Carts\Actions;
 
 use Modules\Carts\Models\CartItem;
 use Modules\Carts\Services\CartService;
+use Modules\Core\Exceptions\ApiException;
 use Modules\Products\Models\Product;
 
 class UpdateCartAction
@@ -13,11 +14,11 @@ class UpdateCartAction
     public function handle(CartItem $cartItem, int $quantity)
     {
         if ($quantity < 1) {
-            throw new \Exception("Quantity must be at least 1");
+            throw new ApiException("Quantity must be at least 1");
         }
 
         if ($cartItem->product->stock < $quantity) {
-            throw new \Exception(
+            throw new ApiException(
                 "Product is out of stock, you can not add more than " .
                     $cartItem->product->stock
             );
@@ -34,7 +35,7 @@ class UpdateCartAction
         $cartItem = $this->cartService->findCartItemByProduct($product);
 
         if (!$cartItem) {
-            throw new \Exception("Product not found in cart");
+            throw new ApiException("Product not found in cart");
         }
 
         return $this->handle($cartItem, $quantity);

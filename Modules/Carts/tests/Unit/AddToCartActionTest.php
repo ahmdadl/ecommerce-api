@@ -3,13 +3,14 @@
 use Modules\Carts\Actions\AddToCartAction;
 use Modules\Carts\Models\Cart;
 use Modules\Carts\Services\CartService;
+use Modules\Core\Exceptions\ApiException;
 use Modules\Products\Models\Product;
 
 test("add_to_cart_fail_if_quantity_less_than_one", function () {
     $cartService = new CartService(Cart::factory()->create());
     $action = new AddToCartAction($cartService);
 
-    $this->expectException(\Exception::class);
+    $this->expectException(ApiException::class);
 
     $action->handle(Product::factory()->create(), 0);
 
@@ -20,7 +21,7 @@ test("add_to_cart_fail_if_product_out_of_stock", function () {
     $cartService = new CartService(Cart::factory()->create());
     $action = new AddToCartAction($cartService);
 
-    $this->expectException(\Exception::class);
+    $this->expectException(ApiException::class);
 
     $action->handle(Product::factory()->create(["stock" => 1]), 2);
 

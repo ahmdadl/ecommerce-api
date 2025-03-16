@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Carbon;
+use Modules\Core\Exceptions\ApiException;
 use Modules\Coupons\Actions\CalculateCouponDiscountAction;
 use Modules\Coupons\Actions\ValidateCouponAction;
 use Modules\Coupons\Actions\CalculateCoupondiscountedPriceAction;
@@ -78,7 +79,7 @@ it("validates if discounted price larger than max discount", function () {
     expect($discountedPrice)->toBe(150.0);
 
     expect(fn() => $this->validator->handle($coupon, 100.0))->toThrow(
-        \Exception::class
+        ApiException::class
     );
 });
 
@@ -89,7 +90,7 @@ it("throws InvalidArgumentException for negative total price", function () {
     ]);
 
     expect(fn() => $this->validator->handle($coupon, -50.0))->toThrow(
-        \Exception::class,
+        ApiException::class,
         __("coupons::t.invalid_total_price")
     );
 });

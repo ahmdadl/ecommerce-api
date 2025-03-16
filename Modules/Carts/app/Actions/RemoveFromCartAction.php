@@ -4,6 +4,7 @@ namespace Modules\Carts\Actions;
 
 use Modules\Carts\Models\CartItem;
 use Modules\Carts\Services\CartService;
+use Modules\Core\Exceptions\ApiException;
 use Modules\Products\Models\Product;
 
 class RemoveFromCartAction
@@ -23,7 +24,7 @@ class RemoveFromCartAction
         $cartItem = $this->cartService->findCartItemByProduct($product);
 
         if (!$cartItem) {
-            throw new \Exception("Product not found in cart");
+            throw new ApiException("Product not found in cart");
         }
 
         return $this->handle($cartItem);

@@ -3,6 +3,7 @@
 namespace Modules\Carts\Actions;
 
 use Modules\Carts\Services\CartService;
+use Modules\Core\Exceptions\ApiException;
 use Modules\Products\Models\Product;
 
 final class AddToCartAction
@@ -12,11 +13,11 @@ final class AddToCartAction
     public function handle(Product $product, int $quantity = 1)
     {
         if ($quantity < 1) {
-            throw new \Exception("Quantity must be at least 1");
+            throw new ApiException("Quantity must be at least 1");
         }
 
         if ($product->stock < $quantity) {
-            throw new \Exception(
+            throw new ApiException(
                 "Product is out of stock, you can not add more than " .
                     $product->stock
             );
