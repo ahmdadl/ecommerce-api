@@ -9,8 +9,8 @@ class RegisterUserAction
 {
     public function handle(array $data): ?User
     {
-        $data["name"] = $data["firstName"] . " " . $data["lastName"];
-        unset($data["firstName"], $data["lastName"]);
+        $data["name"] = $data["first_name"] . " " . $data["last_name"];
+        unset($data["first_name"], $data["last_name"]);
 
         $user = User::create($data);
 

@@ -15,8 +15,8 @@ return new class extends Migration {
             $table->foreignUlid("user_id")->constrained();
             $table->foreignUlid("government_id")->constrained();
             $table->foreignId("city_id")->constrained();
-            $table->string("firstName", 50);
-            $table->string("lastName", 50);
+            $table->string("first_name", 50);
+            $table->string("last_name", 50);
             $table->string("title", 100)->nullable();
             $table->string("address", 250);
             $table->string("phone", 12);

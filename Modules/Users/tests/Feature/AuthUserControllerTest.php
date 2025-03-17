@@ -68,8 +68,8 @@ test("guest_cannot_register_with_invalid_data", function () {
     asGuest();
 
     postJson(route("api.auth.register"))
-        ->assertJsonValidationErrorFor("firstName")
-        ->assertJsonValidationErrorFor("lastName")
+        ->assertJsonValidationErrorFor("first_name")
+        ->assertJsonValidationErrorFor("last_name")
         ->assertJsonValidationErrorFor("email")
         ->assertJsonValidationErrorFor("phone")
         ->assertJsonValidationErrorFor("password");
@@ -79,8 +79,8 @@ test("guest_can_register_with_valid_data", function () {
     asGuest();
 
     postJson(route("api.auth.register"), [
-        "firstName" => "John",
-        "lastName" => "Doe",
+        "first_name" => "John",
+        "last_name" => "Doe",
         "email" => fake()->unique()->safeEmail,
         "phone" => "01143456576",
         "password" => ($password = "123123123"),

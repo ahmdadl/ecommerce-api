@@ -26,8 +26,8 @@ class AddressFactory extends Factory
             "city_id" => fn() => \Modules\Cities\Models\City::factory()->for(
                 $government
             ),
-            "firstName" => fake()->name,
-            "lastName" => fake()->name,
+            "first_name" => fake()->name,
+            "last_name" => fake()->name,
             "title" => fake()->sentence(1),
             "address" => fake()->address,
             "phone" => "201034" . random_int(100000, 999999),
