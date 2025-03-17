@@ -32,7 +32,7 @@ class UserResource extends Resource
         return [
             F\TextInput::make("name")->required()->maxLength(50),
             F\TextInput::make("email")->email()->required()->maxLength(100),
-            F\TextInput::make("phoneNumber")
+            F\TextInput::make("phone")
                 ->translateLabel()
                 ->nullable()
                 ->maxLength(12),
@@ -63,9 +63,7 @@ class UserResource extends Resource
             T\TextColumn::make("email")
                 ->translateLabel()
                 ->url(fn(User $record) => "mailto:{$record->email}"),
-            T\TextColumn::make("phoneNumber")
-                ->translateLabel()
-                ->toggleable(true),
+            T\TextColumn::make("phone")->translateLabel()->toggleable(true),
             T\IconColumn::make("is_active")
                 ->translateLabel()
                 ->boolean()
@@ -120,18 +118,18 @@ class UserResource extends Resource
                     )
                 ),
 
-            // Filter for phoneNumber
-            Filter::make("phoneNumber")
+            // Filter for phone
+            Filter::make("phone")
                 ->form([
-                    F\TextInput::make("phoneNumber")
+                    F\TextInput::make("phone")
                         ->label("Search Phone")
                         ->placeholder("Enter phone to search"),
                 ])
                 ->query(
                     fn(Builder $query, array $data): Builder => $query->when(
-                        $data["phoneNumber"],
+                        $data["phone"],
                         fn(Builder $query, $phone) => $query->where(
-                            "phoneNumber",
+                            "phone",
                             "like",
                             "%{$phone}%"
                         )

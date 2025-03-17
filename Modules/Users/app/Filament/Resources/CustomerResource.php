@@ -50,7 +50,7 @@ class CustomerResource extends Resource
             I\TextEntry::make("created_at")->label(__("joinedAt")),
             I\TextEntry::make("name")->translateLabel(),
             I\TextEntry::make("email")->translateLabel(),
-            I\TextEntry::make("phoneNumber")->translateLabel(),
+            I\TextEntry::make("phone")->translateLabel(),
             I\IconEntry::make("is_active")->translateLabel()->boolean(),
             I\TextEntry::make("gender")
                 ->translateLabel()

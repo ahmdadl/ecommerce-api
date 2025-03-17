@@ -16,7 +16,7 @@ return new class extends Migration {
             $table->uid();
             $table->string("name", 100);
             $table->string("email", 100)->unique();
-            $table->string("phoneNumber", 15)->nullable()->unique();
+            $table->string("phone", 15)->nullable()->unique();
             $table->string("password");
             $table->rememberToken();
             $table->enum("role", UserRole::values())->nullable();

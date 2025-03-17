@@ -3,6 +3,7 @@
 namespace Modules\Users\Http\Requests\Profile;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Modules\Core\Rules\PhoneNumber;
 use Modules\Users\Enums\UserGender;
 
 class UpdateProfileRequest extends FormRequest
@@ -17,9 +18,12 @@ class UpdateProfileRequest extends FormRequest
             "email" =>
                 "required|email|max:150|unique:users,email," .
                 auth("customer")->id(),
-            "phoneNumber" =>
-                "required|string|max:20|unique:users,phoneNumber," .
-                auth("customer")->id(),
+            "phone" => [
+                "required",
+                "string",
+                new PhoneNumber(),
+                "unique:users,phone," . auth("customer")->id(),
+            ],
             "gender" => "required|enum:" . UserGender::class,
         ];
     }

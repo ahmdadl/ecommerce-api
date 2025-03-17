@@ -15,6 +15,7 @@
         "coolsam/modules": "^4.1",
         "cviebrock/eloquent-sluggable": "^11.0",
         "dasundev/livewire-dropzone": "^2.0",
+        "giggsey/libphonenumber-for-php": "^8.13",
         "laravel/framework": "^11.31",
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.9",

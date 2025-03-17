@@ -3,6 +3,7 @@
 namespace Modules\Users\Http\Requests\Auth;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Modules\Core\Rules\PhoneNumber;
 
 class RegisterUserRequest extends FormRequest
 {
@@ -15,7 +16,12 @@ class RegisterUserRequest extends FormRequest
             "firstName" => "required|string|max:150",
             "lastName" => "required|string|max:150",
             "email" => "required|string|email|max:150|unique:users",
-            "phoneNumber" => "required|string|max:12",
+            "phone" => [
+                "required",
+                "string",
+                new PhoneNumber(),
+                "unique:users",
+            ],
             "password" => "required|string|min:8|max:150|confirmed",
         ];
     }

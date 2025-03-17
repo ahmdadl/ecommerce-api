@@ -79,5 +79,6 @@
     "Create User": "Create User",
     "New city": "New City",
     "cities": "Cities",
-    "governments": "Governments"
+    "governments": "Governments",
+    "invalid_phone": "Invalid phone number format"
 }

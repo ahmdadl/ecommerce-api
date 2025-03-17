@@ -71,7 +71,7 @@ test("guest_cannot_register_with_invalid_data", function () {
         ->assertJsonValidationErrorFor("firstName")
         ->assertJsonValidationErrorFor("lastName")
         ->assertJsonValidationErrorFor("email")
-        ->assertJsonValidationErrorFor("phoneNumber")
+        ->assertJsonValidationErrorFor("phone")
         ->assertJsonValidationErrorFor("password");
 });
 
@@ -82,7 +82,7 @@ test("guest_can_register_with_valid_data", function () {
         "firstName" => "John",
         "lastName" => "Doe",
         "email" => fake()->unique()->safeEmail,
-        "phoneNumber" => "123123123",
+        "phone" => "01143456576",
         "password" => ($password = "123123123"),
         "password_confirmation" => $password,
     ])
