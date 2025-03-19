@@ -80,5 +80,7 @@
     "New city": "New City",
     "cities": "Cities",
     "governments": "Governments",
-    "invalid_phone": "Invalid phone number format"
+    "invalid_phone": "Invalid phone number format",
+    "Cash on Delivery": "Cash on Delivery",
+    "Pay with Fawry": "Pay with Fawry"
 }

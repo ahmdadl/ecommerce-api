@@ -11,7 +11,7 @@ class RemoveFromCartAction
 {
     public function __construct(public readonly CartService $cartService) {}
 
-    public function handle(CartItem $cartItem)
+    public function handle(CartItem $cartItem): void
     {
         $this->cartService->removeItem($cartItem);
     }
@@ -19,7 +19,7 @@ class RemoveFromCartAction
     /**
      * use product to get cart item
      */
-    public function usingProduct(Product $product)
+    public function usingProduct(Product $product): void
     {
         $cartItem = $this->cartService->findCartItemByProduct($product);
 
@@ -27,6 +27,6 @@ class RemoveFromCartAction
             throw new ApiException(__("carts::t.product_not_found_in_cart"));
         }
 
-        return $this->handle($cartItem);
+        $this->handle($cartItem);
     }
 }

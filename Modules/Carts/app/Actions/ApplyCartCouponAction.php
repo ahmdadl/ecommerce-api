@@ -10,7 +10,7 @@ final class ApplyCartCouponAction
 {
     public function __construct(public readonly CartService $cartService) {}
 
-    public function handle(Coupon $coupon)
+    public function handle(Coupon $coupon): void
     {
         $totalPrice = $this->cartService->cart->totals->total;
 

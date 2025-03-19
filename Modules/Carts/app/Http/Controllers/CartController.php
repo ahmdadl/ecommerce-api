@@ -18,6 +18,7 @@ use Modules\Addresses\Models\Address;
 use Modules\Carts\Actions\SetCartAddressAction;
 use Modules\Coupons\Actions\ValidateCouponAction;
 use Modules\Coupons\Models\Coupon;
+use Modules\Payments\Models\PaymentMethod;
 
 class CartController extends Controller
 {
@@ -34,14 +35,18 @@ class CartController extends Controller
 
         $response["cart"] = new CartResource($cartService->cart);
 
-        $loadedArray = $request->array("with") ?? [];
+        $loadedArray = $request->array("with");
 
         if (in_array("addresses", $loadedArray)) {
             $response["addresses"] = AddressResource::collection(
-                Address::where("user_id", user()->id)
+                Address::where("user_id", user()?->id)
                     ->with(["government", "city"])
                     ->get()
             );
+        }
+
+        if (in_array("paymentMethods", $loadedArray)) {
+            $response["paymentMethods"] = PaymentMethod::active()->get();
         }
 
         return api()->success($response);

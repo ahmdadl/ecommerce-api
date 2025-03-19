@@ -11,7 +11,7 @@ class UpdateCartAction
 {
     public function __construct(public readonly CartService $cartService) {}
 
-    public function handle(CartItem $cartItem, int $quantity)
+    public function handle(CartItem $cartItem, int $quantity): void
     {
         if ($quantity < 1) {
             throw new ApiException(
@@ -19,10 +19,10 @@ class UpdateCartAction
             );
         }
 
-        if ($cartItem->product->stock < $quantity) {
+        if ($cartItem->product?->stock < $quantity) {
             throw new ApiException(
                 __("carts::t.product_stock_is_not_enough", [
-                    "stock" => $cartItem->product->stock,
+                    "stock" => $cartItem->product?->stock,
                 ])
             );
         }
@@ -33,7 +33,7 @@ class UpdateCartAction
     /**
      * use product to get cart item
      */
-    public function usingProduct(Product $product, int $quantity)
+    public function usingProduct(Product $product, int $quantity): void
     {
         $cartItem = $this->cartService->findCartItemByProduct($product);
 
@@ -41,6 +41,6 @@ class UpdateCartAction
             throw new ApiException(__("carts::t.product_not_found_in_cart"));
         }
 
-        return $this->handle($cartItem, $quantity);
+        $this->handle($cartItem, $quantity);
     }
 }

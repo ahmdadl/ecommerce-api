@@ -32,7 +32,7 @@ class Cart extends Model
 
     /**
      * cart owner
-     * @return MorphTo<\Modules\Users\Models\User|\Modules\Guests\Models\Guest, $this>
+     * @return MorphTo<Model, $this>
      */
     public function cartable(): MorphTo
     {

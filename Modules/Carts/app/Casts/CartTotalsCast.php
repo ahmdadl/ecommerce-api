@@ -6,6 +6,9 @@ use Modules\Carts\ValueObjects\CartTotals;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 use InvalidArgumentException;
 
+/**
+ * @implements CastsAttributes<CartTotals, CartTotals>
+ */
 class CartTotalsCast implements CastsAttributes
 {
     // Convert the JSON from the database to a CartTotals object
@@ -15,10 +18,12 @@ class CartTotalsCast implements CastsAttributes
         $value,
         array $attributes
     ): CartTotals {
+        // @phpstan-ignore-next-line
         if (!json_validate($value)) {
             throw new \Exception("Cart Totals value is invalid JSON format");
         }
 
+        // @phpstan-ignore-next-line
         return CartTotals::fromArray(json_decode($value, true));
     }
 
@@ -31,6 +36,7 @@ class CartTotalsCast implements CastsAttributes
             );
         }
 
+        // @phpstan-ignore-next-line
         return json_encode($value->toArray());
     }
 }

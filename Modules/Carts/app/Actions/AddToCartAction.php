@@ -10,7 +10,7 @@ final class AddToCartAction
 {
     public function __construct(public readonly CartService $cartService) {}
 
-    public function handle(Product $product, int $quantity = 1)
+    public function handle(Product $product, int $quantity = 1): void
     {
         if ($quantity < 1) {
             throw new ApiException(

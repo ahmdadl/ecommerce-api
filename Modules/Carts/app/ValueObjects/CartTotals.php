@@ -147,7 +147,7 @@ final class CartTotals
 
         // calculate shipping
         if ($cart->address) {
-            $shipping = $cart->address->government->shipping_fees;
+            $shipping = $cart->address->government->shipping_fees ?? 0;
             $total = round($total + $shipping, 2);
         }
 
@@ -170,6 +170,6 @@ final class CartTotals
      */
     public function __toString(): string
     {
-        return (string) json_encode($this->toArray() ?? []);
+        return (string) json_encode($this->toArray());
     }
 }

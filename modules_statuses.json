@@ -12,5 +12,6 @@
     "Governments": true,
     "Cities": true,
     "Addresses": true,
-    "Carts": true
+    "Carts": true,
+    "Payments": true
 }

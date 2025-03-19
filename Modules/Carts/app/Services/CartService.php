@@ -23,7 +23,7 @@ final readonly class CartService
     /**
      * Adds a specified quantity of a product to the cart, creating a new CartItem entry in the database.
      */
-    public function addItem(Product $product, int $quantity = 1)
+    public function addItem(Product $product, int $quantity = 1): void
     {
         DB::transaction(function () use ($product, $quantity) {
             CartItem::create([
@@ -64,6 +64,7 @@ final readonly class CartService
                 ->update([
                     "quantity" => $quantity,
                     "totals" => CartTotals::calculateFromProduct(
+                        // @phpstan-ignore-next-line
                         $cartItem->product,
                         $quantity
                     ),
@@ -191,7 +192,7 @@ final readonly class CartService
         return $this->cart
             ->items()
             ->where("product_id", $product->id)
-            ->isNotEmpty();
+            ->exists();
     }
 
     /**
@@ -224,20 +225,23 @@ final readonly class CartService
      */
     private function calculateItemTotals(): self
     {
+        // @phpstan-ignore-next-line
         $updatedItems = $this->cart
             ->loadMissing(["coupon", "address"])
-            ->items->map(function (CartItem $cartItem) {
-                return [
+            ->items->map(
+                // @phpstan-ignore-next-line
+                fn(CartItem $cartItem): array => [
                     "id" => $cartItem->id,
                     "cart_id" => $cartItem->cart_id,
                     "product_id" => $cartItem->product_id,
                     "quantity" => $cartItem->quantity,
                     "totals" => (string) CartTotals::calculateFromProduct(
+                        // @phpstan-ignore-next-line
                         $cartItem->product,
                         $cartItem->quantity
                     ),
-                ];
-            });
+                ]
+            );
 
         if ($updatedItems->isNotEmpty()) {
             CartItem::upsert(
