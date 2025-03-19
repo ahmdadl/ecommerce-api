@@ -19,6 +19,7 @@ class PhoneNumber implements ValidationRule
         Closure $fail
     ): void {
         $phoneUtil = PhoneNumberUtil::getInstance();
+        /** @var string $value */
         $number = $phoneUtil->parse($value, $this->countryCode);
 
         if (!$phoneUtil->isValidNumber($number)) {
