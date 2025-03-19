@@ -228,3 +228,28 @@ if (!function_exists("cartService")) {
         return app(Modules\Carts\Services\CartService::class);
     }
 }
+
+if (!function_exists("parsePhone")) {
+    function parsePhone(
+        string $phoneNumber,
+        string $countryCode = "EG"
+    ): object|false {
+        $phoneUtil = \libphonenumber\PhoneNumberUtil::getInstance();
+        try {
+            $phoneProto = $phoneUtil->parse($phoneNumber, $countryCode);
+            if (!$phoneUtil->isValidNumber($phoneProto)) {
+                return false;
+            }
+
+            return (object) [
+                "full" =>
+                    $phoneProto->getCountryCode() .
+                    $phoneProto->getNationalNumber(),
+                "national" => $phoneProto->getNationalNumber(),
+                "country" => $phoneProto->getCountryCode(),
+            ];
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+}
