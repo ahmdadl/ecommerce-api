@@ -19,7 +19,7 @@ return new class extends Migration {
             $table->string("city_name")->nullable();
             $table->float("shipping_fees")->nullable();
             $table->string("name", 50);
-            $table->string("title", 100)->nullable();
+            $table->string("title", 50)->nullable();
             $table->string("address", 250);
             $table->string("phone", length: 15);
             $table->timestamps();

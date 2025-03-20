@@ -16,11 +16,11 @@ return new class extends Migration {
             $table->uid();
             $table->foreignUlid("order_id")->constrained();
             $table->enum(
-                "paymentMethod",
+                "payment_method",
                 PaymentMethod::all()->pluck("code")->toArray()
             );
             $table
-                ->enum("paymentStatus", OrderPaymentStatus::values())
+                ->enum("payment_status", OrderPaymentStatus::values())
                 ->default(OrderPaymentStatus::PENDING->value);
             $table->json("payment_details")->nullable();
             $table->timestamps();

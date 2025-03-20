@@ -23,14 +23,14 @@ return new class extends Migration {
             $table->foreignUlid("address_id")->constrained("order_addresses");
             $table->json("totals")->nullable();
             $table->enum(
-                "paymentMethod",
+                "payment_method",
                 PaymentMethod::all()->pluck("code")->toArray()
             );
             $table
                 ->enum("status", OrderStatus::values())
                 ->default(OrderStatus::PENDING->value);
             $table
-                ->enum("paymentStatus", OrderPaymentStatus::values())
+                ->enum("payment_status", OrderPaymentStatus::values())
                 ->default(OrderPaymentStatus::PENDING->value);
             $table->timestamps();
         });

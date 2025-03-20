@@ -26,7 +26,7 @@ class OrderAddressFactory extends Factory
             "city_id" => $address->city_id,
             "city_name" => $address->city_name,
             "shipping_fees" => $address->shipping_fees,
-            "name" => $address->name,
+            "name" => $address->first_name . " " . $address->last_name,
             "title" => $address->title,
             "address" => $address->address,
             "phone" => $address->phone,

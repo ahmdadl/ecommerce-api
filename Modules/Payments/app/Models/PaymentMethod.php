@@ -11,25 +11,21 @@ class PaymentMethod extends Model
 {
     use Sushi, HasActiveState;
 
-    protected array $appends = ["name"];
+    protected $appends = ["name"];
 
-    protected array $hidden = ["localizedName", "is_active"];
+    protected $hidden = ["localizedName", "is_active"];
 
     protected array $rows = [
         [
             "code" => "cod",
-            "localizedName" => [
-                "en" => "Cash on Delivery",
-                "ar" => "الدفع عند الاستلام",
-            ],
+            "name_en" => "Cash on Delivery",
+            "name_ar" => "الدفع عند الاستلام",
             "is_active" => true,
         ],
         [
             "code" => "fawry",
-            "localizedName" => [
-                "en" => "Pay with Fawry",
-                "ar" => "الدفع Fawry ",
-            ],
+            "name_en" => "Pay with Fawry",
+            "name_ar" => "الدفع Fawry ",
             "is_active" => true,
         ],
     ];
@@ -41,7 +37,7 @@ class PaymentMethod extends Model
     public function name(): Attribute
     {
         return Attribute::make(
-            get: fn() => $this->localizedName[app()->getLocale()]
+            get: fn() => $this->attributes["name_" . app()->getLocale()]
         );
     }
 }

@@ -21,10 +21,10 @@ class PaymentAttemptFactory extends Factory
     {
         return [
             "order_id" => fn() => Order::factory(),
-            "paymentMethod" => fake()->randomElement(
+            "payment_method" => fake()->randomElement(
                 PaymentMethod::all()->pluck("code")
             ),
-            "paymentStatus" => OrderPaymentStatus::PENDING,
+            "payment_status" => OrderPaymentStatus::PENDING,
             "payment_details" => ["id" => fake()->slug(3)],
         ];
     }

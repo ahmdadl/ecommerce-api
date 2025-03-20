@@ -3,6 +3,7 @@
 namespace Modules\Orders\Models;
 
 use Illuminate\Database\Eloquent\Attributes\UseFactory;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -33,6 +34,19 @@ class Order extends Model
     }
 
     /**
+     * @return Attribute<PaymentMethod, void>
+     */
+    public function paymentMethodRecord(): Attribute
+    {
+        return Attribute::make(
+            fn(?string $value, array $attributes) => PaymentMethod::firstWhere(
+                "code",
+                $attributes["payment_method"]
+            )
+        );
+    }
+
+    /**
      * @return BelongsTo<User, $this>
      */
     public function user(): BelongsTo
@@ -41,27 +55,19 @@ class Order extends Model
     }
 
     /**
-     * @return BelongsTo<Coupon, $this>
+     * @return BelongsTo<OrderCoupon, $this>
      */
     public function coupon(): BelongsTo
     {
-        return $this->belongsTo(Coupon::class);
+        return $this->belongsTo(OrderCoupon::class);
     }
 
     /**
-     * @return BelongsTo<Address, $this>
+     * @return BelongsTo<OrderAddress, $this>
      */
     public function address(): BelongsTo
     {
-        return $this->belongsTo(Address::class);
-    }
-
-    /**
-     * @return BelongsTo<PaymentMethod, $this>
-     */
-    public function paymentMethod(): BelongsTo
-    {
-        return $this->belongsTo(PaymentMethod::class);
+        return $this->belongsTo(OrderAddress::class);
     }
 
     /**

@@ -30,9 +30,9 @@ class OrderFactory extends Factory
             "coupon_id" => fn() => OrderCoupon::factory(),
             "address_id" => fn() => OrderAddress::factory(),
             "totals" => CartTotals::default(),
-            "paymentMethod" => PaymentMethod::inRandomOrder()->first()->code,
+            "payment_method" => PaymentMethod::inRandomOrder()->first()->code,
             "status" => OrderStatus::PENDING,
-            "paymentStatus" => OrderPaymentStatus::PENDING,
+            "payment_status" => OrderPaymentStatus::PENDING,
         ];
     }
 }
