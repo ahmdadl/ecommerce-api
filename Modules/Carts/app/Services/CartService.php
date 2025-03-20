@@ -8,6 +8,7 @@ use Modules\Carts\Models\Cart;
 use Modules\Carts\Models\CartItem;
 use Modules\Carts\ValueObjects\CartTotals;
 use Modules\Coupons\Models\Coupon;
+use Modules\Orders\Models\Order;
 use Modules\Products\Models\Product;
 
 final readonly class CartService
@@ -36,6 +37,8 @@ final readonly class CartService
                 ),
             ]);
 
+            $this->removeAddons();
+
             $this->save();
         });
     }
@@ -47,6 +50,8 @@ final readonly class CartService
     {
         DB::transaction(function () use ($cartItem) {
             $this->cart->items()->where("id", $cartItem->id)->delete();
+
+            $this->removeAddons();
 
             $this->save();
         });
@@ -70,6 +75,8 @@ final readonly class CartService
                     ),
                 ]);
 
+            $this->removeAddons();
+
             $this->save();
         });
     }
@@ -84,6 +91,9 @@ final readonly class CartService
                 ->items()
                 ->where("id", $cartItem->id)
                 ->increment("quantity");
+
+            $this->removeAddons();
+
             $this->save();
         });
     }
@@ -105,6 +115,8 @@ final readonly class CartService
                     ),
                 ]);
 
+            $this->removeAddons();
+
             $this->save();
         });
     }
@@ -117,6 +129,8 @@ final readonly class CartService
         DB::transaction(function () use ($address) {
             $this->cart->setRelation("address", $address);
 
+            $this->removeAddons();
+
             $this->save();
         });
     }
@@ -128,6 +142,8 @@ final readonly class CartService
     {
         DB::transaction(function () {
             $this->cart->setRelation("address", null);
+
+            $this->removeAddons();
 
             $this->save();
         });
@@ -152,6 +168,8 @@ final readonly class CartService
     {
         DB::transaction(function () {
             $this->cart->setRelation("coupon", null);
+
+            $this->removeAddons();
 
             $this->save();
         });
@@ -201,6 +219,40 @@ final readonly class CartService
     public function findCartItemByProduct(Product $product): ?CartItem
     {
         return $this->cart->items()->firstWhere("product_id", $product->id);
+    }
+
+    /**
+     * set order
+     */
+    public function setOrder(Order $order): void
+    {
+        DB::transaction(function () use ($order) {
+            $this->cart->setRelation("order", $order);
+
+            $this->save();
+        });
+    }
+
+    /**
+     * remove order
+     */
+    public function removeOrder(): void
+    {
+        DB::transaction(function () {
+            $this->cart->setRelation("order", null);
+
+            $this->save();
+        });
+    }
+
+    /**
+     * remove any cart addons on any action
+     */
+    private function removeAddons(): void
+    {
+        $this->cart->setRelation("coupon", null);
+
+        $this->cart->setRelation("order", null);
     }
 
     /**

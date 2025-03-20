@@ -15,6 +15,7 @@ return new class extends Migration {
             $table->morphs("cartable");
             $table->foreignId("address_id")->nullable()->constrained();
             $table->foreignId("coupon_id")->nullable()->constrained();
+            $table->foreignId("order_id")->nullable()->constrained();
             $table->json("totals")->nullable();
             $table->timestamps();
         });

@@ -13,6 +13,7 @@ use Modules\Addresses\Models\Address;
 use Modules\Carts\Casts\CartTotalsCast;
 use Modules\Carts\Database\Factories\CartFactory;
 use Modules\Coupons\Models\Coupon;
+use Modules\Orders\Models\Order;
 
 #[UseFactory(CartFactory::class)]
 class Cart extends Model
@@ -64,5 +65,13 @@ class Cart extends Model
     public function address(): BelongsTo
     {
         return $this->belongsTo(Address::class);
+    }
+
+    /**
+     * @return BelongsTo<Order, $this>
+     */
+    public function order(): BelongsTo
+    {
+        return $this->belongsTo(Order::class);
     }
 }
