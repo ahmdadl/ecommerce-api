@@ -3,6 +3,15 @@
 namespace Modules\Orders\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Modules\Carts\ValueObjects\CartTotals;
+use Modules\Coupons\Models\Coupon;
+use Modules\Orders\Enums\OrderPaymentStatus;
+use Modules\Orders\Enums\OrderStatus;
+use Modules\Orders\Models\OrderAddress;
+use Modules\Orders\Models\OrderCoupon;
+use Modules\Payments\Models\PaymentMethod;
+use Modules\Users\Database\Factories\UserFactory;
+use Modules\Users\Models\User;
 
 class OrderFactory extends Factory
 {
@@ -16,7 +25,14 @@ class OrderFactory extends Factory
      */
     public function definition(): array
     {
-        return [];
+        return [
+            "user_id" => fn() => User::factory()->customer(),
+            "coupon_id" => fn() => OrderCoupon::factory(),
+            "address_id" => fn() => OrderAddress::factory(),
+            "totals" => CartTotals::default(),
+            "paymentMethod" => PaymentMethod::inRandomOrder()->first()->code,
+            "status" => OrderStatus::PENDING,
+            "paymentStatus" => OrderPaymentStatus::PENDING,
+        ];
     }
 }
-

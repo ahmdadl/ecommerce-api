@@ -3,6 +3,7 @@
 namespace Modules\Orders\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Modules\Addresses\Models\Address;
 
 class OrderAddressFactory extends Factory
 {
@@ -16,7 +17,19 @@ class OrderAddressFactory extends Factory
      */
     public function definition(): array
     {
-        return [];
+        $address = Address::factory()->create();
+
+        return [
+            "address_id" => $address->id,
+            "user_id" => $address->user_id,
+            "government_id" => $address->government_id,
+            "city_id" => $address->city_id,
+            "city_name" => $address->city_name,
+            "shipping_fees" => $address->shipping_fees,
+            "name" => $address->name,
+            "title" => $address->title,
+            "address" => $address->address,
+            "phone" => $address->phone,
+        ];
     }
 }
-
