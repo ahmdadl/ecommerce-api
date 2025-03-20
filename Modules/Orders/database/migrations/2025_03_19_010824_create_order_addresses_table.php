@@ -10,18 +10,19 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create("addresses", function (Blueprint $table) {
+        Schema::create("order_addresses", function (Blueprint $table) {
             $table->uid();
+            $table->foreignUlid("address_id")->constrained();
             $table->foreignUlid("user_id")->constrained();
             $table->foreignUlid("government_id")->constrained();
-            $table->foreignUlid("city_id")->constrained();
-            $table->string("first_name", 50);
-            $table->string("last_name", 50);
+            $table->foreignId("city_id")->constrained();
+            $table->string("city_name")->nullable();
+            $table->float("shipping_fees")->nullable();
+            $table->string("name", 50);
             $table->string("title", 100)->nullable();
             $table->string("address", 250);
-            $table->string("phone", 12);
+            $table->string("phone", length: 15);
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
@@ -30,6 +31,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists("addresses");
+        Schema::dropIfExists("order_addresses");
     }
 };

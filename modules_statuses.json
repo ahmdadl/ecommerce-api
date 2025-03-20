@@ -13,5 +13,6 @@
     "Cities": true,
     "Addresses": true,
     "Carts": true,
-    "Payments": true
+    "Payments": true,
+    "Orders": true
 }
