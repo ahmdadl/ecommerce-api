@@ -11,6 +11,10 @@ class PaymentMethod extends Model
 {
     use Sushi, HasActiveState;
 
+    public const CASH_ON_DELIVERY = "cod";
+    public const FAWRY = "fawry";
+    public const INSTAPAY = "instapay";
+
     protected $appends = ["name"];
 
     protected $hidden = ["localizedName", "is_active"];
@@ -25,7 +29,13 @@ class PaymentMethod extends Model
         [
             "code" => "fawry",
             "name_en" => "Pay with Fawry",
-            "name_ar" => "الدفع Fawry ",
+            "name_ar" => "الدفع بفورى ",
+            "is_active" => false,
+        ],
+        [
+            "code" => "instapay",
+            "name_en" => "Pay with Instapay",
+            "name_ar" => "الدفع بانستاباى ",
             "is_active" => true,
         ],
     ];
@@ -54,7 +64,9 @@ class PaymentMethod extends Model
      */
     public function isCashOnDelivery(): Attribute
     {
-        return Attribute::make(get: fn() => $this->code === "cod");
+        return Attribute::make(
+            get: fn() => $this->code === "cod"
+        )->shouldCache();
     }
 
     /**
@@ -62,6 +74,18 @@ class PaymentMethod extends Model
      */
     public function isFawry(): Attribute
     {
-        return Attribute::make(get: fn() => $this->code === "fawry");
+        return Attribute::make(
+            get: fn() => $this->code === "fawry"
+        )->shouldCache();
+    }
+
+    /**
+     * @return Attribute<bool, void>
+     */
+    public function isInstapay(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => $this->code === "instapay"
+        )->shouldCache();
     }
 }

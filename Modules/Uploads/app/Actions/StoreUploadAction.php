@@ -3,10 +3,13 @@
 namespace Modules\Uploads\Actions;
 
 use Illuminate\Http\UploadedFile;
+use Modules\Core\Traits\HasActionHelpers;
 use Modules\Uploads\Models\Upload;
 
 class StoreUploadAction
 {
+    use HasActionHelpers;
+
     public function handle(UploadedFile $file): Upload
     {
         $originalName = $file->getClientOriginalName();

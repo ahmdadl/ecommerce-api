@@ -15,6 +15,12 @@ class CreateOrderRequest extends FormRequest
     {
         return [
             "payment_method" => ["required", "string", "max:50"],
+            "receipt" => [
+                "required_if:payment_method," . PaymentMethod::INSTAPAY,
+                "string",
+                "max:255",
+                "exists:uploads,id",
+            ],
         ];
     }
 
