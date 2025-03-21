@@ -28,7 +28,7 @@ class CreateOrderController extends Controller
         /** @var PaymentMethod $paymentMethod */
         $paymentMethod = $request->paymentMethodRecord;
 
-        if ($paymentMethod->isCashOnDelivery()) {
+        if (!$paymentMethod->is_online) {
             cartService()->destroy();
 
             return api()->record(new OrderResource($order));

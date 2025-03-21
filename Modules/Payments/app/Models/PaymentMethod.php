@@ -26,6 +26,7 @@ class PaymentMethod extends Model
             "name_ar" => "الدفع عند الاستلام",
             "is_active" => true,
             "require_receipt" => false,
+            "is_online" => false,
         ],
         [
             "code" => "fawry",
@@ -33,6 +34,7 @@ class PaymentMethod extends Model
             "name_ar" => "الدفع بفورى ",
             "is_active" => false,
             "require_receipt" => true,
+            "is_online" => false,
         ],
         [
             "code" => "instapay",
@@ -40,6 +42,7 @@ class PaymentMethod extends Model
             "name_ar" => "الدفع بانستاباى ",
             "is_active" => true,
             "require_receipt" => true,
+            "is_online" => false,
         ],
     ];
 
@@ -49,6 +52,14 @@ class PaymentMethod extends Model
     public function scopeCode($query, string $code): void
     {
         $query->where("code", $code);
+    }
+
+    /**
+     * scope by is online
+     */
+    public function scopeOnline($query, bool $isOnline = true): void
+    {
+        $query->where("is_online", $isOnline);
     }
 
     /**
