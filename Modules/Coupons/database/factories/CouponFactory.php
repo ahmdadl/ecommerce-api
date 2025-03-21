@@ -28,7 +28,7 @@ class CouponFactory extends Factory
                 ->format("Y-m-d"),
             "discount_type" => CouponDiscountType::FIXED,
             "value" => 50,
-            "max_discount" => fake()->optional(0.3)->randomFloat(2, 50, 500),
+            "max_discount" => fake()->optional(0.3)->randomFloat(2, 1000, 5000),
             "used_count" => fake()->numberBetween(0, 50),
             "is_active" => true,
         ];

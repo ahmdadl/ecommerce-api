@@ -24,7 +24,7 @@ class PaymentAttemptFactory extends Factory
             "payment_method" => fake()->randomElement(
                 PaymentMethod::all()->pluck("code")
             ),
-            "payment_status" => OrderPaymentStatus::PENDING,
+            "status" => OrderPaymentStatus::PENDING,
             "payment_details" => ["id" => fake()->slug(3)],
         ];
     }
