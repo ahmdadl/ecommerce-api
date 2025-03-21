@@ -24,6 +24,6 @@ class Upload extends Model
         return Attribute::make(
             // @phpstan-ignore-next-line
             get: fn() => config("app.url") . "/uploads/" . $this->id
-        );
+        )->shouldCache();
     }
 }

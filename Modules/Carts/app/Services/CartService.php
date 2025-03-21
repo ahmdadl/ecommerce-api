@@ -246,6 +246,18 @@ final readonly class CartService
     }
 
     /**
+     * delete cart and cart items
+     */
+    public function destroy(): void
+    {
+        DB::transaction(function () {
+            $this->cart->items()->delete();
+
+            $this->cart->delete();
+        });
+    }
+
+    /**
      * remove any cart addons on any action
      */
     private function removeAddons(): void

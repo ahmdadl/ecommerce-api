@@ -97,7 +97,9 @@ class Product extends Model
      */
     public function isDiscounted(): Attribute
     {
-        return Attribute::make(get: fn() => $this->salePrice < $this->price);
+        return Attribute::make(
+            get: fn() => $this->salePrice < $this->price
+        )->shouldCache();
     }
 
     /**
@@ -111,7 +113,7 @@ class Product extends Model
             get: fn() => $this->salePrice < $this->price
                 ? round($this->price - $this->salePrice, 2)
                 : 0.0
-        );
+        )->shouldCache();
     }
 
     /**

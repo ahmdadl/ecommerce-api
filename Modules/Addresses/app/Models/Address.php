@@ -3,6 +3,7 @@
 namespace Modules\Addresses\Models;
 
 use Illuminate\Database\Eloquent\Attributes\UseFactory;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -18,6 +19,18 @@ class Address extends Model
 {
     /** @use HasFactory<AddressFactory> */
     use HasFactory, HasUlids, SoftDeletes;
+
+    /**
+     * @return Attribute<string, void>
+     */
+    public function name(): Attribute
+    {
+        return Attribute::make(
+            fn(mixed $value, array $attrs) => $attrs["first_name"] .
+                " " .
+                $attrs["last_name"]
+        );
+    }
 
     /**
      * @return BelongsTo<User, $this>

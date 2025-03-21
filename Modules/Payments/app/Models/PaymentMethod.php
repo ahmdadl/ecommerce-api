@@ -31,6 +31,14 @@ class PaymentMethod extends Model
     ];
 
     /**
+     * scope by code
+     */
+    public function scopeCode($query, string $code): void
+    {
+        $query->where("code", $code);
+    }
+
+    /**
      * get localized name
      * @return Attribute<string, void>
      */
@@ -39,5 +47,21 @@ class PaymentMethod extends Model
         return Attribute::make(
             get: fn() => $this->attributes["name_" . app()->getLocale()]
         );
+    }
+
+    /**
+     * @return Attribute<bool, void>
+     */
+    public function isCashOnDelivery(): Attribute
+    {
+        return Attribute::make(get: fn() => $this->code === "cod");
+    }
+
+    /**
+     * @return Attribute<bool, void>
+     */
+    public function isFawry(): Attribute
+    {
+        return Attribute::make(get: fn() => $this->code === "fawry");
     }
 }

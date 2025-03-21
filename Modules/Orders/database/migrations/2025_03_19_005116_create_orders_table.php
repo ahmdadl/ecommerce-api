@@ -21,7 +21,7 @@ return new class extends Migration {
                 ->nullable()
                 ->constrained("order_coupons");
             $table->foreignUlid("address_id")->constrained("order_addresses");
-            $table->json("totals")->nullable();
+            $table->json("totals");
             $table->enum(
                 "payment_method",
                 PaymentMethod::all()->pluck("code")->toArray()

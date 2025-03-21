@@ -20,7 +20,7 @@ class OrderAddress extends Model
     /** @use HasFactory<OrderAddressFactory> */
     use HasFactory, HasUlids, HasTranslations;
 
-    protected array $translatable = ["city_name"];
+    protected array $translatable = ["city_title"];
 
     /**
      * cast fields
@@ -62,5 +62,24 @@ class OrderAddress extends Model
     public function address(): BelongsTo
     {
         return $this->belongsTo(Address::class);
+    }
+
+    /**
+     * create from normal address
+     */
+    public static function createFromAddress(Address $address): OrderAddress
+    {
+        return self::create([
+            "address_id" => $address->id,
+            "user_id" => $address->user_id,
+            "government_id" => $address->government_id,
+            "city_id" => $address->city_id,
+            "city_title" => $address->city->title,
+            "shipping_fees" => $address->government->shipping_fees,
+            "name" => $address->name,
+            "title" => $address->title,
+            "address" => $address->address,
+            "phone" => $address->phone,
+        ]);
     }
 }

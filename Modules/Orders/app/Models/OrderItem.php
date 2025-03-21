@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Carts\Models;
+namespace Modules\Orders\Models;
 
 use Illuminate\Database\Eloquent\Attributes\UseFactory;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
@@ -8,18 +8,18 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Modules\Carts\Casts\CartTotalsCast;
-use Modules\Carts\Database\Factories\CartItemFactory;
+// use Spatie\Translatable\HasTranslations;
+use Modules\Orders\Database\Factories\OrderItemFactory;
 use Modules\Products\Models\Product;
 
-#[UseFactory(CartItemFactory::class)]
-class CartItem extends Model
+#[UseFactory(OrderItemFactory::class)]
+class OrderItem extends Model
 {
-    /** @use HasFactory<CartItemFactory> */
+    /** @use HasFactory<OrderItemFactory> */
     use HasFactory, HasUlids;
 
-    /**
-     * cast fields
-     */
+    protected array $translatable = ["product_title"];
+
     protected function casts(): array
     {
         return [
@@ -29,16 +29,14 @@ class CartItem extends Model
     }
 
     /**
-     * cart
-     * @return BelongsTo<Cart, $this>
+     * @return BelongsTo<Order, $this>
      */
-    public function cart(): BelongsTo
+    public function order(): BelongsTo
     {
-        return $this->belongsTo(Cart::class);
+        return $this->belongsTo(Order::class);
     }
 
     /**
-     * product
      * @return BelongsTo<Product, $this>
      */
     public function product(): BelongsTo

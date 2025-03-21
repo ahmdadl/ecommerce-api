@@ -32,4 +32,18 @@ class OrderCoupon extends Model
     {
         return $this->belongsTo(Coupon::class);
     }
+
+    /**
+     * create from normal coupon
+     */
+    public static function createFromCoupon(Coupon $coupon): OrderCoupon
+    {
+        return self::create([
+            "coupon_id" => $coupon->id,
+            "code" => $coupon->code,
+            "name" => $coupon->name,
+            "discount_type" => $coupon->discount_type,
+            "value" => $coupon->value,
+        ]);
+    }
 }

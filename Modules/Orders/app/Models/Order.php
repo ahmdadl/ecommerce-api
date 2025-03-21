@@ -29,7 +29,7 @@ class Order extends Model
         return [
             "totals" => CartTotalsCast::class,
             "status" => OrderStatus::class,
-            "paymentStatus" => OrderPaymentStatus::class,
+            "payment_status" => OrderPaymentStatus::class,
         ];
     }
 
@@ -43,7 +43,7 @@ class Order extends Model
                 "code",
                 $attributes["payment_method"]
             )
-        );
+        )->shouldCache();
     }
 
     /**
@@ -76,5 +76,13 @@ class Order extends Model
     public function paymentAttempts(): HasMany
     {
         return $this->hasMany(PaymentAttempt::class);
+    }
+
+    /**
+     * @return HasMany<OrderItem, $this>
+     */
+    public function items(): HasMany
+    {
+        return $this->hasMany(OrderItem::class);
     }
 }

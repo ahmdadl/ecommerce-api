@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Modules\Orders\Http\Controllers\OrdersController;
+use Modules\Orders\Http\Controllers\CreateOrderController;
 
 /*
  *--------------------------------------------------------------------------
@@ -12,8 +12,8 @@ use Modules\Orders\Http\Controllers\OrdersController;
  * routes are loaded by the RouteServiceProvider within a group which
  * is assigned the "api" middleware group. Enjoy building your API!
  *
-*/
+ */
 
-Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
-    // Route::apiResource('orders', OrdersController::class)->names('orders');
+Route::middleware(["auth:customer"])->group(function () {
+    Route::post("orders", CreateOrderController::class)->name("orders.store");
 });

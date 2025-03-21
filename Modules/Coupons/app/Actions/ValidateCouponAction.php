@@ -3,11 +3,14 @@
 namespace Modules\Coupons\Actions;
 
 use Modules\Core\Exceptions\ApiException;
+use Modules\Core\Traits\HasActionHelpers;
 use Modules\Coupons\Models\Coupon;
 use Throwable;
 
 class ValidateCouponAction
 {
+    use HasActionHelpers;
+
     public function handle(
         mixed $couponOrCode,
         float $totalPrice
