@@ -13,10 +13,18 @@ class CreateOrderRequest extends FormRequest
      */
     public function rules(): array
     {
+        $paymentMethodsWithReceipt = PaymentMethod::where(
+            "require_receipt",
+            true
+        )
+            ->get()
+            ->pluck("code");
+
         return [
             "payment_method" => ["required", "string", "max:50"],
             "receipt" => [
-                "required_if:payment_method," . PaymentMethod::INSTAPAY,
+                "required_if:payment_method," .
+                $paymentMethodsWithReceipt->implode(","),
                 "string",
                 "max:255",
                 "exists:uploads,id",

@@ -25,18 +25,21 @@ class PaymentMethod extends Model
             "name_en" => "Cash on Delivery",
             "name_ar" => "الدفع عند الاستلام",
             "is_active" => true,
+            "require_receipt" => false,
         ],
         [
             "code" => "fawry",
             "name_en" => "Pay with Fawry",
             "name_ar" => "الدفع بفورى ",
             "is_active" => false,
+            "require_receipt" => true,
         ],
         [
             "code" => "instapay",
             "name_en" => "Pay with Instapay",
             "name_ar" => "الدفع بانستاباى ",
             "is_active" => true,
+            "require_receipt" => true,
         ],
     ];
 

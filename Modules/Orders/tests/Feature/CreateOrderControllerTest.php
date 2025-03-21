@@ -21,7 +21,9 @@ it("cannot_create_order_with_invalid_data", function () {
     $cart = Cart::factory()->create();
     $cart->cartable()->associate($user)->save();
 
-    $paymentMethod = PaymentMethod::active()->inRandomOrder()->first();
+    $paymentMethod = PaymentMethod::code(
+        PaymentMethod::CASH_ON_DELIVERY
+    )->first();
 
     $postOrder = fn(array $data = []) => actingAs($user)->postJson(
         route("api.orders.store"),
@@ -79,7 +81,7 @@ it("can_create_an_order_with_cod", function () {
         ->for($coupon)
         ->create();
     CartItem::factory()->for($cart)->count(2)->create();
-    $paymentMethod = PaymentMethod::active()->inRandomOrder()->first();
+    $paymentMethod = PaymentMethod::CASH_ON_DELIVERY;
 
     $cartService = new CartService($cart);
     $cartService->refresh();
@@ -90,7 +92,7 @@ it("can_create_an_order_with_cod", function () {
 
     $response = actingAs($user)
         ->postJson(route("api.orders.store"), [
-            "payment_method" => $paymentMethod->code,
+            "payment_method" => $paymentMethod,
         ])
         ->assertOk()
         ->json();
