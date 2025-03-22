@@ -16,11 +16,6 @@ return new class extends Migration {
         Schema::create("orders", function (Blueprint $table) {
             $table->uid();
             $table->foreignUlid("user_id")->constrained();
-            $table
-                ->foreignUlid("coupon_id")
-                ->nullable()
-                ->constrained("order_coupons");
-            $table->foreignUlid("address_id")->constrained("order_addresses");
             $table->json("totals");
             $table->enum(
                 "payment_method",

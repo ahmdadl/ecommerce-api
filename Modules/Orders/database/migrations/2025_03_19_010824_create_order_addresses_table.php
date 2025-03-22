@@ -15,7 +15,7 @@ return new class extends Migration {
             $table->foreignUlid("address_id")->constrained();
             $table->foreignUlid("user_id")->constrained();
             $table->foreignUlid("government_id")->constrained();
-            $table->foreignId("city_id")->constrained();
+            $table->foreignUlid("city_id")->constrained();
             $table->string("city_title")->nullable();
             $table->float("shipping_fees")->nullable();
             $table->string("name", 50);
