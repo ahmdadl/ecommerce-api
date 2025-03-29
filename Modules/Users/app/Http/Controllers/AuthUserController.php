@@ -63,7 +63,7 @@ class AuthUserController extends Controller
         $sent = $action->handle($email);
 
         if (!$sent) {
-            return api()->error(__("users::t.email_not_found"));
+            return api()->error(__("users::t.invalid_credentials"));
         }
 
         return api()->noContent();

@@ -3,6 +3,7 @@
 namespace Modules\Users\Actions\Auth;
 
 use Modules\Core\Services\Application;
+use Modules\Users\Enums\UserRole;
 use Modules\Users\Models\User;
 
 class RegisterUserAction
@@ -12,7 +13,7 @@ class RegisterUserAction
         $data["name"] = $data["first_name"] . " " . $data["last_name"];
         unset($data["first_name"], $data["last_name"]);
 
-        $user = User::create($data);
+        $user = User::create([...$data, "role" => UserRole::CUSTOMER]);
 
         $user->access_token = $user->createToken(
             Application::getApplicationType()
