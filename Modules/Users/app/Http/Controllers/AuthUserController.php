@@ -3,6 +3,7 @@
 namespace Modules\Users\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Container\Attributes\Log;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Modules\Users\Actions\Auth\LoginUserAction;
@@ -75,8 +76,8 @@ class AuthUserController extends Controller
         UserResetPasswordRequest $request,
         UserResetPasswordAction $action
     ): JsonResponse {
-        $action->handle($request->validated());
+        $user = $action->handle($request->validated());
 
-        return api()->noContent();
+        return api()->record(new CustomerResource($user));
     }
 }

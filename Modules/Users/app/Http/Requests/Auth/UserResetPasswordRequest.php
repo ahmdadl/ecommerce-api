@@ -12,7 +12,7 @@ class UserResetPasswordRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "token" => "required|string|size:6",
+            "otp" => "required|string|size:6",
             "email" => "required|email|max:150",
             "password" => "required|string|min:8|max:150|confirmed",
         ];

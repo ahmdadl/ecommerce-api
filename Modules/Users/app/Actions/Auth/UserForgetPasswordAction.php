@@ -4,6 +4,7 @@ namespace Modules\Users\Actions\Auth;
 
 use Modules\Users\Models\Auth\PasswordResetToken;
 use Modules\Users\Models\Customer;
+use Modules\Users\Notifications\ForgetPasswordNotification;
 use Modules\Users\Utils\UserUtils;
 
 class UserForgetPasswordAction
@@ -26,7 +27,7 @@ class UserForgetPasswordAction
         ]);
 
         // Send the email
-        // $user->sendPasswordResetNotification($activationToken);
+        $user->notify(new ForgetPasswordNotification($token));
 
         return true;
     }

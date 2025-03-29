@@ -4,15 +4,17 @@ namespace Modules\Users\Actions\Auth;
 
 use Illuminate\Support\Facades\Hash;
 use Modules\Core\Exceptions\ApiException;
+use Modules\Core\Services\Application;
 use Modules\Users\Models\Auth\PasswordResetToken;
 use Modules\Users\Models\Customer;
+use Modules\Users\Models\User;
 use Throwable;
 
 class UserResetPasswordAction
 {
-    public function handle(array $data): ?Throwable
+    public function handle(array $data): Throwable|User
     {
-        ["email" => $email, "password" => $password, "token" => $token] = $data;
+        ["email" => $email, "password" => $password, "otp" => $token] = $data;
 
         $user = Customer::role()->active()->whereEmail($email)->first();
 
@@ -37,6 +39,12 @@ class UserResetPasswordAction
 
         $passwordReset->delete();
 
-        return null;
+        // log user in
+        auth("customer")->setUser($user);
+        $accessToken = $user->createToken(Application::getApplicationType())
+            ->plainTextToken;
+        $user->access_token = $accessToken;
+
+        return $user;
     }
 }
