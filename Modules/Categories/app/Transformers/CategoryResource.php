@@ -4,6 +4,7 @@ namespace Modules\Categories\Transformers;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Modules\Products\Transformers\ProductResource;
 
 class CategoryResource extends JsonResource
 {
@@ -26,6 +27,9 @@ class CategoryResource extends JsonResource
             "meta_keywords" => $this->meta_keywords,
             // "created_at" => $this->created_at,
             // "updated_at" => $this->updated_at,
+            "products" => ProductResource::collection(
+                $this->whenLoaded("products")
+            ),
         ];
     }
 }

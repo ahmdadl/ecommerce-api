@@ -47,7 +47,7 @@ class CreateOrderRequest extends FormRequest
     {
         return [
             function (Validator $validator) {
-                $paymentMethod = $this->input("payment_method");
+                $paymentMethod = $this->string("payment_method")->value();
 
                 if (empty($paymentMethod)) {
                     return;

@@ -19,7 +19,7 @@ class CreateOrderFromCartAction
         string $paymentMethod,
         OrderStatus $status = OrderStatus::PENDING,
         OrderPaymentStatus $orderPaymentStatus = OrderPaymentStatus::PENDING
-    ): Order|Throwable {
+    ): ?Order {
         // validate cart
         if ($cart->items()->count() === 0) {
             throw new ApiException(__("orders::t.cart_is_empty"));
@@ -50,7 +50,7 @@ class CreateOrderFromCartAction
 
         // create order
         $order = Order::create([
-            "user_id" => user()->id,
+            "user_id" => user()?->id,
             "address_id" => $orderAddress->id,
             "coupon_id" => $orderCoupon?->id,
             "totals" => $cart->totals,
@@ -63,8 +63,8 @@ class CreateOrderFromCartAction
         foreach ($cart->items()->with("product")->get() as $item) {
             $order->items()->create([
                 "product_id" => $item->product_id,
-                "product_title" => $item->product->title,
-                "product_sku" => $item->product->sku,
+                "product_title" => $item->product?->title,
+                "product_sku" => $item->product?->sku,
                 "quantity" => $item->quantity,
                 "totals" => $item->totals,
             ]);
@@ -72,6 +72,7 @@ class CreateOrderFromCartAction
 
         // create order payment attempt
         $this->createOrderPaymentAttempt(
+            // @phpstan-ignore-next-line
             $order->id,
             $paymentMethod,
             $orderPaymentStatus

@@ -23,7 +23,10 @@ class CreateOrderController extends Controller
         cartService()->refresh();
 
         // should be moved to queue
-        $order = $action->handle(cartService()->cart, $request->payment_method);
+        $order = $action->handle(
+            cartService()->cart,
+            $request->string("payment_method")->value()
+        );
 
         /** @var PaymentMethod $paymentMethod */
         $paymentMethod = $request->paymentMethodRecord;

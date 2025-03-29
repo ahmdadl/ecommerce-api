@@ -22,7 +22,7 @@ class ForgetPasswordNotification extends Notification implements ShouldQueue
     /**
      * Get the notification's delivery channels.
      */
-    public function via($notifiable): array
+    public function via(mixed $notifiable): array
     {
         return ["mail"];
     }
@@ -30,7 +30,7 @@ class ForgetPasswordNotification extends Notification implements ShouldQueue
     /**
      * Get the mail representation of the notification.
      */
-    public function toMail($notifiable): MailMessage
+    public function toMail(mixed $notifiable): MailMessage
     {
         return (new MailMessage())
             ->subject(__("Reset Password Notification"))
@@ -56,7 +56,7 @@ class ForgetPasswordNotification extends Notification implements ShouldQueue
     /**
      * Get the array representation of the notification.
      */
-    public function toArray($notifiable): array
+    public function toArray(mixed $notifiable): array
     {
         return [];
     }

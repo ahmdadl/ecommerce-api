@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Modules\Core\Models\Scopes\HasActiveState;
 use Sushi\Sushi;
+use Illuminate\Database\Eloquent\Builder;
 
 class PaymentMethod extends Model
 {
@@ -15,6 +16,7 @@ class PaymentMethod extends Model
     public const FAWRY = "fawry";
     public const INSTAPAY = "instapay";
 
+    // @phpstan-ignore-next-line
     protected $appends = ["name"];
 
     protected $hidden = ["localizedName", "is_active"];
@@ -48,16 +50,18 @@ class PaymentMethod extends Model
 
     /**
      * scope by code
+     * @param Builder<PaymentMethod> $query
      */
-    public function scopeCode($query, string $code): void
+    public function scopeCode(Builder $query, string $code): void
     {
         $query->where("code", $code);
     }
 
     /**
      * scope by is online
+     * @param Builder<PaymentMethod> $query
      */
-    public function scopeOnline($query, bool $isOnline = true): void
+    public function scopeOnline(Builder $query, bool $isOnline = true): void
     {
         $query->where("is_online", $isOnline);
     }

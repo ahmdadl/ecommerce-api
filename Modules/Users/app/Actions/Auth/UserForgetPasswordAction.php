@@ -17,7 +17,7 @@ class UserForgetPasswordAction
             return false;
         }
 
-        $token = UserUtils::generateToken();
+        $token = (string) UserUtils::generateToken();
 
         PasswordResetToken::whereEmail($email)->delete();
         PasswordResetToken::create([

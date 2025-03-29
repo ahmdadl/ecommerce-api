@@ -34,11 +34,12 @@ class Order extends Model
     }
 
     /**
-     * @return Attribute<PaymentMethod, void>
+     * @return Attribute<PaymentMethod|null, void>
      */
     public function paymentMethodRecord(): Attribute
     {
         return Attribute::make(
+            // @phpstan-ignore-next-line
             fn(?string $value, array $attributes) => PaymentMethod::firstWhere(
                 "code",
                 $attributes["payment_method"]

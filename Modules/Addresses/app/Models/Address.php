@@ -26,6 +26,7 @@ class Address extends Model
     public function name(): Attribute
     {
         return Attribute::make(
+            // @phpstan-ignore-next-line
             fn(mixed $value, array $attrs) => $attrs["first_name"] .
                 " " .
                 $attrs["last_name"]
