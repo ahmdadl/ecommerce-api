@@ -40,6 +40,14 @@ class Product extends Model
     public array $translatable = ["title", "description"];
 
     /**
+     * get route key name
+     */
+    public function getRouteKeyName(): string
+    {
+        return "slug";
+    }
+
+    /**
      * Return the sluggable configuration array for this model.
      */
     public function sluggable(): array
