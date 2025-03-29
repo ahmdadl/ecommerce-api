@@ -16,6 +16,6 @@ use Modules\Categories\Http\Controllers\CategoriesController;
 
 Route::middleware(["auth:guest,customer"])->group(function () {
     Route::apiResource("categories", CategoriesController::class)
-        ->names("categories")
+        ->parameter("categories", "activeCategory")
         ->only(["index", "show"]);
 });

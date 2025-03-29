@@ -58,12 +58,22 @@ class Brand extends Model
     }
 
     /**
-     * products relation
+     * active products relation
      *
      * @return HasMany<Product, $this>
      */
     public function products(): HasMany
     {
-        return $this->hasMany(Product::class);
+        return $this->hasMany(Product::class)->active();
+    }
+
+    /**
+     * all products relation
+     *
+     * @return HasMany<Product, $this>
+     */
+    public function allProducts(): HasMany
+    {
+        return $this->products();
     }
 }

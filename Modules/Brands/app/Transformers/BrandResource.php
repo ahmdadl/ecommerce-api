@@ -4,6 +4,7 @@ namespace Modules\Brands\Transformers;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Modules\Products\Transformers\ProductResource;
 
 class BrandResource extends JsonResource
 {
@@ -24,6 +25,12 @@ class BrandResource extends JsonResource
             "meta_title" => $this->meta_title,
             "meta_description" => $this->meta_description,
             "meta_keywords" => $this->meta_keywords,
+            "products_count" => $this->whenNotNull(
+                $this->products_count ?? null
+            ),
+            "products" => ProductResource::collection(
+                $this->whenLoaded("products")
+            ),
         ];
     }
 }

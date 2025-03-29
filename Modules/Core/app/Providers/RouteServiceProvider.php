@@ -52,4 +52,19 @@ class RouteServiceProvider extends ServiceProvider
             ->name("api.")
             ->group(module_path($this->name, "/routes/api.php"));
     }
+
+    /**
+     * Resolve the model class based on Laravel Modules structure.
+     */
+    private function resolveModelClass(string $parameter): string
+    {
+        $modelName = ucfirst($parameter);
+
+        // Assume the namespace follows Modules\{ModuleName}\Models\{ModelName}
+        // For simplicity, we assume the module name matches the model name pluralized
+        $moduleName = ucfirst(str($parameter)->plural()->value());
+        $modelClass = "Modules\\{$moduleName}\\Models\\{$modelName}";
+
+        return $modelClass;
+    }
 }

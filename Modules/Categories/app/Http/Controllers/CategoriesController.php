@@ -15,7 +15,7 @@ class CategoriesController extends Controller
      */
     public function index(): JsonResponse
     {
-        $categories = Category::withCount("products")->get();
+        $categories = Category::withCount("products")->active()->get();
 
         return api()->records(CategoryResource::collection($categories));
     }
@@ -23,9 +23,11 @@ class CategoriesController extends Controller
     /**
      * Show the specified resource.
      */
-    public function show(Category $category): JsonResponse
+    public function show(Request $request, Category $category): JsonResponse
     {
-        $category->loadMissing("products");
+        if ($request->has("withProducts")) {
+            $category->loadMissing("products");
+        }
 
         return api()->record(new CategoryResource($category));
     }

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Modules\Brands\Models\Brand;
+use Modules\Brands\Transformers\BrandResource;
 
 class BrandsController extends Controller
 {
@@ -14,48 +15,19 @@ class BrandsController extends Controller
      */
     public function index(): JsonResponse
     {
-        //
+        $brands = Brand::withCount("products")->active()->get();
 
-        return response()->json([]);
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request): JsonResponse
-    {
-        //
-
-        return response()->json([]);
+        return api()->records(BrandResource::collection($brands));
     }
 
     /**
      * Show the specified resource.
      */
-    public function show(Brand $id): JsonResponse
+    public function show(Request $request, Brand $brand): JsonResponse
     {
-        //
-
-        return response()->json([]);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Brand $id): JsonResponse
-    {
-        //
-
-        return response()->json([]);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Brand $id): JsonResponse
-    {
-        //
-
-        return response()->json([]);
+        if ($request->has("withProducts")) {
+            $brand->loadMissing("products");
+        }
+        return api()->record(new BrandResource($brand));
     }
 }

@@ -4,6 +4,7 @@ namespace Modules\Categories\Providers;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use Modules\Categories\Models\Category;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -16,6 +17,12 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        Route::bind("activeCategory", function ($value) {
+            return Category::where("slug", $value)
+                ->where("is_active", true)
+                ->firstOrFail();
+        });
+
         parent::boot();
     }
 
