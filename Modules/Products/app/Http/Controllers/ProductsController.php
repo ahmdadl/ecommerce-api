@@ -26,13 +26,12 @@ class ProductsController extends Controller
      */
     public function show(Request $request, Product $product): JsonResponse
     {
-        if ($request->has("withCategory")) {
-            $product->loadMissing("category");
-        }
+        $request->whenHas(
+            "withCategory",
+            fn() => $product->loadMissing("category")
+        );
 
-        if ($request->has("withBrand")) {
-            $product->loadMissing("brand");
-        }
+        $request->whenHas("withBrand", fn() => $product->loadMissing("brand"));
 
         return api()->record(new ProductResource($product));
     }
