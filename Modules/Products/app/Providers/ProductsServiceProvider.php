@@ -23,7 +23,7 @@ class ProductsServiceProvider extends ServiceProvider
     {
         $this->registerCommands();
         $this->registerCommandSchedules();
-        $this->registerTranslations();
+        // $this->registerTranslations();
         // $this->registerConfig();
         // $this->registerViews();
         $this->loadMigrationsFrom(
@@ -36,7 +36,7 @@ class ProductsServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->register(EventServiceProvider::class);
+        // $this->app->register(EventServiceProvider::class);
         $this->app->register(RouteServiceProvider::class);
     }
 

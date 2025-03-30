@@ -15,7 +15,7 @@ class ProductResource extends JsonResource
     public function toArray(Request $request): array
     {
         // @phpstan-ignore-next-line
-        $images = collect($this->images)->map("uploads_url");
+        $images = collect($this->images)->map("uploads_url")->values();
 
         return [
             "id" => $this->id,

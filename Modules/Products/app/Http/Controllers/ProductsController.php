@@ -6,56 +6,47 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Modules\Products\Models\Product;
+use Modules\Products\Transformers\ProductResource;
 
 class ProductsController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(): JsonResponse
+    public function index(Request $request): JsonResponse
     {
-        //
+        $products = Product::query()->active();
 
-        return response()->json([]);
-    }
+        $with = [];
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request): JsonResponse
-    {
-        //
+        if ($request->has("withCategory")) {
+            $with[] = "category";
+        }
 
-        return response()->json([]);
+        if ($request->has("withBrand")) {
+            $with[] = "brand";
+        }
+
+        if (count($with) > 0) {
+            $products->with($with);
+        }
+
+        return api()->records(ProductResource::collection($products->get()));
     }
 
     /**
      * Show the specified resource.
      */
-    public function show(Product $id): JsonResponse
+    public function show(Request $request, Product $product): JsonResponse
     {
-        //
+        if ($request->has("withCategory")) {
+            $product->loadMissing("category");
+        }
 
-        return response()->json([]);
-    }
+        if ($request->has("withBrand")) {
+            $product->loadMissing("brand");
+        }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Product $id): JsonResponse
-    {
-        //
-
-        return response()->json([]);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Product $id): JsonResponse
-    {
-        //
-
-        return api()->success();
+        return api()->record(new ProductResource($product));
     }
 }
