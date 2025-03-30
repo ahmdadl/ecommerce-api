@@ -25,9 +25,7 @@ class CategoryResource extends JsonResource
             "meta_title" => $this->meta_title,
             "meta_description" => $this->meta_description,
             "meta_keywords" => $this->meta_keywords,
-            "products_count" => $this->whenNotNull(
-                $this->products_count ?? null
-            ),
+            "products_count" => $this->whenCounted("products"),
             // "created_at" => $this->created_at,
             // "updated_at" => $this->updated_at,
             "products" => ProductResource::collection(

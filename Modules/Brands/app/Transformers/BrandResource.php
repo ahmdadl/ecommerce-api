@@ -25,9 +25,7 @@ class BrandResource extends JsonResource
             "meta_title" => $this->meta_title,
             "meta_description" => $this->meta_description,
             "meta_keywords" => $this->meta_keywords,
-            "products_count" => $this->whenNotNull(
-                $this->products_count ?? null
-            ),
+            "products_count" => $this->whenCounted("products"),
             "products" => ProductResource::collection(
                 $this->whenLoaded("products")
             ),

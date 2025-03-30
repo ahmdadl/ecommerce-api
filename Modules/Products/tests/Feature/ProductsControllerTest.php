@@ -68,8 +68,30 @@ it("gets_filtered_products", function () {
         route("api.products.index") . "?category=" . $category->id
     )->assertJsonCount(3, "data.records");
 
-    getJson(route("api.products.index") . "?min_price=" . 55)->assertJsonCount(
+    getJson(route("api.products.index") . "?min_price=" . 5)->assertJsonCount(
         3,
         "data.records"
     );
+});
+
+test("filters_related_to_current_data", function () {
+    $categoryA = Category::factory()->create();
+    $categoryB = Category::factory()->create();
+
+    Product::factory()->for($categoryA)->count(3)->create();
+    Product::factory()->for($categoryB)->count(5)->create();
+
+    expect(Product::active()->count())->toBe(8);
+
+    asGuest();
+
+    getJson(route("api.products.index"))
+        ->assertJsonCount(8, "data.records")
+        ->assertSee($categoryA->name)
+        ->assertSee($categoryB->name);
+
+    getJson(route("api.products.index") . "?category=" . $categoryB->id)
+        ->assertJsonCount(5, "data.records")
+        ->assertSee($categoryB->name)
+        ->assertDontSee($categoryA->name);
 });
