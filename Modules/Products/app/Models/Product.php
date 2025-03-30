@@ -18,6 +18,7 @@ use Modules\Categories\Models\Category;
 use Modules\Core\Models\Scopes\HasActiveState;
 use Modules\Core\Models\Scopes\HasMetaTags;
 use Modules\Products\Database\Factories\ProductFactory;
+use Modules\Products\Filters\ProductFilter;
 use Spatie\Translatable\HasTranslations;
 
 #[UseFactory(ProductFactory::class)]
@@ -88,7 +89,6 @@ class Product extends Model
 
     /**
      * product with discount
-     *
      * @param  Builder<Product>  $query
      */
     public function scopeHasDiscount(Builder $query): void
@@ -96,6 +96,17 @@ class Product extends Model
         $query
             ->whereNotNull("salePrice")
             ->whereColumn("salePrice", "<", "price");
+    }
+
+    /**
+     * filter products
+     * @param  Builder<Product>  $query
+     * @param  ProductFilter  $filter
+     * @return Builder<Product>
+     */
+    public function scopeFilter(Builder $query, ProductFilter $filter): Builder
+    {
+        return $filter->apply($query);
     }
 
     /**

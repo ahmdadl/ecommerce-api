@@ -1,5 +1,6 @@
 <?php
 
+use Modules\Categories\Models\Category;
 use Modules\Products\Models\Product;
 
 use function Pest\Laravel\getJson;
@@ -45,4 +46,30 @@ it("gets_active_product", function () {
     getJson(route("api.products.show", $product->slug) . "?withCategory=1")
         ->assertOk()
         ->assertJsonPath("data.record.category.id", $product->category_id);
+});
+
+it("gets_filtered_products", function () {
+    $category = Category::factory()->create();
+    $products = Product::factory(3)
+        ->for($category)
+        ->create([
+            "is_active" => true,
+            "stock" => 0,
+        ]);
+
+    asGuest();
+
+    getJson(route("api.products.index") . "?in_stock=1")->assertJsonCount(
+        0,
+        "data.records"
+    );
+
+    getJson(
+        route("api.products.index") . "?category=" . $category->id
+    )->assertJsonCount(3, "data.records");
+
+    getJson(route("api.products.index") . "?min_price=" . 55)->assertJsonCount(
+        3,
+        "data.records"
+    );
 });

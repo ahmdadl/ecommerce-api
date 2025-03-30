@@ -5,6 +5,7 @@ namespace Modules\Products\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Modules\Products\Filters\ProductFilter;
 use Modules\Products\Models\Product;
 use Modules\Products\Transformers\ProductResource;
 
@@ -15,7 +16,9 @@ class ProductsController extends Controller
      */
     public function index(Request $request): JsonResponse
     {
-        $products = Product::query()->active();
+        $products = Product::query()
+            ->filter(new ProductFilter($request))
+            ->active();
 
         $with = [];
 
