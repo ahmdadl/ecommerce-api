@@ -15,21 +15,22 @@ class GetProductsAction
 
     public function handle(Request $request)
     {
-        $products = Product::query()
+        $productsQuery = Product::query()
             ->active()
             ->filter(new ProductFilter($request))
-            ->with($this->getLazyLoadRelations($request));
+            ->with($this->getLazyLoadRelations($request))
+            ->orderBy(...$this->getOrderBy($request));
 
         $response = [];
 
-        $request->when(
-            $request->has("withFilters"),
+        $request->whenHas(
+            "withFilters",
             fn() => ($response["filters"] = GetProductFiltersAction::new(
-                clone $products
+                clone $productsQuery
             )->handle())
         );
 
-        $products = $products->paginate();
+        $products = $productsQuery->paginate();
         $response["records"] = ProductResource::collection($products);
         $response["paginationInfo"] = $this->getPaginationInfo($products);
 
@@ -42,16 +43,17 @@ class GetProductsAction
      */
     private function getLazyLoadRelations(Request $request): array
     {
-        $with = [];
+        $relations = [];
+
         if ($request->has("withCategory")) {
-            $with[] = "category";
+            $relations[] = "category";
         }
 
         if ($request->has("withBrand")) {
-            $with[] = "brand";
+            $relations[] = "brand";
         }
 
-        return $with;
+        return $relations;
     }
 
     /**
@@ -68,5 +70,27 @@ class GetProductsAction
             "to" => $products->lastItem(),
             "has_more_pages" => $products->hasMorePages(),
         ];
+    }
+
+    /**
+     * get order by
+     * @return string[]
+     */
+    private function getOrderBy(Request $request): array
+    {
+        $orderBy = ["id", "desc"];
+
+        if ($sortBy = $request->has("sortBy")) {
+            $orderBy = match ($sortBy) {
+                "lowest_price" => ["price", "asc"],
+                "highest_price" => ["price", "desc"],
+                // "lowest_stock" => ["stock", "asc"],
+                "newest" => ["id", "desc"],
+                "oldest" => ["id", "asc"],
+                default => ["id", "desc"],
+            };
+        }
+
+        return $orderBy;
     }
 }

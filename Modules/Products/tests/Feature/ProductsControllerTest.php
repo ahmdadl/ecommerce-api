@@ -24,11 +24,11 @@ it("gets_all_active_products", function () {
     getJson(route("api.products.index") . "?withCategory=1&withBrand=1")
         ->assertJsonPath(
             "data.records.0.category.id",
-            $activeProducts->first()->category_id
+            $activeProducts->last()->category_id
         )
         ->assertJsonPath(
             "data.records.0.brand.id",
-            $activeProducts->first()->brand_id
+            $activeProducts->last()->brand_id
         );
 });
 
