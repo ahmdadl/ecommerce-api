@@ -102,7 +102,8 @@ test("only_guest_can_reset_password", function () {
     );
     postJson(route("api.auth.reset-password"))
         ->assertJsonValidationErrorFor("email")
-        ->assertJsonValidationErrorFor("token");
+        ->assertJsonValidationErrorFor("otp")
+        ->assertJsonValidationErrorFor("password");
 });
 
 test("user_cannot_reset_password_with_invalid_data", function () {
@@ -110,13 +111,13 @@ test("user_cannot_reset_password_with_invalid_data", function () {
 
     postJson(route("api.auth.forget-password"), ["email" => fake()->email])
         ->assertStatus(400)
-        ->assertSee(__("users::t.email_not_found"));
+        ->assertSee(__("users::t.invalid_credentials"));
     postJson(
         route("api.auth.reset-password", [
             "email" => fake()->email,
             "password" => ($password = str()->random(8)),
             "password_confirmation" => $password,
-            "token" => str()->random(6),
+            "otp" => str()->random(6),
         ])
     )
         ->assertStatus(400)
@@ -133,7 +134,7 @@ test("user_cannot_reset_password_with_invalid_data", function () {
             "email" => $user->email,
             "password" => ($password = str()->random(8)),
             "password_confirmation" => $password,
-            "token" => str()->random(6),
+            "otp" => str()->random(6),
         ])
     )
         ->assertStatus(400)
@@ -151,7 +152,7 @@ test("user_cannot_reset_password_with_invalid_data", function () {
             "email" => $user->email,
             "password" => ($password = str()->random(8)),
             "password_confirmation" => $password,
-            "token" => $passwordReset->token,
+            "otp" => $passwordReset->token,
         ])
     )
         ->assertStatus(400)
@@ -171,10 +172,10 @@ test("user_can_reset_password", function () {
 
     postJson(route("api.auth.reset-password"), [
         "email" => $user->email,
-        "token" => $passwordReset->token,
+        "otp" => $passwordReset->token,
         "password" => ($password = str()->random(8)),
         "password_confirmation" => $password,
-    ])->assertNoContent();
+    ])->assertOk();
 
     expect(
         Customer::attempt(["email" => $user->email, "password" => $password])
