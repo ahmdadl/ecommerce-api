@@ -22,7 +22,7 @@ class UploadablePathCast implements CastsAttributes
         mixed $value,
         array $attributes
     ): string {
-        return $value;
+        return $value ?? "";
         // return uploads_url($value);
     }
 

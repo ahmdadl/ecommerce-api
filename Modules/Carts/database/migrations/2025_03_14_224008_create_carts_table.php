@@ -12,7 +12,7 @@ return new class extends Migration {
     {
         Schema::create("carts", function (Blueprint $table) {
             $table->uid();
-            $table->morphs("cartable");
+            $table->ulidMorphs("cartable");
             $table->foreignUlid("address_id")->nullable()->constrained();
             $table->foreignUlid("coupon_id")->nullable()->constrained();
             $table->json("totals")->nullable();
