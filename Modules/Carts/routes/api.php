@@ -42,4 +42,6 @@ Route::middleware(["auth:customer,guest"])
             "remove-by-product"
         );
         Route::delete("{cartItem}", "remove")->name("remove");
+
+        Route::delete("", "reset")->name("reset");
     });

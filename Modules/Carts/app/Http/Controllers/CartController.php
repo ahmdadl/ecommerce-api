@@ -15,6 +15,7 @@ use Modules\Carts\Services\CartService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Modules\Addresses\Models\Address;
+use Modules\Carts\Actions\ResetCartAction;
 use Modules\Carts\Actions\SetCartAddressAction;
 use Modules\Coupons\Actions\ValidateCouponAction;
 use Modules\Coupons\Models\Coupon;
@@ -165,5 +166,17 @@ class CartController extends Controller
         $cartService->removeCoupon();
 
         return $this->index($request, $cartService);
+    }
+
+    /**
+     * reset cart
+     */
+    public function reset(
+        Request $request,
+        ResetCartAction $resetAction
+    ): JsonResponse {
+        $resetAction->handle();
+
+        return $this->index($request, $resetAction->cartService);
     }
 }

@@ -176,6 +176,24 @@ final readonly class CartService
     }
 
     /**
+     * reset cart
+     */
+    public function reset(): void
+    {
+        DB::transaction(function () {
+            $this->cart->items()->delete();
+
+            $this->cart->setRelation("coupon", null);
+
+            $this->cart->setRelation("order", null);
+
+            $this->cart->setRelation("address", null);
+
+            $this->save();
+        });
+    }
+
+    /**
      * Saves the current state of the cart and calculates the totals.
      */
     public function save(): void
