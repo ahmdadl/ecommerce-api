@@ -16,6 +16,7 @@ class LoginUserAction
 
         /** @var User $user */
         $user = auth("customer")->user();
+        $user = new Customer($user->toArray());
 
         $accessToken = $user->createToken(Application::getApplicationType())
             ->plainTextToken;
