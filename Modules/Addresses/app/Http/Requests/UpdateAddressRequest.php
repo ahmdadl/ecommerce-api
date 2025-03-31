@@ -24,7 +24,9 @@ class UpdateAddressRequest extends FormRequest
                 "string",
                 "max:12",
                 new PhoneNumber(),
-                "unique:addresses,phone," . user()?->id . ",user_id",
+                "unique:addresses,phone," .
+                user()?->id .
+                ",user_id,deleted_at,NULL",
             ],
         ];
     }

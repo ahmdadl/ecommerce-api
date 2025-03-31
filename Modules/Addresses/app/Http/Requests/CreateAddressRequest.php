@@ -24,7 +24,7 @@ class CreateAddressRequest extends FormRequest
                 "string",
                 "max:12",
                 new PhoneNumber(),
-                "unique:addresses",
+                "unique:addresses,phone,NULL,user_id,deleted_at,NULL",
             ],
         ];
     }

@@ -19,7 +19,7 @@ return new class extends Migration {
             $table->string("last_name", 50);
             $table->string("title", 100)->nullable();
             $table->string("address", 250);
-            $table->string("phone", 12);
+            $table->string("phone", 12)->unique();
             $table->timestamps();
             $table->softDeletes();
         });
