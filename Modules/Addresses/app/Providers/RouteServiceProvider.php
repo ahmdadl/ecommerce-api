@@ -4,10 +4,11 @@ namespace Modules\Addresses\Providers;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use Modules\Addresses\Models\Address;
 
 class RouteServiceProvider extends ServiceProvider
 {
-    protected string $name = 'Addresses';
+    protected string $name = "Addresses";
 
     /**
      * Called before routes are registered.
@@ -16,6 +17,12 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        Route::bind("myAddress", function ($value) {
+            return Address::where("id", $value)
+                ->where("user_id", user()?->id)
+                ->firstOrFail();
+        });
+
         parent::boot();
     }
 
@@ -25,7 +32,7 @@ class RouteServiceProvider extends ServiceProvider
     public function map(): void
     {
         $this->mapApiRoutes();
-        $this->mapWebRoutes();
+        // $this->mapWebRoutes();
     }
 
     /**
@@ -35,7 +42,9 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function mapWebRoutes(): void
     {
-        Route::middleware('web')->group(module_path($this->name, '/routes/web.php'));
+        Route::middleware("web")->group(
+            module_path($this->name, "/routes/web.php")
+        );
     }
 
     /**
@@ -45,6 +54,9 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function mapApiRoutes(): void
     {
-        Route::middleware('api')->prefix('api')->name('api.')->group(module_path($this->name, '/routes/api.php'));
+        Route::middleware("api")
+            ->prefix("api")
+            ->name("api.")
+            ->group(module_path($this->name, "/routes/api.php"));
     }
 }

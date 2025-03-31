@@ -15,9 +15,10 @@ use Modules\Guests\Models\Guest;
 
 use function Pest\Laravel\actingAs;
 
-pest()->extend(Tests\TestCase::class)
+pest()
+    ->extend(Tests\TestCase::class)
     ->use(Illuminate\Foundation\Testing\RefreshDatabase::class)
-    ->in('../Modules/*/tests/**/*Test.php');
+    ->in("../Modules/*/tests/**/*Test.php");
 
 /*
 |--------------------------------------------------------------------------
@@ -30,7 +31,7 @@ pest()->extend(Tests\TestCase::class)
 |
 */
 
-expect()->extend('toBeOne', function () {
+expect()->extend("toBeOne", function () {
     return $this->toBe(1);
 });
 
@@ -55,5 +56,20 @@ function something()
  */
 function asGuest(?Guest $guest = null): void
 {
-    actingAs($guest ?? Guest::factory()->create(), 'guest');
+    actingAs($guest ?? Guest::factory()->create(), "guest");
+}
+
+/**
+ * generate fake egyptian phone
+ */
+function fakePhone(): string
+{
+    $prefixes = ["010", "011", "012"];
+
+    /** @var string */
+    $prefix = $prefixes[array_rand($prefixes)];
+
+    $number = sprintf("%08d", rand(0, 99999999));
+
+    return $prefix . $number;
 }

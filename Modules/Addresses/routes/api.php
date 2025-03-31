@@ -12,8 +12,12 @@ use Modules\Addresses\Http\Controllers\AddressesController;
  * routes are loaded by the RouteServiceProvider within a group which
  * is assigned the "api" middleware group. Enjoy building your API!
  *
-*/
+ */
 
-Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
-    // Route::apiResource('addresses', AddressesController::class)->names('addresses');
-});
+Route::middleware(["auth:customer"])
+    ->controller(AddressesController::class)
+    ->group(function () {
+        Route::apiResource("addresses", AddressesController::class)
+            ->parameter("addresses", "myAddress")
+            ->only(["index", "store", "update", "destroy"]);
+    });

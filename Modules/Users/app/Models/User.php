@@ -7,11 +7,13 @@ use Illuminate\Database\Eloquent\Attributes\UseFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Modules\Addresses\Models\Address;
 use Modules\Carts\Models\Cart;
 use Modules\Core\Models\Scopes\HasActiveState;
 use Modules\Users\Casts\UserTotalCast;
@@ -118,5 +120,14 @@ class User extends Authenticatable
     public function cart(): MorphOne
     {
         return $this->morphOne(Cart::class, "cartable");
+    }
+
+    /**
+     * get user addresses
+     * @return HasMany<Address, $this>
+     */
+    public function addresses(): HasMany
+    {
+        return $this->hasMany(Address::class);
     }
 }
