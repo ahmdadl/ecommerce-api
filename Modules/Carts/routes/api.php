@@ -25,7 +25,7 @@ Route::middleware(["auth:customer,guest"])
         Route::delete("address", "removeCartAddress")->name("remove-address");
 
         // coupon routes
-        Route::patch("coupon/{coupon}", "applyCartCoupon")->name(
+        Route::patch("coupon/{coupon:code}", "applyCartCoupon")->name(
             "apply-coupon"
         );
         Route::delete("coupon", "removeCartCoupon")->name("remove-coupon");
