@@ -7,6 +7,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Modules\Categories\Models\Category;
 use Modules\Categories\Transformers\CategoryResource;
+use Modules\Products\Actions\GetProductsAction;
 
 class CategoriesController extends Controller
 {
@@ -25,10 +26,11 @@ class CategoriesController extends Controller
      */
     public function show(Request $request, Category $category): JsonResponse
     {
-        if ($request->has("withProducts")) {
-            $category->loadMissing("products");
-        }
+        $request->merge(["category" => $category->id]);
 
-        return api()->record(new CategoryResource($category));
+        return api()->success([
+            "category" => new CategoryResource($category),
+            ...GetProductsAction::new()->handle($request),
+        ]);
     }
 }

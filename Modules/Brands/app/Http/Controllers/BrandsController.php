@@ -7,6 +7,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Modules\Brands\Models\Brand;
 use Modules\Brands\Transformers\BrandResource;
+use Modules\Products\Actions\GetProductsAction;
 
 class BrandsController extends Controller
 {
@@ -25,9 +26,11 @@ class BrandsController extends Controller
      */
     public function show(Request $request, Brand $brand): JsonResponse
     {
-        if ($request->has("withProducts")) {
-            $brand->loadMissing("products");
-        }
-        return api()->record(new BrandResource($brand));
+        $request->merge(["brand" => $brand->id]);
+
+        return api()->success([
+            "brand" => new BrandResource($brand),
+            ...GetProductsAction::new()->handle($request),
+        ]);
     }
 }

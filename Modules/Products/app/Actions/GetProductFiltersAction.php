@@ -87,12 +87,14 @@ class GetProductFiltersAction
     protected function getPriceRange()
     {
         $stats = $this->builder
+            ->reorder()
+            ->withoutEagerLoads()
             ->selectRaw("MIN(price) as min_price, MAX(price) as max_price")
             ->first();
 
         return [
-            "min" => $stats->min_price,
-            "max" => $stats->max_price,
+            "min" => $stats->min_price ?? 0,
+            "max" => $stats->max_price ?? 0,
         ];
     }
 

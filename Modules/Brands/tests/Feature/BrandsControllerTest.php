@@ -38,7 +38,7 @@ it("gets_active_brand_with_products", function () {
 
     getJson(route("api.brands.show", $activeBrand->slug))
         ->assertOk()
-        ->assertJsonPath("data.record.id", $activeBrand->id);
+        ->assertJsonPath("data.brand.id", $activeBrand->id);
 
     getJson(route("api.brands.show", [$inactiveBrand->slug]))->assertNotFound();
 });

@@ -23,16 +23,17 @@ class GetProductsAction
 
         $response = [];
 
-        $request->whenHas(
-            "withFilters",
-            fn() => ($response["filters"] = GetProductFiltersAction::new(
-                clone $productsQuery
-            )->handle())
-        );
+        $productsQueryClone = clone $productsQuery;
 
         $products = $productsQuery->paginate();
         $response["records"] = ProductResource::collection($products);
         $response["paginationInfo"] = $this->getPaginationInfo($products);
+
+        if ($request->has("withFilters")) {
+            $response["filters"] = GetProductFiltersAction::new(
+                $productsQueryClone
+            )->handle();
+        }
 
         return $response;
     }
