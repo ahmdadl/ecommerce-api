@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Modules\Governments\Http\Controllers\GovernmentsController;
+use Modules\Governments\Http\Controllers\GetAllGovernmentsController;
 
 /*
  *--------------------------------------------------------------------------
@@ -13,6 +13,6 @@ use Modules\Governments\Http\Controllers\GovernmentsController;
  * is assigned the "api" middleware group. Enjoy building your API!
  *
  */
-Route::apiResource("governments", GovernmentsController::class)
-    ->only("index")
-    ->middleware("auth-public");
+Route::get("governments", GetAllGovernmentsController::class)->middleware(
+    "auth-public"
+);

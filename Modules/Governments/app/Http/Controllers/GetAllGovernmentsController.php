@@ -7,12 +7,12 @@ use Illuminate\Http\JsonResponse;
 use Modules\Governments\Models\Government;
 use Modules\Governments\Transformers\GovernmentResource;
 
-class GovernmentsController extends Controller
+class GetAllGovernmentsController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(): JsonResponse
+    public function __invoke(): JsonResponse
     {
         return api()->records(
             GovernmentResource::collection(
