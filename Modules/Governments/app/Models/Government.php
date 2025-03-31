@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Modules\Cities\Models\City;
 use Modules\Core\Models\Scopes\HasActiveState;
+use Modules\Core\Models\Scopes\PaginateIfRequestedScope;
 use Modules\Governments\Database\Factories\GovernmentFactory;
 use Spatie\Translatable\HasTranslations;
 
@@ -17,7 +18,12 @@ use Spatie\Translatable\HasTranslations;
 class Government extends Model
 {
     /** @use HasFactory<GovernmentFactory> */
-    use HasFactory, HasUlids, HasActiveState, HasTranslations, SoftDeletes;
+    use HasFactory,
+        HasUlids,
+        HasActiveState,
+        HasTranslations,
+        SoftDeletes,
+        PaginateIfRequestedScope;
 
     /**
      * translatable fields
