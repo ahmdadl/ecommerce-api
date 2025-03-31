@@ -12,8 +12,8 @@ use Modules\Cities\Http\Controllers\CitiesController;
  * routes are loaded by the RouteServiceProvider within a group which
  * is assigned the "api" middleware group. Enjoy building your API!
  *
-*/
+ */
 
-Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
-    // Route::apiResource('cities', CitiesController::class)->names('cities');
-});
+Route::apiResource("cities", CitiesController::class)
+    ->only("index")
+    ->middleware("auth-public");

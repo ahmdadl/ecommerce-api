@@ -12,8 +12,7 @@ use Modules\Governments\Http\Controllers\GovernmentsController;
  * routes are loaded by the RouteServiceProvider within a group which
  * is assigned the "api" middleware group. Enjoy building your API!
  *
-*/
-
-Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
-    Route::apiResource('governments', GovernmentsController::class)->names('governments');
-});
+ */
+Route::apiResource("governments", GovernmentsController::class)
+    ->only("index")
+    ->middleware("auth-public");
