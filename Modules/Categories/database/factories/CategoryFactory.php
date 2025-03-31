@@ -27,13 +27,6 @@ class CategoryFactory extends Factory
             ],
             "is_main" => fake()->boolean(10),
             "is_active" => true,
-            // "image" => [
-            //     "url" => fake()->imageUrl(640, 480, "pages"),
-            //     "alt" => [
-            //         "en" => fake()->sentence(4),
-            //         "es" => "Texto alternativo en español",
-            //     ],
-            // ],
         ];
     }
 }
