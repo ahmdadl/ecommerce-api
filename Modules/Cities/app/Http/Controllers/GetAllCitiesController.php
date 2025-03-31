@@ -3,8 +3,10 @@
 namespace Modules\Cities\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Modules\Cities\Models\City;
 use Modules\Cities\Transformers\CityResource;
 
@@ -25,6 +27,7 @@ class GetAllCitiesController extends Controller
             )
         );
 
+        /** @var LengthAwarePaginator|Collection */
         $cities = $cities->paginateIfRequested();
 
         return api()->paginatedIfRequested($cities, CityResource::class);

@@ -21,6 +21,8 @@ trait PaginateIfRequestedScope
      * Scope a query to only include is_active records.
      *
      * @param  Builder<Model>  $query
+     *
+     * @return LengthAwarePaginator|Collection
      */
     public function scopePaginateIfRequested(
         Builder $query

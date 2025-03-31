@@ -3,7 +3,9 @@
 namespace Modules\Governments\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Modules\Governments\Models\Government;
 use Modules\Governments\Transformers\GovernmentResource;
 
@@ -14,10 +16,12 @@ class GetAllGovernmentsController extends Controller
      */
     public function __invoke(): JsonResponse
     {
-        return api()->records(
-            GovernmentResource::collection(
-                Government::active()->paginateIfRequested()
-            )
+        /** @var LengthAwarePaginator|Collection */
+        $governments = Government::active()->paginateIfRequested();
+
+        return api()->paginatedIfRequested(
+            $governments,
+            GovernmentResource::class
         );
     }
 }
