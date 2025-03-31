@@ -13,10 +13,20 @@ class GetAllCitiesController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function __invoke(): JsonResponse
+    public function __invoke(Request $request): JsonResponse
     {
-        return api()->records(
-            CityResource::collection(City::active()->paginateIfRequested())
+        $cities = City::active();
+
+        $cities->when(
+            $request->integer("government_id"),
+            fn($q, int $governmentId) => $q->where(
+                "government_id",
+                $governmentId
+            )
         );
+
+        $cities = $cities->paginateIfRequested();
+
+        return api()->paginatedIfRequested($cities, CityResource::class);
     }
 }

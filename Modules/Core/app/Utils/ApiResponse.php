@@ -2,7 +2,9 @@
 
 namespace Modules\Core\Utils;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 final class ApiResponse
@@ -46,6 +48,25 @@ final class ApiResponse
     }
 
     /**
+     * send response with pagination if requested
+     * @param \Illuminate\Pagination\LengthAwarePaginator|Collection$paginator
+     * @param string $jsonResource
+     * @param mixed $message
+     * @return JsonResponse
+     */
+    public function paginatedIfRequested(
+        LengthAwarePaginator|Collection $paginator,
+        string $jsonResource,
+        ?string $message = null
+    ): JsonResponse {
+        if (request()->has("paginate")) {
+            return $this->paginate($paginator, $jsonResource, $message);
+        }
+
+        return $this->records($jsonResource::collection($paginator), $message);
+    }
+
+    /**
      * Return a paginated JSON response.
      *
      * @template TModel of \Illuminate\Database\Eloquent\Model
@@ -55,19 +76,21 @@ final class ApiResponse
      */
     public function paginate(
         LengthAwarePaginator $paginator,
+        string $jsonResource,
         ?string $message = null
     ): JsonResponse {
         return response()->json([
             "success" => true,
             "message" => $message ?? __("core::core.pagination_success"),
-            "data" => $paginator->items(),
-            "pagination" => [
-                "total" => $paginator->total(),
-                "per_page" => $paginator->perPage(),
+            "records" => $jsonResource::collection($paginator),
+            "paginationInfo" => (object) [
                 "current_page" => $paginator->currentPage(),
+                "per_page" => $paginator->perPage(),
+                "total" => $paginator->total(),
                 "last_page" => $paginator->lastPage(),
                 "from" => $paginator->firstItem(),
                 "to" => $paginator->lastItem(),
+                "has_more_pages" => $paginator->hasMorePages(),
             ],
         ]);
     }
