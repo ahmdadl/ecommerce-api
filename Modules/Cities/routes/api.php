@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Modules\Cities\Http\Controllers\CitiesController;
+use Modules\Cities\Http\Controllers\GetAllCitiesController;
 
 /*
  *--------------------------------------------------------------------------
@@ -14,6 +14,4 @@ use Modules\Cities\Http\Controllers\CitiesController;
  *
  */
 
-Route::apiResource("cities", CitiesController::class)
-    ->only("index")
-    ->middleware("auth-public");
+Route::get("cities", GetAllCitiesController::class)->middleware("auth-public");

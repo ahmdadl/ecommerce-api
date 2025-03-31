@@ -11,13 +11,19 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Translatable\HasTranslations;
 use Modules\Cities\Database\Factories\CityFactory;
 use Modules\Core\Models\Scopes\HasActiveState;
+use Modules\Core\Models\Scopes\PaginateIfRequestedScope;
 use Modules\Governments\Models\Government;
 
 #[UseFactory(CityFactory::class)]
 class City extends Model
 {
     /** @use HasFactory<CityFactory> */
-    use HasFactory, HasUlids, HasTranslations, HasActiveState, SoftDeletes;
+    use HasFactory,
+        HasUlids,
+        HasTranslations,
+        HasActiveState,
+        SoftDeletes,
+        PaginateIfRequestedScope;
 
     protected array $translatable = ["title"];
 
