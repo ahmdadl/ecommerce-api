@@ -1,8 +1,10 @@
 <?php
 
+use Modules\Guests\Models\Guest;
 use Modules\Products\Models\Product;
 use Modules\Users\Models\User;
 use Modules\Wishlists\Models\Wishlist;
+use Modules\Wishlists\Models\WishlistItem;
 use Modules\Wishlists\Services\WishlistService;
 
 use function Pest\Laravel\actingAs;
@@ -103,4 +105,62 @@ it("has_clear_wishlist_method", function () {
     $wishlistService->clear();
 
     expect($wishlistService->isEmpty())->toBe(true);
+});
+
+it("updates_user_total_wishlist_items", function () {
+    $user = User::factory()->customer()->create();
+    $wishlist = Wishlist::factory()->for($user, "wishlistable")->create();
+    $wishlistService = new WishlistService($wishlist);
+
+    $wishlistService->addItem(Product::factory()->create());
+
+    $user->refresh();
+    expect($user->totals->wishlistItems)->toBe(1);
+    expect($wishlistService->count())->toBe(1);
+
+    $wishlistService->removeItem(WishlistItem::first());
+
+    expect($wishlistService->count())->toBe(0);
+    $user->refresh();
+    expect($user->totals->wishlistItems)->toBe(0);
+
+    $wishlistService->addItem(Product::factory()->create());
+    $wishlistService->addItem(Product::factory()->create());
+
+    $user->refresh();
+    expect($user->totals->wishlistItems)->toBe(2);
+
+    $wishlistService->clear();
+
+    $user->refresh();
+    expect($user->totals->wishlistItems)->toBe(0);
+});
+
+it("updates_guest_total_wishlist_items", function () {
+    $user = Guest::factory()->create();
+    $wishlist = Wishlist::factory()->for($user, "wishlistable")->create();
+    $wishlistService = new WishlistService($wishlist);
+
+    $wishlistService->addItem(Product::factory()->create());
+
+    $user->refresh();
+    expect($user->totals->wishlistItems)->toBe(1);
+    expect($wishlistService->count())->toBe(1);
+
+    $wishlistService->removeItem(WishlistItem::first());
+
+    expect($wishlistService->count())->toBe(0);
+    $user->refresh();
+    expect($user->totals->wishlistItems)->toBe(0);
+
+    $wishlistService->addItem(Product::factory()->create());
+    $wishlistService->addItem(Product::factory()->create());
+
+    $user->refresh();
+    expect($user->totals->wishlistItems)->toBe(2);
+
+    $wishlistService->clear();
+
+    $user->refresh();
+    expect($user->totals->wishlistItems)->toBe(0);
 });

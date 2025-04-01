@@ -39,6 +39,20 @@ final readonly class WishlistService
     {
         DB::transaction(function () use ($wishlistItem) {
             $this->wishlist->items()->where("id", $wishlistItem->id)->delete();
+
+            $this->save();
+        });
+    }
+
+    /**
+     * clear wishlist
+     */
+    public function clear(): void
+    {
+        DB::transaction(function () {
+            $this->wishlist->items()->delete();
+
+            $this->save();
         });
     }
 
@@ -59,14 +73,6 @@ final readonly class WishlistService
     }
 
     /**
-     * clear wishlist
-     */
-    public function clear(): void
-    {
-        $this->wishlist->items()->delete();
-    }
-
-    /**
      * check if product is in wishlist
      */
     public function hasProduct(Product $product): bool
@@ -78,10 +84,22 @@ final readonly class WishlistService
     }
 
     /**
+     * update user total wishlist items
+     */
+    public function updateUserTotalWishlistItems(): void
+    {
+        $this->wishlist->wishlistable()->update([
+            "totals->wishlist_items" => $this->count(),
+        ]);
+    }
+
+    /**
      * save wishlist
      */
     private function save(): void
     {
         $this->wishlist->save();
+
+        $this->updateUserTotalWishlistItems();
     }
 }

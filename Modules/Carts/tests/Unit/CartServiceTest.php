@@ -9,6 +9,7 @@ use Modules\Coupons\Enums\CouponDiscountType;
 use Modules\Coupons\Models\Coupon;
 use Modules\Governments\Models\Government;
 use Modules\Products\Models\Product;
+use Modules\Users\Models\User;
 
 test("cart_totals_updated_after_adding_item", function () {
     $cart = Cart::factory()->create();
