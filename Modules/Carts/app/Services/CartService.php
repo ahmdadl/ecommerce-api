@@ -129,7 +129,7 @@ final readonly class CartService
     public function setAddress(Address $address): void
     {
         DB::transaction(function () use ($address) {
-            $this->cart->setRelation("address", $address);
+            $this->cart->address()->associate($address);
 
             $this->removeAddons();
 
@@ -143,7 +143,7 @@ final readonly class CartService
     public function removeAddress(): void
     {
         DB::transaction(function () {
-            $this->cart->setRelation("address", null);
+            $this->cart->address()->associate(null);
 
             $this->removeAddons();
 
@@ -157,7 +157,7 @@ final readonly class CartService
     public function applyCoupon(Coupon $coupon): void
     {
         DB::transaction(function () use ($coupon) {
-            $this->cart->setRelation("coupon", $coupon);
+            $this->cart->coupon()->associate($coupon);
 
             $this->save();
         });
@@ -169,7 +169,7 @@ final readonly class CartService
     public function removeCoupon(): void
     {
         DB::transaction(function () {
-            $this->cart->setRelation("coupon", null);
+            $this->cart->coupon()->associate(null);
 
             $this->removeAddons();
 
@@ -251,7 +251,7 @@ final readonly class CartService
     public function setOrder(Order $order): void
     {
         DB::transaction(function () use ($order) {
-            $this->cart->setRelation("order", $order);
+            $this->cart->order()->associate($order);
 
             $this->save();
         });
@@ -263,7 +263,7 @@ final readonly class CartService
     public function removeOrder(): void
     {
         DB::transaction(function () {
-            $this->cart->setRelation("order", null);
+            $this->cart->order()->associate(null);
 
             $this->save();
         });
@@ -314,7 +314,7 @@ final readonly class CartService
                 "id",
                 "price",
                 "salePrice",
-                "quantity"
+                "stock"
             ),
         ]);
 
