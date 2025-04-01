@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Modules\Orders\Http\Controllers\CreateOrderController;
+use Modules\Orders\Http\Controllers\OrdersController;
 
 /*
  *--------------------------------------------------------------------------
@@ -14,6 +15,11 @@ use Modules\Orders\Http\Controllers\CreateOrderController;
  *
  */
 
-Route::middleware(["auth:customer"])->group(function () {
-    Route::post("orders", CreateOrderController::class)->name("orders.store");
-});
+Route::middleware(["auth:customer"])
+    ->prefix("orders")
+    ->name("orders.")
+    ->group(function () {
+        Route::get("{order}", [OrdersController::class, "show"])->name("show");
+
+        Route::post("", CreateOrderController::class)->name("store");
+    });

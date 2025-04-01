@@ -63,8 +63,8 @@ class CreateOrderFromCartAction
         foreach ($cart->items()->with("product")->get() as $item) {
             $order->items()->create([
                 "product_id" => $item->product_id,
-                "product_title" => $item->product?->title,
-                "product_sku" => $item->product?->sku,
+                "title" => $item->product?->getTranslations("title"),
+                "sku" => $item->product?->sku,
                 "quantity" => $item->quantity,
                 "totals" => $item->totals,
             ]);

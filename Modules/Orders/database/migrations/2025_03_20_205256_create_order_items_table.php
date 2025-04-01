@@ -14,8 +14,8 @@ return new class extends Migration {
             $table->uid();
             $table->foreignUlid("order_id")->constrained();
             $table->foreignUlid("product_id")->constrained();
-            $table->json("product_title");
-            $table->string("product_sku", 255)->nullable();
+            $table->json("title");
+            $table->string("sku", 255)->nullable();
             $table->integer("quantity");
             $table->json("totals");
             $table->timestamps();

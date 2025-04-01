@@ -1,8 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Modules\Addresses\Http\Controllers\AddressesController;
+use Modules\Orders\Http\Controllers\OrdersController;
 use Modules\Users\Http\Controllers\AuthUserController;
 use Modules\Users\Http\Controllers\UserProfileController;
+use Modules\Wishlists\Http\Controllers\WishlistsController;
 
 /*
  *--------------------------------------------------------------------------
@@ -29,12 +32,25 @@ Route::middleware(["auth:guest"])
     });
 
 Route::middleware(["auth:customer"])
-    ->controller(UserProfileController::class)
     ->name("profile.")
     ->prefix("profile")
     ->group(function () {
-        Route::post("update", "updateProfile")->name("updateProfile");
-        Route::post("change-password", "updatePassword")->name(
-            "changePassword"
+        Route::controller(UserProfileController::class)->group(function () {
+            Route::post("update", "updateProfile")->name("updateProfile");
+            Route::post("change-password", "updatePassword")->name(
+                "changePassword"
+            );
+        });
+
+        Route::get("wishlist", [WishlistsController::class, "index"])->name(
+            "wishlist"
+        );
+
+        Route::get("orders", [OrdersController::class, "index"])->name(
+            "orders"
+        );
+
+        Route::get("addresses", [AddressesController::class, "index"])->name(
+            "addresses"
         );
     });

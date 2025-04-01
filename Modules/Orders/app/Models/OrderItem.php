@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Modules\Carts\Casts\CartTotalsCast;
-// use Spatie\Translatable\HasTranslations;
+use Spatie\Translatable\HasTranslations;
 use Modules\Orders\Database\Factories\OrderItemFactory;
 use Modules\Products\Models\Product;
 
@@ -16,9 +16,9 @@ use Modules\Products\Models\Product;
 class OrderItem extends Model
 {
     /** @use HasFactory<OrderItemFactory> */
-    use HasFactory, HasUlids;
+    use HasFactory, HasUlids, HasTranslations;
 
-    protected array $translatable = ["product_title"];
+    protected array $translatable = ["title"];
 
     protected function casts(): array
     {

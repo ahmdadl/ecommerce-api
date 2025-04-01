@@ -5,6 +5,8 @@ namespace Modules\Orders\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use Modules\Orders\Models\Order;
+use Modules\Orders\Transformers\OrderResource;
 
 class OrdersController extends Controller
 {
@@ -13,48 +15,24 @@ class OrdersController extends Controller
      */
     public function index(): JsonResponse
     {
-        //
+        $orders = Order::where("user_id", user()?->id)->latest()->paginate();
 
-        return response()->json([]);
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request): JsonResponse
-    {
-        //
-
-        return response()->json([]);
+        return api()->paginate($orders, OrderResource::class);
     }
 
     /**
      * Show the specified resource.
      */
-    public function show(mixed $id): JsonResponse
+    public function show(Request $request, Order $order): JsonResponse
     {
-        //
+        $order->loadMissing([
+            "address",
+            "coupon",
+            "paymentAttempts",
+            "items",
+            "items.product",
+        ]);
 
-        return response()->json([]);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, mixed $id): JsonResponse
-    {
-        //
-
-        return response()->json([]);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(mixed $id): JsonResponse
-    {
-        //
-
-        return response()->json([]);
+        return api()->record(new OrderResource($order));
     }
 }
