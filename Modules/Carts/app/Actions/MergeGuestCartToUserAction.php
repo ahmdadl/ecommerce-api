@@ -19,10 +19,9 @@ class MergeGuestCartToUserAction
         }
         $guestCartService = new CartService($guestCart);
 
-        $userCart = $user->cart;
-
         // check if user does not have cart or his cart is empty
         // THEN just set current guest cart to user cart
+        $userCart = $user->cart;
         if (!$userCart || $userCart->totals->items === 0) {
             $guestCart->cartable()->associate($user);
 
@@ -41,6 +40,7 @@ class MergeGuestCartToUserAction
                 $userCartItem = $userCartService->findCartItemByProduct(
                     $guestCartItem->product
                 );
+
                 if ($userCartItem) {
                     (new UpdateCartAction($userCartService))->handle(
                         $userCartItem,

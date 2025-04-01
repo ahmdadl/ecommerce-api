@@ -101,7 +101,7 @@ final readonly class WishlistService
     /**
      * save wishlist
      */
-    private function save(): void
+    public function save(): void
     {
         $this->wishlist->save();
 

@@ -3,11 +3,14 @@
 namespace Modules\Users\Actions\Auth;
 
 use Illuminate\Support\Facades\Hash;
+use Modules\Carts\Actions\MergeGuestCartToUserAction;
 use Modules\Core\Exceptions\ApiException;
 use Modules\Core\Services\Application;
+use Modules\Guests\Models\Guest;
 use Modules\Users\Models\Auth\PasswordResetToken;
 use Modules\Users\Models\Customer;
 use Modules\Users\Models\User;
+use Modules\Wishlists\Actions\MergeGuestWishlistToUserAction;
 use Throwable;
 
 class UserResetPasswordAction
@@ -44,6 +47,13 @@ class UserResetPasswordAction
         $accessToken = $user->createToken(Application::getApplicationType())
             ->plainTextToken;
         $user->access_token = $accessToken;
+
+        /** @var Guest $guest */
+        $guest = auth("guest")->user();
+        // merge guest cart to user cart
+        MergeGuestCartToUserAction::new()->handle($guest, $user);
+        // merge guest wishlist to user wishlist
+        MergeGuestWishlistToUserAction::new()->handle($guest, $user);
 
         return $user;
     }

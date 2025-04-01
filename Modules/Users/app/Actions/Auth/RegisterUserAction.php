@@ -7,6 +7,7 @@ use Modules\Core\Services\Application;
 use Modules\Guests\Models\Guest;
 use Modules\Users\Enums\UserRole;
 use Modules\Users\Models\User;
+use Modules\Wishlists\Actions\MergeGuestWishlistToUserAction;
 
 class RegisterUserAction
 {
@@ -21,10 +22,12 @@ class RegisterUserAction
             Application::getApplicationType()
         )->plainTextToken;
 
-        // merge guest cart to user cart
         /** @var Guest $guest */
         $guest = auth("guest")->user();
+        // merge guest cart to user cart
         MergeGuestCartToUserAction::new()->handle($guest, $user);
+        // merge guest wishlist to user wishlist
+        MergeGuestWishlistToUserAction::new()->handle($guest, $user);
 
         return $user;
     }

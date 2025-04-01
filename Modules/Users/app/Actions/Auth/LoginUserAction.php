@@ -7,6 +7,7 @@ use Modules\Core\Services\Application;
 use Modules\Guests\Models\Guest;
 use Modules\Users\Models\Customer;
 use Modules\Users\Models\User;
+use Modules\Wishlists\Actions\MergeGuestWishlistToUserAction;
 
 class LoginUserAction
 {
@@ -30,6 +31,8 @@ class LoginUserAction
 
         // merge guest cart to user cart
         MergeGuestCartToUserAction::new()->handle($guest, $user);
+        // merge guest wishlist to user wishlist
+        MergeGuestWishlistToUserAction::new()->handle($guest, $user);
 
         return $user;
     }
