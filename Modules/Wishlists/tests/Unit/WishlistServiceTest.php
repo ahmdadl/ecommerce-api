@@ -61,3 +61,46 @@ it("has_wishlist_helper_method", function () {
 
     expect(wishlistService())->toBeInstanceOf(WishlistService::class);
 });
+
+it("has_count_method", function () {
+    $wishlist = Wishlist::factory()->create();
+
+    $wishlistService = new WishlistService($wishlist);
+
+    expect($wishlistService->count())->toBe(0);
+});
+
+it("has_has_product_method", function () {
+    $wishlist = Wishlist::factory()->create();
+    $product = Product::factory()->create();
+
+    $wishlistService = new WishlistService($wishlist);
+
+    expect($wishlistService->hasProduct($product))->toBe(false);
+
+    $wishlistService->addItem($product);
+
+    expect($wishlistService->hasProduct($product))->toBe(true);
+});
+
+it("has_is_empty_wishlist_method", function () {
+    $wishlist = Wishlist::factory()->create();
+
+    $wishlistService = new WishlistService($wishlist);
+
+    expect($wishlistService->isEmpty())->toBe(true);
+});
+
+it("has_clear_wishlist_method", function () {
+    $wishlist = Wishlist::factory()->create();
+
+    $wishlistService = new WishlistService($wishlist);
+
+    $wishlistService->addItem(Product::factory()->create());
+
+    expect($wishlistService->isEmpty())->toBe(false);
+
+    $wishlistService->clear();
+
+    expect($wishlistService->isEmpty())->toBe(true);
+});

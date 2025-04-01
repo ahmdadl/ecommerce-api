@@ -18,7 +18,7 @@ final readonly class WishlistService
     }
 
     /**
-     * Adds a specified quantity of a product to the wishlist, creating a new CartItem entry in the database.
+     * Adds a specified quantity of a product to the wishlist, creating a new Wishlist item entry in the database.
      */
     public function addItem(Product $product): void
     {
@@ -33,13 +33,48 @@ final readonly class WishlistService
     }
 
     /**
-     * Removes a specified CartItem from the wishlist.
+     * Removes a specified Wishlist item from the wishlist.
      */
     public function removeItem(WishlistItem $wishlistItem): void
     {
         DB::transaction(function () use ($wishlistItem) {
             $this->wishlist->items()->where("id", $wishlistItem->id)->delete();
         });
+    }
+
+    /**
+     * count of items
+     */
+    public function count(): int
+    {
+        return $this->wishlist->items()->count();
+    }
+
+    /**
+     * check if wishlist is empty
+     */
+    public function isEmpty(): bool
+    {
+        return $this->count() === 0;
+    }
+
+    /**
+     * clear wishlist
+     */
+    public function clear(): void
+    {
+        $this->wishlist->items()->delete();
+    }
+
+    /**
+     * check if product is in wishlist
+     */
+    public function hasProduct(Product $product): bool
+    {
+        return $this->wishlist
+            ->items()
+            ->where("product_id", $product->id)
+            ->exists();
     }
 
     /**
