@@ -4,6 +4,7 @@ namespace Modules\Wishlists\Providers;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use Modules\Wishlists\Models\WishlistItem;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -16,6 +17,12 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        Route::bind("myItem", function ($value) {
+            return WishlistItem::where("id", $value)
+                ->where("wishlist_id", wishlistService()?->wishlist->id)
+                ->firstOrFail();
+        });
+
         parent::boot();
     }
 

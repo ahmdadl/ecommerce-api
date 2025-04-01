@@ -12,6 +12,9 @@
 */
 
 use Modules\Guests\Models\Guest;
+use Modules\Users\Models\Customer;
+use Modules\Users\Models\User;
+use Tests\TestCase;
 
 use function Pest\Laravel\actingAs;
 
@@ -54,9 +57,20 @@ function something()
 /**
  * login as a guest
  */
-function asGuest(?Guest $guest = null): void
+function asGuest(?Guest $guest = null): TestCase
 {
-    actingAs($guest ?? Guest::factory()->create(), "guest");
+    return actingAs($guest ?? Guest::factory()->create(), "guest");
+}
+
+/**
+ * login as a customer
+ */
+function asCustomer(?User $customer = null): TestCase
+{
+    return actingAs(
+        $customer ?? User::factory()->customer()->create(),
+        "customer"
+    );
 }
 
 /**

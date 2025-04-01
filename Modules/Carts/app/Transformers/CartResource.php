@@ -19,7 +19,7 @@ class CartResource extends JsonResource
             "address_id" => $this->address_id,
             "coupon_id" => $this->coupon_id,
             "totals" => $this->totals,
-            "user" => user(),
+            "user" => $this->whenLoaded("cartable", $this->cartable),
             "address" => $this->whenLoaded("address", $this->address),
             "coupon" => $this->whenLoaded("coupon", $this->coupon),
             "items" => $this->whenLoaded(

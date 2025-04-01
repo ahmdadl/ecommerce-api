@@ -14,8 +14,13 @@ use Modules\Wishlists\Http\Controllers\WishlistsController;
  *
  */
 
-Route::middleware(["auth:guest,customer"])->group(function () {
-    Route::apiResource("wishlists", WishlistsController::class)->names(
-        "wishlists"
-    );
-});
+Route::middleware(["auth:guest,customer"])
+    ->controller(WishlistsController::class)
+    ->name("wishlist.")
+    ->prefix("wishlists")
+    ->group(function () {
+        Route::get("", "index")->name("index");
+        Route::post("{product}", "store")->name("store");
+        Route::delete("{myItem}", "destroy")->name("destroy");
+        Route::delete("", "clear")->name("clear");
+    });
