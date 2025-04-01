@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -15,12 +16,14 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Modules\Addresses\Models\Address;
 use Modules\Carts\Models\Cart;
+use Modules\CompareLists\Models\CompareList;
 use Modules\Core\Models\Scopes\HasActiveState;
 use Modules\Users\Casts\UserTotalCast;
 use Modules\Users\Database\Factories\UserFactory;
 use Modules\Users\Enums\UserGender;
 use Modules\Users\Enums\UserRole;
 use Modules\Users\ValueObjects\UserTotals;
+use Modules\Wishlists\Models\Wishlist;
 use Spatie\Permission\Traits\HasRoles;
 
 #[UseFactory(UserFactory::class)]
@@ -129,5 +132,23 @@ class User extends Authenticatable
     public function addresses(): HasMany
     {
         return $this->hasMany(Address::class);
+    }
+
+    /**
+     * user wishlist
+     * @return MorphOne<Wishlist, $this>
+     */
+    public function wishlist(): MorphOne
+    {
+        return $this->morphOne(Wishlist::class, "wishlistable");
+    }
+
+    /**
+     * user compare list
+     * @return HasOne<CompareList, $this>
+     */
+    public function compareList(): HasOne
+    {
+        return $this->hasOne(CompareList::class);
     }
 }

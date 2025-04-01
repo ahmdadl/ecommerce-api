@@ -17,7 +17,7 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Route::bind("myItem", function ($value) {
+        Route::bind("myWishedItem", function ($value) {
             return WishlistItem::where("id", $value)
                 ->where("wishlist_id", wishlistService()?->wishlist->id)
                 ->firstOrFail();

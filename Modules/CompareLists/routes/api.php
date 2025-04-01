@@ -21,6 +21,6 @@ Route::middleware(["auth:customer"])
     ->group(function () {
         Route::get("", "index")->name("index");
         Route::post("{product}", "store")->name("store");
+        Route::delete("clear", "clear")->name("clear");
         Route::delete("{myCompareItem}", "destroy")->name("destroy");
-        Route::delete("", "clear")->name("clear");
     });

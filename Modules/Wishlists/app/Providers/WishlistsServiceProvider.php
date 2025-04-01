@@ -50,6 +50,7 @@ class WishlistsServiceProvider extends ServiceProvider
                 if (!user()) {
                     return null;
                 }
+
                 $wishlist =
                     user()->wishlist ??
                     Wishlist::create([

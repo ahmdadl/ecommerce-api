@@ -14,6 +14,7 @@ use Modules\Carts\Models\Cart;
 use Modules\Guests\Database\Factories\GuestFactory;
 use Modules\Users\Casts\UserTotalCast;
 use Modules\Users\ValueObjects\UserTotals;
+use Modules\Wishlists\Models\Wishlist;
 
 #[UseFactory(GuestFactory::class)]
 class Guest extends AuthenticatableModel
@@ -48,5 +49,14 @@ class Guest extends AuthenticatableModel
     public function cart(): MorphOne
     {
         return $this->morphOne(Cart::class, "cartable");
+    }
+
+    /**
+     * user wishlist
+     * @return MorphOne<Wishlist, $this>
+     */
+    public function wishlist(): MorphOne
+    {
+        return $this->morphOne(Wishlist::class, "wishlistable");
     }
 }
