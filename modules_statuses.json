@@ -14,5 +14,6 @@
     "Addresses": true,
     "Carts": true,
     "Payments": true,
-    "Orders": true
+    "Orders": true,
+    "Wishlists": true
 }

@@ -1,0 +1,11 @@
+{
+    "name": "Wishlists",
+    "alias": "wishlists",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Wishlists\\Providers\\WishlistsServiceProvider"
+    ],
+    "files": []
+}
