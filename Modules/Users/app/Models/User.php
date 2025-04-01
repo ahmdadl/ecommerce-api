@@ -149,6 +149,6 @@ class User extends Authenticatable
      */
     public function compareList(): HasOne
     {
-        return $this->hasOne(CompareList::class);
+        return $this->hasOne(CompareList::class, "user_id");
     }
 }
