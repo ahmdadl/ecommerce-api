@@ -1,0 +1,31 @@
+{
+    "name": "nwidart/comparelists",
+    "description": "",
+    "authors": [
+        {
+            "name": "Nicolas Widart",
+            "email": "n.widart@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [],
+            "aliases": {}
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\CompareLists\\": "app/",
+            "Modules\\CompareLists\\Database\\Factories\\": "database/factories/",
+            "Modules\\CompareLists\\Database\\Seeders\\": "database/seeders/"
+        },
+        "files": [
+            "app/compare_list_helper_functions.php"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Modules\\CompareLists\\Tests\\": "tests/"
+        }
+    }
+}

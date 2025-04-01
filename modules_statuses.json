@@ -15,5 +15,6 @@
     "Carts": true,
     "Payments": true,
     "Orders": true,
-    "Wishlists": true
+    "Wishlists": true,
+    "CompareLists": true
 }

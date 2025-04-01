@@ -1,0 +1,11 @@
+{
+    "name": "CompareLists",
+    "alias": "comparelists",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\CompareLists\\Providers\\CompareListsServiceProvider"
+    ],
+    "files": []
+}
