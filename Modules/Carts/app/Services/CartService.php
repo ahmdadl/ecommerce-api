@@ -10,6 +10,8 @@ use Modules\Carts\ValueObjects\CartTotals;
 use Modules\Coupons\Models\Coupon;
 use Modules\Orders\Models\Order;
 use Modules\Products\Models\Product;
+use Modules\Users\Enums\UserTotalsKey;
+use Modules\Users\ValueObjects\UserTotals;
 
 final readonly class CartService
 {
@@ -201,6 +203,8 @@ final readonly class CartService
         $this->calculateTotals();
 
         $this->cart->save();
+
+        $this->updateUserTotalCartItems();
     }
 
     /**
@@ -216,6 +220,8 @@ final readonly class CartService
         $this->calculateTotals();
 
         $this->cart->save();
+
+        $this->updateUserTotalCartItems();
 
         return $this;
     }
@@ -271,8 +277,21 @@ final readonly class CartService
         DB::transaction(function () {
             $this->cart->items()->delete();
 
-            $this->cart->delete();
+            $this->save();
         });
+    }
+
+    /**
+     * update user total cart items
+     */
+    public function updateUserTotalCartItems(): void
+    {
+        /** @var \Modules\Users\Models\User $this->cart->cartable */
+        UserTotals::update(
+            $this->cart->cartable,
+            UserTotalsKey::CART_ITEMS,
+            $this->cart->totals->items
+        );
     }
 
     /**

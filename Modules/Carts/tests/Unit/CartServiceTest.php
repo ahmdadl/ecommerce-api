@@ -9,7 +9,9 @@ use Modules\Coupons\Enums\CouponDiscountType;
 use Modules\Coupons\Models\Coupon;
 use Modules\Governments\Models\Government;
 use Modules\Products\Models\Product;
+use Modules\Users\Enums\UserTotalsKey;
 use Modules\Users\Models\User;
+use Modules\Users\ValueObjects\UserTotals;
 
 test("cart_totals_updated_after_adding_item", function () {
     $cart = Cart::factory()->create();
@@ -136,4 +138,29 @@ test("calculate_shipping_fees_after_address", function () {
     $cartService->setAddress($address);
 
     expect($cart->totals->total)->toBe((float) 250);
+});
+
+it("updates_user_total_cart_items", function () {
+    $user = User::factory()->customer()->create();
+    $cart = Cart::factory()->for($user, "cartable")->create();
+    $cartService = new CartService($cart);
+
+    $cartService->addItem($productA = Product::factory()->create());
+    $cartService->addItem($productB = Product::factory()->create());
+
+    $validateCount = function (int $count) use ($user, $cartService) {
+        $user->refresh();
+        expect($user->totals->cartItems)->toBe($count);
+        expect($cartService->cart->totals->items)->toBe($count);
+    };
+
+    $validateCount(2);
+
+    $cartService->removeItem($cartService->findCartItemByProduct($productA));
+
+    $validateCount(1);
+
+    $cartService->destroy();
+
+    $validateCount(0);
 });

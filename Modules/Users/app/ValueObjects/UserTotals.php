@@ -4,6 +4,9 @@ namespace Modules\Users\ValueObjects;
 
 use Livewire\Wireable;
 use Modules\Core\Traits\WireableValueObject;
+use Modules\Guests\Models\Guest;
+use Modules\Users\Enums\UserTotalsKey;
+use Modules\Users\Models\User;
 
 final class UserTotals implements Wireable
 {
@@ -15,9 +18,9 @@ final class UserTotals implements Wireable
     public function __construct(
         public int $cartItems,
         public int $wishlistItems,
-        public int $comparedItems,
+        public int $compareItems,
         public int $orders,
-        public int $totalPurchased
+        public int $purchased
     ) {}
 
     /**
@@ -28,9 +31,9 @@ final class UserTotals implements Wireable
         return [
             "cart_items" => $this->cartItems,
             "wishlist_items" => $this->wishlistItems,
-            "compared_items" => $this->comparedItems,
+            "compare_items" => $this->compareItems,
             "orders" => $this->orders,
-            "total_purchased" => $this->totalPurchased,
+            "purchased" => $this->purchased,
         ];
     }
 
@@ -42,9 +45,9 @@ final class UserTotals implements Wireable
         return new self(
             cartItems: $data["cart_items"],
             wishlistItems: $data["wishlist_items"],
-            comparedItems: $data["compared_items"],
+            compareItems: $data["compare_items"],
             orders: $data["orders"],
-            totalPurchased: $data["total_purchased"]
+            purchased: $data["purchased"]
         );
     }
 
@@ -56,9 +59,9 @@ final class UserTotals implements Wireable
         return new self(
             cartItems: 0,
             wishlistItems: 0,
-            comparedItems: 0,
+            compareItems: 0,
             orders: 0,
-            totalPurchased: 0
+            purchased: 0
         );
     }
 
@@ -71,9 +74,9 @@ final class UserTotals implements Wireable
         return new self(
             cartItems: 0,
             wishlistItems: 0,
-            comparedItems: 0,
+            compareItems: 0,
             orders: 0,
-            totalPurchased: 0
+            purchased: 0
         );
     }
 
@@ -85,5 +88,16 @@ final class UserTotals implements Wireable
     public function __toString(): string
     {
         return (string) json_encode($this->toArray());
+    }
+
+    /**
+     * update user or guest totals
+     */
+    public static function update(
+        User|Guest $user,
+        UserTotalsKey $key,
+        int $value
+    ): void {
+        $user->update(["totals->$key->value" => $value]);
     }
 }

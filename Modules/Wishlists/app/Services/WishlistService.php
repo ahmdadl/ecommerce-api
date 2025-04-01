@@ -4,6 +4,8 @@ namespace Modules\Wishlists\Services;
 
 use Illuminate\Support\Facades\DB;
 use Modules\Products\Models\Product;
+use Modules\Users\Enums\UserTotalsKey;
+use Modules\Users\ValueObjects\UserTotals;
 use Modules\Wishlists\Models\Wishlist;
 use Modules\Wishlists\Models\WishlistItem;
 
@@ -88,9 +90,12 @@ final readonly class WishlistService
      */
     public function updateUserTotalWishlistItems(): void
     {
-        $this->wishlist->wishlistable()->update([
-            "totals->wishlist_items" => $this->count(),
-        ]);
+        /** @var \Modules\Users\Models\User $this->wishlist->wishlistable */
+        UserTotals::update(
+            $this->wishlist->wishlistable,
+            UserTotalsKey::WISHLIST_ITEMS,
+            $this->count()
+        );
     }
 
     /**
