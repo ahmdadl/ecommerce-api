@@ -17,11 +17,16 @@ use Modules\Users\Models\User;
 use Tests\TestCase;
 
 use function Pest\Laravel\actingAs;
+use function Pest\Laravel\withoutExceptionHandling;
 
 pest()
     ->extend(Tests\TestCase::class)
     ->use(Illuminate\Foundation\Testing\RefreshDatabase::class)
     ->in("../Modules/*/tests/**/*Test.php");
+
+beforeAll(function () {
+    withoutExceptionHandling();
+});
 
 /*
 |--------------------------------------------------------------------------

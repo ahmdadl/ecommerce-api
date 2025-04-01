@@ -2,7 +2,9 @@
 
 namespace Modules\Users\Actions\Auth;
 
+use Modules\Carts\Actions\MergeGuestCartToUserAction;
 use Modules\Core\Services\Application;
+use Modules\Guests\Models\Guest;
 use Modules\Users\Enums\UserRole;
 use Modules\Users\Models\User;
 
@@ -18,6 +20,11 @@ class RegisterUserAction
         $user->access_token = $user->createToken(
             Application::getApplicationType()
         )->plainTextToken;
+
+        // merge guest cart to user cart
+        /** @var Guest $guest */
+        $guest = auth("guest")->user();
+        MergeGuestCartToUserAction::new()->handle($guest, $user);
 
         return $user;
     }
