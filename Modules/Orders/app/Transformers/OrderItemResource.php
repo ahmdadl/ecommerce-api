@@ -4,6 +4,7 @@ namespace Modules\Orders\Transformers;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Modules\Products\Transformers\ProductResource;
 
 class OrderItemResource extends JsonResource
 {
@@ -19,7 +20,9 @@ class OrderItemResource extends JsonResource
             "quantity" => $this->quantity,
             "totals" => $this->totals,
             "created_at" => $this->created_at,
-            "product" => $this->whenLoaded("product", $this->product),
+            "product" => new ProductResource(
+                $this->whenLoaded("product", $this->product)
+            ),
         ];
     }
 }
