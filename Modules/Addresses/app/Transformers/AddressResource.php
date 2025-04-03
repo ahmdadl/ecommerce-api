@@ -4,6 +4,8 @@ namespace Modules\Addresses\Transformers;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Modules\Cities\Transformers\CityResource;
+use Modules\Governments\Transformers\GovernmentResource;
 
 class AddressResource extends JsonResource
 {
@@ -22,8 +24,11 @@ class AddressResource extends JsonResource
             "title" => $this->title,
             "address" => $this->address,
             "phone" => $this->phone,
-            "government" => $this->whenLoaded("government", $this->government),
-            "city" => $this->whenLoaded("city", $this->city),
+            "government" => $this->whenLoaded(
+                "government",
+                new GovernmentResource($this->government)
+            ),
+            "city" => $this->whenLoaded("city", new CityResource($this->city)),
         ];
     }
 }

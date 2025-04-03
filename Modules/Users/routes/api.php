@@ -36,8 +36,8 @@ Route::middleware(["auth:customer"])
     ->prefix("profile")
     ->group(function () {
         Route::controller(UserProfileController::class)->group(function () {
-            Route::post("update", "updateProfile")->name("updateProfile");
-            Route::post("change-password", "updatePassword")->name(
+            Route::patch("update", "updateProfile")->name("updateProfile");
+            Route::patch("change-password", "updatePassword")->name(
                 "changePassword"
             );
         });

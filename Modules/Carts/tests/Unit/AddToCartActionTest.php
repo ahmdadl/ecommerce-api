@@ -13,8 +13,6 @@ test("add_to_cart_fail_if_quantity_less_than_one", function () {
     $this->expectException(ApiException::class);
 
     $action->handle(Product::factory()->create(), 0);
-
-    expect($cartService->cart->items()->count())->toBe(0);
 });
 
 test("add_to_cart_fail_if_product_out_of_stock", function () {
@@ -24,8 +22,6 @@ test("add_to_cart_fail_if_product_out_of_stock", function () {
     $this->expectException(ApiException::class);
 
     $action->handle(Product::factory()->create(["stock" => 1]), 2);
-
-    expect($cartService->cart->items()->count())->toBe(0);
 });
 
 test("add_to_cart_success", function () {
