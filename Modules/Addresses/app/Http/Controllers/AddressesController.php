@@ -5,6 +5,7 @@ namespace Modules\Addresses\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use Modules\Addresses\Actions\GetAddressesAction;
 use Modules\Addresses\Http\Requests\CreateAddressRequest;
 use Modules\Addresses\Http\Requests\UpdateAddressRequest;
 use Modules\Addresses\Models\Address;
@@ -15,14 +16,11 @@ class AddressesController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): JsonResponse
-    {
-        $addresses = Address::with(["government", "city"])
-            ->where("user_id", user()?->id)
-            ->latest()
-            ->get();
-
-        return api()->records(AddressResource::collection($addresses));
+    public function index(
+        Request $request,
+        GetAddressesAction $action
+    ): JsonResponse {
+        return api()->success($action->handle($request));
     }
 
     /**
