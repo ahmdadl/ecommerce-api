@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Modules\Carts\Casts\CartTotalsCast;
+use Modules\Core\Models\Scopes\HasFiltersScope;
 use Modules\Orders\Database\Factories\OrderFactory;
 use Modules\Orders\Enums\OrderPaymentStatus;
 use Modules\Orders\Enums\OrderStatus;
@@ -20,7 +21,7 @@ use Modules\Users\Models\User;
 class Order extends Model
 {
     /** @use HasFactory<OrderFactory> */
-    use HasFactory, HasUlids;
+    use HasFactory, HasUlids, HasFiltersScope;
 
     protected function casts(): array
     {

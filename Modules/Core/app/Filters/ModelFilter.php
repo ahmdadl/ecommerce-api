@@ -4,7 +4,7 @@ namespace Modules\Core\Filters;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
-abstract class ModelFilter
+class ModelFilter
 {
     /**
      * query builder
@@ -35,7 +35,10 @@ abstract class ModelFilter
     /**
      * get all allowed filters with their cast types
      */
-    abstract protected function getAllowedFilters(): array;
+    protected function getAllowedFilters(): array
+    {
+        return []; // will be overridden by child classes
+    }
 
     /**
      * get filters
@@ -44,7 +47,7 @@ abstract class ModelFilter
     public function filters(): array
     {
         // Define accepted filters and their cast types
-        $allowedFilters = $this->getAllowedFilters();
+        $allowedFilters = [...$this->getAllowedFilters(), "id" => "string"];
 
         // Get all request parameters
         $requestData = $this->request->all();
@@ -80,5 +83,15 @@ abstract class ModelFilter
             default:
                 return $value; // Return as-is if type is unknown
         }
+    }
+
+    /**
+     * base filter to filter by id
+     * @param string $value
+     * @return Builder
+     */
+    protected function id(string $value): Builder
+    {
+        return $this->builder->where("id", $value);
     }
 }
