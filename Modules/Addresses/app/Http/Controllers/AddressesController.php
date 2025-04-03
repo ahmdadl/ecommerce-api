@@ -17,7 +17,10 @@ class AddressesController extends Controller
      */
     public function index(): JsonResponse
     {
-        $addresses = Address::where("user_id", user()?->id)->latest()->get();
+        $addresses = Address::with(["government", "city"])
+            ->where("user_id", user()?->id)
+            ->latest()
+            ->get();
 
         return api()->records(AddressResource::collection($addresses));
     }

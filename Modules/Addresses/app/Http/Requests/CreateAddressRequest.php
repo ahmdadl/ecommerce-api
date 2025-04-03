@@ -3,6 +3,7 @@
 namespace Modules\Addresses\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 use Modules\Core\Rules\PhoneNumber;
 
 class CreateAddressRequest extends FormRequest
@@ -17,14 +18,21 @@ class CreateAddressRequest extends FormRequest
             "city_id" => ["required", "ulid", "exists:cities,id"],
             "first_name" => ["required", "string", "max:50"],
             "last_name" => ["required", "string", "max:50"],
-            "title" => ["nullable", "string", "max:100"],
+            "title" => [
+                "nullable",
+                "string",
+                "max:100",
+                Rule::unique("addresses")->where("user_id", $this->user()->id),
+            ],
             "address" => ["required", "string", "max:250"],
             "phone" => [
                 "required",
                 "string",
                 "max:12",
                 new PhoneNumber(),
-                "unique:addresses,phone,NULL,user_id,deleted_at,NULL",
+                Rule::unique("users")
+                    ->ignore($this->user()->id)
+                    ->withoutTrashed(),
             ],
         ];
     }
