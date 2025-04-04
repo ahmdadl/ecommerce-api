@@ -4,10 +4,13 @@ namespace Modules\Carts\Providers;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use Modules\Core\Exceptions\ApiException;
+use Modules\Coupons\Actions\ValidateCouponAction;
+use Modules\Coupons\Models\Coupon;
 
 class RouteServiceProvider extends ServiceProvider
 {
-    protected string $name = 'Carts';
+    protected string $name = "Carts";
 
     /**
      * Called before routes are registered.
@@ -16,6 +19,16 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        Route::bind("activeCoupon", function ($value) {
+            $coupon = Coupon::byCode($value)->first();
+
+            if (!$coupon || !$coupon->is_active) {
+                return api()->error(__("coupons::t.invalid_coupon"));
+            }
+
+            return $coupon;
+        });
+
         parent::boot();
     }
 
@@ -35,7 +48,9 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function mapWebRoutes(): void
     {
-        Route::middleware('web')->group(module_path($this->name, '/routes/web.php'));
+        Route::middleware("web")->group(
+            module_path($this->name, "/routes/web.php")
+        );
     }
 
     /**
@@ -45,6 +60,9 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function mapApiRoutes(): void
     {
-        Route::middleware('api')->prefix('api')->name('api.')->group(module_path($this->name, '/routes/api.php'));
+        Route::middleware("api")
+            ->prefix("api")
+            ->name("api.")
+            ->group(module_path($this->name, "/routes/api.php"));
     }
 }
