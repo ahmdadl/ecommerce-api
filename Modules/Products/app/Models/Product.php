@@ -137,6 +137,22 @@ class Product extends Model
         return Attribute::make(get: fn() => $this->stock > 0);
     }
 
+    /**
+     * product discounted percentage
+     *
+     * @return Attribute<float, void>
+     */
+    public function discountedPercentage(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => $this->salePrice < $this->price
+                ? round(
+                    (($this->price - $this->salePrice) / $this->price) * 100
+                )
+                : 0.0
+        )->shouldCache();
+    }
+
     /** Relations */
 
     /**
