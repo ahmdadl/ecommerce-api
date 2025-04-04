@@ -31,7 +31,12 @@ class CartController extends Controller
         Request $request,
         CartService $cartService
     ): JsonResponse {
-        $cartService->cart->loadMissing(["coupon", "address", "items"]);
+        $cartService->cart->loadMissing([
+            "coupon",
+            "address",
+            "items",
+            "items.product",
+        ]);
 
         $response = [];
 
