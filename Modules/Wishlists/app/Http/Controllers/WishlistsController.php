@@ -37,6 +37,10 @@ class WishlistsController extends Controller
     ): JsonResponse {
         $action->handle($product);
 
+        if ($request->boolean("withoutResponse")) {
+            return api()->noContent();
+        }
+
         return $this->index($request, $action->service);
     }
 
@@ -48,6 +52,10 @@ class WishlistsController extends Controller
         WishlistItem $wishlistItem
     ): JsonResponse {
         wishlistService()->removeItem($wishlistItem);
+
+        if ($request->boolean("withoutResponse")) {
+            return api()->noContent();
+        }
 
         return $this->index($request, wishlistService());
     }
