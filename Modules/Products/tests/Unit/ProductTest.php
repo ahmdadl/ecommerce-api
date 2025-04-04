@@ -4,6 +4,10 @@ use Modules\Products\Models\Product;
 use Modules\Categories\Models\Category;
 use Modules\Brands\Models\Brand;
 use Illuminate\Support\Str;
+use Modules\Users\Models\User;
+use Modules\Wishlists\Services\WishlistService;
+
+use function Pest\Laravel\actingAs;
 
 it("can be created with factory", function () {
     $product = Product::factory()->create([
@@ -150,4 +154,36 @@ it("can be soft deleted", function () {
         ->deleted_at->not->toBeNull()
         ->and(Product::find($product->id))
         ->toBeNull();
+});
+
+it("calculates discounted percentage correctly", function () {
+    $product = Product::factory()->create([
+        "title" => ["en" => "Vegan Protein"],
+        "price" => 39.99,
+        "salePrice" => 29.99,
+    ]);
+
+    $noDiscount = Product::factory()->create([
+        "title" => ["en" => "Energy Gel"],
+        "price" => 5.0,
+        "salePrice" => 5.0,
+    ]);
+
+    expect($product->discountedPercentage)
+        ->toBeFloat(25.0) // 39.99 - 29.99
+        ->and($noDiscount->discountedPercentage)
+        ->toBeFloat(0.0);
+});
+
+it("checks if product is wished by current user", function () {
+    $product = Product::factory()->create();
+
+    actingAs(User::factory()->customer()->create());
+
+    expect($product->isWished)->toBeFalse();
+
+    wishlistService()->addItem($product);
+
+    $product->refresh();
+    expect($product->isWished)->toBeTrue();
 });

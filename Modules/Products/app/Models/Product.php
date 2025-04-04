@@ -11,14 +11,18 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Modules\Brands\Models\Brand;
 use Modules\Carts\Models\CartItem;
 use Modules\Categories\Models\Category;
+use Modules\CompareLists\Models\CompareListItem;
 use Modules\Core\Models\Scopes\HasActiveState;
 use Modules\Core\Models\Scopes\HasMetaTags;
 use Modules\Products\Database\Factories\ProductFactory;
 use Modules\Products\Filters\ProductFilter;
+use Modules\Wishlists\Models\Wishlist;
+use Modules\Wishlists\Models\WishlistItem;
 use Spatie\Translatable\HasTranslations;
 
 #[UseFactory(ProductFactory::class)]
@@ -153,6 +157,23 @@ class Product extends Model
         )->shouldCache();
     }
 
+    /**
+     * check if product is wished by current user
+     *
+     * @return Attribute<bool, void>
+     */
+    public function isWished(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => user()
+                ? user()
+                    ->wishlistItems()
+                    ->where("product_id", $this->id)
+                    ->exists()
+                : false
+        )->shouldCache();
+    }
+
     /** Relations */
 
     /**
@@ -182,5 +203,23 @@ class Product extends Model
     public function cartItems(): HasMany
     {
         return $this->hasMany(CartItem::class);
+    }
+
+    /**
+     * product wishlist items
+     * @return HasMany<WishlistItem, $this>
+     */
+    public function wishlistItems(): HasMany
+    {
+        return $this->hasMany(WishlistItem::class);
+    }
+
+    /**
+     * product compare items
+     * @return HasMany<CompareListItem, $this>
+     */
+    public function compareItems(): HasMany
+    {
+        return $this->hasMany(CompareListItem::class);
     }
 }

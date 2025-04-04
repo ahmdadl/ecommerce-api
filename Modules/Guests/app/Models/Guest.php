@@ -6,6 +6,7 @@ use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Attributes\UseFactory;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Foundation\Auth\Access\Authorizable;
 use Illuminate\Foundation\Auth\User as AuthenticatableModel;
@@ -15,6 +16,7 @@ use Modules\Guests\Database\Factories\GuestFactory;
 use Modules\Users\Casts\UserTotalCast;
 use Modules\Users\ValueObjects\UserTotals;
 use Modules\Wishlists\Models\Wishlist;
+use Modules\Wishlists\Models\WishlistItem;
 
 #[UseFactory(GuestFactory::class)]
 class Guest extends AuthenticatableModel
@@ -58,5 +60,18 @@ class Guest extends AuthenticatableModel
     public function wishlist(): MorphOne
     {
         return $this->morphOne(Wishlist::class, "wishlistable");
+    }
+
+    /**
+     * guest wishlist items
+     * @return HasManyThrough<WishlistItem, Wishlist, $this>
+     */
+    public function wishlistItems(): HasManyThrough
+    {
+        return $this->hasManyThrough(
+            WishlistItem::class,
+            Wishlist::class,
+            "wishlistable_id"
+        );
     }
 }

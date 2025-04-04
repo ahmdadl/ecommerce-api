@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -24,6 +25,7 @@ use Modules\Users\Enums\UserGender;
 use Modules\Users\Enums\UserRole;
 use Modules\Users\ValueObjects\UserTotals;
 use Modules\Wishlists\Models\Wishlist;
+use Modules\Wishlists\Models\WishlistItem;
 use Spatie\Permission\Traits\HasRoles;
 
 #[UseFactory(UserFactory::class)]
@@ -141,6 +143,19 @@ class User extends Authenticatable
     public function wishlist(): MorphOne
     {
         return $this->morphOne(Wishlist::class, "wishlistable");
+    }
+
+    /**
+     * user wishlist items
+     * @return HasManyThrough<WishlistItem, Wishlist, $this>
+     */
+    public function wishlistItems(): HasManyThrough
+    {
+        return $this->hasManyThrough(
+            WishlistItem::class,
+            Wishlist::class,
+            "wishlistable_id"
+        );
     }
 
     /**

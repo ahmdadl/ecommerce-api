@@ -116,7 +116,7 @@ test("cart_coupon_can_be_set_and_removed", function () {
     $coupon = Coupon::factory()->percentage(50)->create();
 
     $response = actingAs($user)
-        ->patchJson(route("api.cart.apply-coupon", [$coupon]))
+        ->patchJson(route("api.cart.apply-coupon", [$coupon->code]))
         ->assertOk()
         ->json();
 

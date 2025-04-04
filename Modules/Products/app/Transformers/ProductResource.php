@@ -34,7 +34,7 @@ class ProductResource extends JsonResource
             "stock" => $this->stock,
             "has_stock" => $this->hasStock,
             "sku" => $this->sku,
-            "is_wished" => false,
+            "is_wished" => $this->isWished,
             "is_carted" => false,
             "is_new" => $this->created_at->isCurrentWeek(),
             // "is_active" => $this->is_active,
