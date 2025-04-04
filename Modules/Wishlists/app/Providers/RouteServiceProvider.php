@@ -23,6 +23,12 @@ class RouteServiceProvider extends ServiceProvider
                 ->firstOrFail();
         });
 
+        Route::bind("myWishedProduct", function ($value) {
+            return WishlistItem::where("product_id", $value)
+                ->where("wishlist_id", wishlistService()?->wishlist->id)
+                ->firstOrFail();
+        });
+
         parent::boot();
     }
 

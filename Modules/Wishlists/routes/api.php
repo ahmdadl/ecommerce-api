@@ -21,6 +21,11 @@ Route::middleware(["auth:guest,customer"])
     ->group(function () {
         Route::get("", "index")->name("index");
         Route::post("{product}", "store")->name("store");
+
         Route::delete("clear", "clear")->name("clear");
+
+        Route::delete("{myWishedProduct}/by-product", "destroyByProduct")->name(
+            "destroy-by-product"
+        );
         Route::delete("{myWishedItem}", "destroy")->name("destroy");
     });

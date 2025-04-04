@@ -26,7 +26,7 @@ it("can_add_product_to_wishlist", function () {
     ]);
 });
 
-it("can_remove_product_from_wishlist", function () {
+it("can_remove_wishlist_item_from_wishlist", function () {
     $wishlist = Wishlist::factory()->create();
     $product = Product::factory()->create();
 
@@ -163,4 +163,23 @@ it("updates_guest_total_wishlist_items", function () {
 
     $user->refresh();
     expect($user->totals->wishlistItems)->toBe(0);
+});
+
+it("can_remove_product_from_wishlist", function () {
+    $wishlist = Wishlist::factory()->create();
+    $product = Product::factory()->create();
+
+    $wishlistService = new WishlistService($wishlist);
+    $wishlistService->addItem($product);
+
+    expect($wishlist->items()->count())->toBe(1);
+
+    $wishlistService->removeProduct($product);
+
+    expect($wishlist->items()->count())->toBe(0);
+
+    assertDatabaseMissing("wishlist_items", [
+        "wishlist_id" => $wishlist->id,
+        "product_id" => $product->id,
+    ]);
 });

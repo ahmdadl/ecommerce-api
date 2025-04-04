@@ -61,6 +61,22 @@ class WishlistsController extends Controller
     }
 
     /**
+     * Remove By Product
+     */
+    public function destroyByProduct(
+        Request $request,
+        WishlistItem $wishlistItem
+    ): JsonResponse {
+        wishlistService()->removeItem($wishlistItem);
+
+        if ($request->boolean("withoutResponse")) {
+            return api()->noContent();
+        }
+
+        return $this->index($request, wishlistService());
+    }
+
+    /**
      * Remove the specified resource from storage.
      */
     public function clear(Request $request): JsonResponse

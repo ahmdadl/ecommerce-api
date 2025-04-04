@@ -8,6 +8,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
 use Modules\Guests\Models\Guest;
 use Modules\Users\Models\User;
+use Modules\Wishlists\Models\Wishlist;
 
 use function Pest\Laravel\assertDatabaseHas;
 use function Pest\Laravel\deleteJson;
@@ -134,3 +135,46 @@ describe("WishlistsController", function () {
             ->assertJsonCount(0, "data.record.items");
     });
 });
+
+test(
+    "destroy removes wishlist product for authenticated user without response",
+    function () {
+        $user = User::factory()->create();
+        $product = Product::factory()->create();
+
+        asCustomer($user);
+
+        $item = WishlistItem::factory()
+            ->for(wishlistService()->wishlist)
+            ->for($product)
+            ->create();
+
+        deleteJson(route("api.wishlist.destroy-by-product", $product), [
+            "withoutResponse" => true,
+        ])->assertNoContent();
+
+        expect(wishlistService()->count())->toBe(0);
+    }
+);
+
+test("destroy fails for non-existent wishlist product", function () {
+    asCustomer()
+        ->deleteJson(route("api.wishlist.destroy-by-product", 999))
+        ->assertNotFound();
+});
+
+test(
+    "destroy fails when wishlist product is not for current user",
+    function () {
+        $user = User::factory()->create();
+        $product = Product::factory()->create();
+
+        asCustomer($user);
+
+        WishlistItem::factory()->for($product)->create();
+
+        deleteJson(
+            route("api.wishlist.destroy-by-product", $product)
+        )->assertNotFound();
+    }
+);

@@ -47,6 +47,21 @@ final readonly class WishlistService
     }
 
     /**
+     * remove a specified product from wishlist
+     */
+    public function removeProduct(Product $product): void
+    {
+        DB::transaction(function () use ($product) {
+            $this->wishlist
+                ->items()
+                ->where("product_id", $product->id)
+                ->delete();
+
+            $this->save();
+        });
+    }
+
+    /**
      * clear wishlist
      */
     public function clear(): void
