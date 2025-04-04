@@ -10,6 +10,7 @@ use Modules\Carts\Actions\RemoveFromCartAction;
 use Modules\Carts\Actions\UpdateCartAction;
 use Modules\Carts\Models\CartItem;
 use Modules\Carts\Transformers\CartResource;
+use Modules\Payments\Transformers\PaymentMethodResource;
 use Modules\Products\Models\Product;
 use Modules\Carts\Services\CartService;
 use Illuminate\Http\JsonResponse;
@@ -47,7 +48,9 @@ class CartController extends Controller
         }
 
         if (in_array("paymentMethods", $loadedArray)) {
-            $response["paymentMethods"] = PaymentMethod::active()->get();
+            $response["paymentMethods"] = PaymentMethodResource::collection(
+                PaymentMethod::active()->get()
+            );
         }
 
         return api()->success($response);

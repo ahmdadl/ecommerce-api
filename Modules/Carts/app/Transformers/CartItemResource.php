@@ -4,6 +4,7 @@ namespace Modules\Carts\Transformers;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Modules\Products\Transformers\ProductResource;
 
 class CartItemResource extends JsonResource
 {
@@ -14,8 +15,10 @@ class CartItemResource extends JsonResource
     {
         return [
             "id" => $this->id,
-            "cart" => $this->whenLoaded("cart", $this->cart),
-            "product" => $this->whenLoaded("product", $this->product),
+            // "cart" => $this->whenLoaded("cart", $this->cart),
+            "product" => new ProductResource(
+                $this->whenLoaded("product", $this->product)
+            ),
             "quantity" => $this->quantity,
             "totals" => $this->totals,
         ];

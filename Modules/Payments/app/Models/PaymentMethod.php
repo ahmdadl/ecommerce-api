@@ -16,10 +16,7 @@ class PaymentMethod extends Model
     public const FAWRY = "fawry";
     public const INSTAPAY = "instapay";
 
-    // @phpstan-ignore-next-line
-    protected $appends = ["name"];
-
-    protected $hidden = ["localizedName", "is_active"];
+    protected $hidden = ["is_active"];
 
     protected array $rows = [
         [

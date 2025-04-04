@@ -4,6 +4,7 @@ namespace Modules\Carts\Transformers;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Modules\Addresses\Transformers\AddressResource;
 
 class CartResource extends JsonResource
 {
@@ -19,12 +20,16 @@ class CartResource extends JsonResource
             "address_id" => $this->address_id,
             "coupon_id" => $this->coupon_id,
             "totals" => $this->totals,
-            "user" => $this->whenLoaded("cartable", $this->cartable),
-            "address" => $this->whenLoaded("address", $this->address),
+            // "user" => $this->whenLoaded("cartable", $this->cartable),
+            "address" => new AddressResource(
+                $this->whenLoaded("address", $this->address)
+            ),
             "coupon" => $this->whenLoaded("coupon", $this->coupon),
-            "items" => $this->whenLoaded(
-                "items",
-                CartItemResource::collection($this->items)
+            "items" => CartItemResource::collection(
+                $this->whenLoaded(
+                    "items",
+                    CartItemResource::collection($this->items)
+                )
             ),
         ];
     }
