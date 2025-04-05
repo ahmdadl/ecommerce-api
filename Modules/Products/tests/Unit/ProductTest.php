@@ -4,6 +4,8 @@ use Modules\Products\Models\Product;
 use Modules\Categories\Models\Category;
 use Modules\Brands\Models\Brand;
 use Illuminate\Support\Str;
+use Modules\Carts\Models\Cart;
+use Modules\Carts\Models\CartItem;
 use Modules\Users\Models\User;
 use Modules\Wishlists\Services\WishlistService;
 
@@ -186,4 +188,26 @@ it("checks if product is wished by current user", function () {
 
     $product->refresh();
     expect($product->isWished)->toBeTrue();
+});
+
+it("calculates carted quantity for current user", function () {
+    $product = Product::factory()->create();
+
+    actingAs($user = User::factory()->customer()->create());
+    $cart = Cart::factory()->for($user, "cartable")->create();
+    CartItem::factory()->for($cart)->create(); // another product for current user
+    CartItem::factory()->for($product)->create(); // same product for another user
+
+    $product->refresh();
+    expect($product->cartedQuantity)->toBe(0);
+
+    CartItem::factory()
+        ->for($product)
+        ->for($cart)
+        ->create([
+            "quantity" => 2,
+        ]); // same product for current user
+
+    $product->refresh();
+    expect($product->cartedQuantity)->toBe(2);
 });

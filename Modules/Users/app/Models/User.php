@@ -17,6 +17,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Modules\Addresses\Models\Address;
 use Modules\Carts\Models\Cart;
+use Modules\Carts\Models\CartItem;
 use Modules\CompareLists\Models\CompareList;
 use Modules\Core\Models\Scopes\HasActiveState;
 use Modules\Users\Casts\UserTotalCast;
@@ -125,6 +126,19 @@ class User extends Authenticatable
     public function cart(): MorphOne
     {
         return $this->morphOne(Cart::class, "cartable");
+    }
+
+    /**
+     * user cart items
+     * @return HasManyThrough<CartItem, Cart, $this>
+     */
+    public function cartItems(): HasManyThrough
+    {
+        return $this->hasManyThrough(
+            CartItem::class,
+            Cart::class,
+            "cartable_id"
+        );
     }
 
     /**

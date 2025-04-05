@@ -12,6 +12,7 @@ use Illuminate\Foundation\Auth\Access\Authorizable;
 use Illuminate\Foundation\Auth\User as AuthenticatableModel;
 use Laravel\Sanctum\HasApiTokens;
 use Modules\Carts\Models\Cart;
+use Modules\Carts\Models\CartItem;
 use Modules\Guests\Database\Factories\GuestFactory;
 use Modules\Users\Casts\UserTotalCast;
 use Modules\Users\ValueObjects\UserTotals;
@@ -51,6 +52,19 @@ class Guest extends AuthenticatableModel
     public function cart(): MorphOne
     {
         return $this->morphOne(Cart::class, "cartable");
+    }
+
+    /**
+     * user cart items
+     * @return HasManyThrough<CartItem, Cart, $this>
+     */
+    public function cartItems(): HasManyThrough
+    {
+        return $this->hasManyThrough(
+            CartItem::class,
+            Cart::class,
+            "cartable_id"
+        );
     }
 
     /**

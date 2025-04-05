@@ -174,6 +174,22 @@ class Product extends Model
         )->shouldCache();
     }
 
+    /**
+     * get carted quantity for current user
+     * @return Attribute<int, void>
+     */
+    public function cartedQuantity(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => user()
+                ? (int) user()
+                    ->cartItems()
+                    ->where("product_id", $this->id)
+                    ->sum("quantity")
+                : 0
+        )->shouldCache();
+    }
+
     /** Relations */
 
     /**

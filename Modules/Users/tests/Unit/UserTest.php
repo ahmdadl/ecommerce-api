@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\DB;
+use Modules\Carts\Models\Cart;
+use Modules\Carts\Models\CartItem;
 use Modules\Users\Enums\UserRole;
 use Modules\Users\Models\Customer;
 use Modules\Users\Models\User;
@@ -28,4 +30,14 @@ test("user_has_many_wishlist_items", function () {
 
     expect($user->wishlist()->count())->toBe(1);
     expect($user->wishlistItems()->count())->toBe(1);
+});
+
+test("user_has_many_cart_items", function () {
+    $user = User::factory()->customer()->create();
+
+    $cart = Cart::factory()->for($user, "cartable")->create();
+    CartItem::factory()->for($cart)->create();
+
+    expect($user->cart()->count())->toBe(1);
+    expect($user->cartItems()->count())->toBe(1);
 });
