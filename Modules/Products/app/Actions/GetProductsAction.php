@@ -4,6 +4,7 @@ namespace Modules\Products\Actions;
 
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Modules\Core\Exceptions\ApiException;
 use Modules\Core\Traits\HasActionHelpers;
 use Modules\Products\Filters\ProductFilter;
 use Modules\Products\Models\Product;
@@ -25,7 +26,7 @@ class GetProductsAction
 
         $productsQueryClone = clone $productsQuery;
 
-        $products = $productsQuery->paginate();
+        $products = $productsQuery->paginate(3);
         $response["records"] = ProductResource::collection($products);
         $response["paginationInfo"] = $this->getPaginationInfo($products);
 
@@ -82,9 +83,9 @@ class GetProductsAction
         $orderBy = ["id", "desc"];
 
         if ($sortBy = $request->has("sortBy")) {
-            $orderBy = match ($sortBy) {
-                "lowest_price" => ["price", "asc"],
-                "highest_price" => ["price", "desc"],
+            $orderBy = match ($request->string("sortBy")->value()) {
+                "lowest_price" => ["salePrice", "asc"],
+                "highest_price" => ["salePrice", "desc"],
                 // "lowest_stock" => ["stock", "asc"],
                 "newest" => ["id", "desc"],
                 "oldest" => ["id", "asc"],
