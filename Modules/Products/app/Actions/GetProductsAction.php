@@ -4,6 +4,10 @@ namespace Modules\Products\Actions;
 
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Modules\Brands\Models\Brand;
+use Modules\Brands\Transformers\BrandResource;
+use Modules\Categories\Models\Category;
+use Modules\Categories\Transformers\CategoryResource;
 use Modules\Core\Exceptions\ApiException;
 use Modules\Core\Traits\HasActionHelpers;
 use Modules\Products\Filters\ProductFilter;
@@ -30,10 +34,26 @@ class GetProductsAction
         $response["records"] = ProductResource::collection($products);
         $response["paginationInfo"] = $this->getPaginationInfo($products);
 
-        if ($request->has("withFilters")) {
+        if ($request->boolean("withFilters")) {
             $response["filters"] = GetProductFiltersAction::new(
                 $productsQueryClone
             )->handle();
+        }
+
+        if ($request->has("forCategory")) {
+            $response["category"] = new CategoryResource(
+                Category::active()
+                    ->where("slug", $request->string("forCategory")->value())
+                    ->first()
+            );
+        }
+
+        if ($request->has("forBrand")) {
+            $response["brand"] = new BrandResource(
+                Brand::active()
+                    ->where("slug", $request->string("forBrand")->value())
+                    ->first()
+            );
         }
 
         return $response;
@@ -47,11 +67,11 @@ class GetProductsAction
     {
         $relations = [];
 
-        if ($request->has("withCategory")) {
+        if ($request->boolean("withCategory")) {
             $relations[] = "category";
         }
 
-        if ($request->has("withBrand")) {
+        if ($request->boolean("withBrand")) {
             $relations[] = "brand";
         }
 
