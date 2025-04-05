@@ -2,6 +2,7 @@
 
 namespace Modules\Products\Filters;
 
+use Modules\Categories\Models\Category;
 use Modules\Core\Filters\ModelFilter;
 
 class ProductFilter extends ModelFilter
@@ -12,10 +13,22 @@ class ProductFilter extends ModelFilter
         return $this->builder->where("category_id", $value);
     }
 
+    // Filter by category slug
+    public function categorySlug(string $value)
+    {
+        return $this->builder->whereRelation("category", "slug", $value);
+    }
+
     // Filter by brand_id
     public function brand(string $value)
     {
         return $this->builder->where("brand_id", $value);
+    }
+
+    // Filter by brand slug
+    public function brandSlug(string $value)
+    {
+        return $this->builder->whereRelation("brand", "slug", $value);
     }
 
     // Filter by title (assuming JSON field search)
@@ -96,7 +109,9 @@ class ProductFilter extends ModelFilter
     {
         return [
             "category" => "string",
+            "categorySlug" => "string",
             "brand" => "string",
+            "brandSlug" => "string",
             "title" => "string",
             "min_price" => "float",
             "max_price" => "float",
