@@ -79,7 +79,9 @@ class ModelFilter
             case "string":
                 return (string) $value;
             case "date":
-                return \Carbon\Carbon::parse($value)->toDateString(); // Requires Carbon
+                return \Carbon\Carbon::parse($value)->toDateString();
+            case "array":
+                return explode(",", $value);
             default:
                 return $value; // Return as-is if type is unknown
         }

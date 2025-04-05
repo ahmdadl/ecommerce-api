@@ -67,6 +67,29 @@ class ProductFilter extends ModelFilter
     }
 
     /**
+     * filter by categories
+     */
+    public function categories(array $value)
+    {
+        return $this->builder->whereIn("category_id", $value);
+    }
+
+    /**
+     * filter by brands
+     */
+    public function brands(array $value)
+    {
+        return $this->builder->whereIn("brand_id", $value);
+    }
+
+    public function price(string $value)
+    {
+        $priceRange = explode("-", $value);
+
+        return $this->builder->whereBetween("salePrice", $priceRange);
+    }
+
+    /**
      * {@inheritDoc}
      */
     protected function getAllowedFilters(): array
@@ -83,6 +106,9 @@ class ProductFilter extends ModelFilter
             "is_main" => "boolean",
             "sku" => "string",
             "created_at" => "date",
+            "categories" => "array",
+            "brands" => "array",
+            "price" => "string",
         ];
     }
 }
