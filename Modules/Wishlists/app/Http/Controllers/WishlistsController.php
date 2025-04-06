@@ -24,7 +24,9 @@ class WishlistsController extends Controller
         $wishlist->loadMissing(["items", "items.product"]);
         $wishlist->unsetRelation("wishlistable");
 
-        return api()->record(new WishlistResource($wishlist));
+        return api()->success([
+            "wishlist" => new WishlistResource($wishlist),
+        ]);
     }
 
     /**
