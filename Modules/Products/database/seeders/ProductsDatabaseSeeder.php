@@ -35,7 +35,7 @@ class ProductsDatabaseSeeder extends Seeder
                 "brand_id" => $brand->id,
             ]);
 
-            if (++$i >= 20) {
+            if (++$i >= 400) {
                 break;
             }
 

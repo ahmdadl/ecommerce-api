@@ -30,7 +30,7 @@ class GetProductsAction
 
         $productsQueryClone = clone $productsQuery;
 
-        $products = $productsQuery->paginate(3);
+        $products = $productsQuery->paginate();
         $response["records"] = ProductResource::collection($products);
         $response["paginationInfo"] = $this->getPaginationInfo($products);
 
