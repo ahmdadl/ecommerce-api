@@ -79,20 +79,21 @@ final class ApiResponse
         string $jsonResource,
         ?string $message = null
     ): JsonResponse {
-        return response()->json([
-            "success" => true,
-            "message" => $message ?? __("core::core.pagination_success"),
-            "records" => $jsonResource::collection($paginator),
-            "paginationInfo" => (object) [
-                "current_page" => $paginator->currentPage(),
-                "per_page" => $paginator->perPage(),
-                "total" => $paginator->total(),
-                "last_page" => $paginator->lastPage(),
-                "from" => $paginator->firstItem(),
-                "to" => $paginator->lastItem(),
-                "has_more_pages" => $paginator->hasMorePages(),
+        return $this->success(
+            [
+                "records" => $jsonResource::collection($paginator),
+                "paginationInfo" => (object) [
+                    "current_page" => $paginator->currentPage(),
+                    "per_page" => $paginator->perPage(),
+                    "total" => $paginator->total(),
+                    "last_page" => $paginator->lastPage(),
+                    "from" => $paginator->firstItem(),
+                    "to" => $paginator->lastItem(),
+                    "has_more_pages" => $paginator->hasMorePages(),
+                ],
             ],
-        ]);
+            $message
+        );
     }
 
     /**
@@ -102,11 +103,11 @@ final class ApiResponse
         ?string $message = null,
         int $statusCode = 204
     ): JsonResponse {
-        return response()->json(
+        return $this->success(
             [
                 "success" => true,
-                "message" => $message ?? __("core::core.empty_success"),
             ],
+            $message ?? __("core::core.empty_success"),
             $statusCode
         );
     }
