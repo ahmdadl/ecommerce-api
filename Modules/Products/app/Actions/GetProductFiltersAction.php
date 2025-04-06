@@ -4,6 +4,7 @@ namespace Modules\Products\Actions;
 
 use Modules\Core\Traits\HasActionHelpers;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\DB;
 use Modules\Products\Models\Product;
 use Modules\Categories\Models\Category;
 use Modules\Brands\Models\Brand;
@@ -40,19 +41,24 @@ class GetProductFiltersAction
      */
     protected function getCategories()
     {
-        $categoryIds = $this->builder->pluck("category_id")->unique();
+        // $categoryIds = $this->builder->pluck("category_id")->unique();
 
-        return Category::whereIn("id", $categoryIds)
-            ->select("id", "title", "slug")
+        $productCounts = $this->builder
+            ->clone()
+            ->select("category_id")
+            ->selectRaw("COUNT(*) as products_count")
+            ->groupBy("category_id")
+            ->pluck("products_count", "category_id");
+
+        return Category::select("id", "title", "slug")
             ->active()
-            ->withCount("products")
             ->get()
-            ->map(function ($category) {
+            ->map(function ($category) use ($productCounts) {
                 return [
                     "id" => $category->id,
                     "title" => $category->title,
                     "slug" => $category->slug,
-                    "products_count" => $category->products_count,
+                    "products_count" => $productCounts[$category->id] ?? 0,
                 ];
             });
     }
@@ -63,19 +69,25 @@ class GetProductFiltersAction
      */
     protected function getBrands()
     {
-        $brandIds = $this->builder->pluck("brand_id")->unique();
+        $brandIds = $this->builder->clone()->pluck("brand_id")->unique();
+
+        $productCounts = $this->builder
+            ->clone()
+            ->select("brand_id")
+            ->selectRaw("COUNT(*) as products_count")
+            ->groupBy("brand_id")
+            ->pluck("products_count", "brand_id");
 
         return Brand::whereIn("id", $brandIds)
             ->select("id", "title", "slug")
             ->active()
-            ->withCount("products")
             ->get()
-            ->map(function ($brand) {
+            ->map(function ($brand) use ($productCounts) {
                 return [
                     "id" => $brand->id,
                     "title" => $brand->title,
                     "slug" => $brand->slug,
-                    "products_count" => $brand->products_count,
+                    "products_count" => $productCounts[$brand->id] ?? 0,
                 ];
             });
     }
