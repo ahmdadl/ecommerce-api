@@ -21,7 +21,10 @@ class CustomerResource extends JsonResource
             "gender" => $this->gender,
             // "created_at" => $this->created_at,
             "role" => $this->when(isset($this->withRole), $this->role),
-            "access_token" => $this->whenNotNull($this->access_token ?? ""),
+            "access_token" => $this->when(
+                !empty($this->access_token ?? ""),
+                $this->access_token ?? ""
+            ),
         ];
     }
 }
