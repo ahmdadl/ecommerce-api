@@ -28,6 +28,7 @@ class UpdateAddressRequest extends FormRequest
                 user()?->id .
                 ",user_id,deleted_at,NULL",
             ],
+            "is_default" => ["nullable", "boolean"],
         ];
     }
 

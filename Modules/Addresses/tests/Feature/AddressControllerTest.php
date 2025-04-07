@@ -28,6 +28,7 @@ test("user_can_create_address", function () {
     postJson(route("api.addresses.store"), [
         ...Address::factory()->make()->toArray(),
         "phone" => ($phone = fakePhone()),
+        "is_default" => true,
     ])
         ->assertOk()
         ->assertSee($phone);
@@ -35,6 +36,7 @@ test("user_can_create_address", function () {
     assertDatabaseHas("addresses", [
         "user_id" => $user->id,
         "phone" => $phone,
+        "is_default" => true,
     ]);
 
     expect($user->addresses()->count())->toBe(1);
@@ -61,6 +63,7 @@ test("user_can_update_address", function () {
     patchJson(route("api.addresses.update", $address), [
         ...Address::factory()->make()->toArray(),
         "phone" => $phone,
+        "is_default" => true,
     ])
         ->assertOk()
         ->assertSee($phone);
@@ -68,6 +71,7 @@ test("user_can_update_address", function () {
     assertDatabaseHas("addresses", [
         "user_id" => $user->id,
         "phone" => $phone,
+        "is_default" => true,
     ]);
 
     expect($user->addresses()->count())->toBe(1);

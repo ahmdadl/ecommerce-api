@@ -34,6 +34,7 @@ class CreateAddressRequest extends FormRequest
                     ->ignore($this->user()->id)
                     ->withoutTrashed(),
             ],
+            "is_default" => ["nullable", "boolean"],
         ];
     }
 

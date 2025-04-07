@@ -21,6 +21,16 @@ class Address extends Model
     use HasFactory, HasUlids, SoftDeletes;
 
     /**
+     * casts
+     */
+    protected function casts(): array
+    {
+        return [
+            "is_default" => "boolean",
+        ];
+    }
+
+    /**
      * @return Attribute<string, void>
      */
     public function name(): Attribute
