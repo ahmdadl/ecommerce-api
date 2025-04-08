@@ -7,10 +7,7 @@ use Modules\Core\Exceptions\ApiException;
 use Modules\Orders\Enums\OrderPaymentStatus;
 use Modules\Orders\Enums\OrderStatus;
 use Modules\Orders\Models\Order;
-use Modules\Orders\Models\OrderAddress;
-use Modules\Orders\Models\OrderCoupon;
 use Modules\Orders\Models\PaymentAttempt;
-use Throwable;
 
 class CreateOrderFromCartAction
 {
@@ -46,7 +43,9 @@ class CreateOrderFromCartAction
         }
 
         // create order address
-        $orderAddress = CreateOrderAddressAction::new()->handle($cart->address);
+        $orderAddress = CreateOrderAddressAction::new()->handle(
+            $cart->shippingAddress
+        );
 
         // create order
         $order = Order::create([

@@ -27,7 +27,7 @@ class CartFactory extends Factory
         return [
             "cartable_id" => fn() => User::factory(),
             "cartable_type" => User::class,
-            "address_id" => null,
+            "shipping_address_id" => null,
             "coupon_id" => null,
             "totals" => CartTotals::default(),
         ];

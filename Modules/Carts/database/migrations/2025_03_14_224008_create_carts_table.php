@@ -13,7 +13,10 @@ return new class extends Migration {
         Schema::create("carts", function (Blueprint $table) {
             $table->uid();
             $table->ulidMorphs("cartable");
-            $table->foreignUlid("address_id")->nullable()->constrained();
+            $table
+                ->foreignUlid("shipping_address_id")
+                ->nullable()
+                ->constrained("addresses");
             $table->foreignUlid("coupon_id")->nullable()->constrained();
             $table->json("totals")->nullable();
             $table->timestamps();

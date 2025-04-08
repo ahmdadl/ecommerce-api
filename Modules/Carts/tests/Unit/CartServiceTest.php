@@ -135,7 +135,7 @@ test("calculate_shipping_fees_after_address", function () {
     $city = City::factory()->for($government)->create();
     $address = Address::factory()->for($city)->for($government)->create();
 
-    $cartService->setAddress($address);
+    $cartService->setShippingAddress($address);
 
     expect($cart->totals->total)->toBe((float) 250);
 });

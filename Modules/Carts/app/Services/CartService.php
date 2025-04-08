@@ -126,10 +126,10 @@ final readonly class CartService
     /**
      * set cart address
      */
-    public function setAddress(Address $address): void
+    public function setShippingAddress(Address $address): void
     {
         DB::transaction(function () use ($address) {
-            $this->cart->address()->associate($address);
+            $this->cart->shippingAddress()->associate($address);
 
             $this->removeAddons();
 
@@ -140,10 +140,10 @@ final readonly class CartService
     /**
      * remove cart address
      */
-    public function removeAddress(): void
+    public function removeShippingAddress(): void
     {
         DB::transaction(function () {
-            $this->cart->address()->associate(null);
+            $this->cart->shippingAddress()->associate(null);
 
             $this->removeAddons();
 
@@ -328,7 +328,7 @@ final readonly class CartService
     {
         // @phpstan-ignore-next-line
         $updatedItems = $this->cart
-            ->loadMissing(["coupon", "address"])
+            ->loadMissing(["coupon", "shippingAddress"])
             ->items->map(
                 // @phpstan-ignore-next-line
                 fn(CartItem $cartItem): array => [

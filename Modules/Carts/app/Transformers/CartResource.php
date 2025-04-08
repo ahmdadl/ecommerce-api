@@ -15,14 +15,14 @@ class CartResource extends JsonResource
     {
         return [
             "id" => $this->id,
-            // 'cartable_id' => $this->customer_id,
+            "user_id" => $this->cartable_id,
             // 'cartable_type' => $this->customer_type,
-            "address_id" => $this->address_id,
+            "shipping_address_id" => $this->shipping_address_id,
             "coupon_id" => $this->coupon_id,
             "totals" => $this->totals,
             // "user" => $this->whenLoaded("cartable", $this->cartable),
-            "address" => new AddressResource(
-                $this->whenLoaded("address", $this->address)
+            "shippingAddress" => new AddressResource(
+                $this->whenLoaded("shippingAddress", $this->shippingAddress)
             ),
             "coupon" => $this->whenLoaded("coupon", $this->coupon),
             "items" => CartItemResource::collection(

@@ -17,10 +17,9 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Modules\Addresses\Http\Requests\CreateAddressRequest;
 use Modules\Addresses\Models\Address;
-use Modules\Carts\Actions\CreateCartAddressAction;
+use Modules\Carts\Actions\CreateShippingAddressAction;
 use Modules\Carts\Actions\ResetCartAction;
-use Modules\Carts\Actions\SetCartAddressAction;
-use Modules\Coupons\Actions\ValidateCouponAction;
+use Modules\Carts\Actions\SetShippingAddressAction;
 use Modules\Coupons\Models\Coupon;
 use Modules\Payments\Models\PaymentMethod;
 
@@ -35,7 +34,7 @@ class CartController extends Controller
     ): JsonResponse {
         $cartService->cart->loadMissing([
             "coupon",
-            "address",
+            "shippingAddress",
             "items",
             "items.product",
         ]);
@@ -54,16 +53,18 @@ class CartController extends Controller
             );
 
             // check if cart has no address, then set default address or first
-            if (!$cartService->cart->address) {
+            if (!$cartService->cart->shippingAddress) {
                 $defaultAddress =
                     Address::default()->first() ?? Address::first();
-                $defaultAddress && $cartService->setAddress($defaultAddress);
+                $defaultAddress &&
+                    $cartService->setShippingAddress($defaultAddress);
             }
         } else {
-            if (!$cartService->cart->address) {
+            if (!$cartService->cart->shippingAddress) {
                 $defaultAddress =
                     Address::default()->first() ?? Address::first();
-                $defaultAddress && $cartService->setAddress($defaultAddress);
+                $defaultAddress &&
+                    $cartService->setShippingAddress($defaultAddress);
             }
         }
 
@@ -142,12 +143,12 @@ class CartController extends Controller
     }
 
     /**
-     * set cart address
+     * set cart shipping address
      */
-    public function setCartAddress(
+    public function applyShippingAddress(
         Request $request,
         Address $address,
-        SetCartAddressAction $action
+        SetShippingAddressAction $action
     ): JsonResponse {
         $action->handle($address);
 
@@ -157,11 +158,11 @@ class CartController extends Controller
     /**
      * remove cart address
      */
-    public function removeCartAddress(
+    public function removeShippingAddress(
         Request $request,
         CartService $cartService
     ): JsonResponse {
-        $cartService->removeAddress();
+        $cartService->removeShippingAddress();
 
         return $this->index($request, $cartService);
     }
@@ -206,9 +207,9 @@ class CartController extends Controller
     /**
      * create address and set as cart address
      */
-    public function createCartAddress(
+    public function storeShippingAddress(
         CreateAddressRequest $request,
-        CreateCartAddressAction $action
+        CreateShippingAddressAction $action
     ): JsonResponse {
         $action->handle($request->validated());
 

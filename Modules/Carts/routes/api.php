@@ -19,11 +19,11 @@ Route::middleware(["auth:customer,guest"])
     ->name("cart.")
     ->group(function () {
         // address routes
-        Route::patch("address/{address}", "setCartAddress")->name(
+        Route::patch("address/{address}", "applyShippingAddress")->name(
             "set-address"
         );
-        // Route::delete("address", "removeCartAddress")->name("remove-address");
-        Route::post("address", "createCartAddress")->name("create-address");
+        // Route::delete("address", "removeShippingAddress")->name("remove-address");
+        Route::post("address", "storeShippingAddress")->name("create-address");
 
         // coupon routes
         Route::patch("coupon/{activeCoupon}", "applyCartCoupon")->name(

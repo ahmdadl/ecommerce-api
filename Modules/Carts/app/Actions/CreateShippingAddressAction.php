@@ -5,7 +5,7 @@ namespace Modules\Carts\Actions;
 use Modules\Addresses\Models\Address;
 use Modules\Carts\Services\CartService;
 
-class CreateCartAddressAction
+class CreateShippingAddressAction
 {
     public function __construct(public CartService $cartService) {}
 
@@ -16,7 +16,7 @@ class CreateCartAddressAction
             ...$validatedData,
         ]);
 
-        $this->cartService->setAddress($address);
+        $this->cartService->setShippingAddress($address);
 
         return $address;
     }

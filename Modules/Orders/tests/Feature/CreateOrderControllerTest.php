@@ -57,7 +57,7 @@ it("cannot_create_order_with_invalid_data", function () {
         ->assertStatus(400)
         ->assertSee("Address");
 
-    $cart->address()->associate($address)->save();
+    $cart->shippingAddress()->associate($address)->save();
 
     // check if coupon is validated
     $cart
@@ -73,11 +73,11 @@ it("cannot_create_order_with_invalid_data", function () {
 
 it("can_create_an_order_with_cod", function () {
     $user = User::factory()->customer()->create();
-    $address = Address::factory()->create();
+    $shippingAddress = Address::factory()->create();
     $coupon = Coupon::factory()->percentage(50)->create();
     $cart = Cart::factory()
         ->for($user, "cartable")
-        ->for($address)
+        ->for($shippingAddress, "shippingAddress")
         ->for($coupon)
         ->create();
     CartItem::factory()->for($cart)->count(2)->create();
@@ -111,7 +111,7 @@ it("can_create_an_order_with_instapay", function () {
     $coupon = Coupon::factory()->percentage(50)->create();
     $cart = Cart::factory()
         ->for($user, "cartable")
-        ->for($address)
+        ->for($address, "shippingAddress")
         ->for($coupon)
         ->create();
     CartItem::factory()->for($cart)->count(2)->create();

@@ -120,7 +120,7 @@ final class CartTotals
 
         foreach (
             $cart
-                ->loadMissing(["coupon", "address"])
+                ->loadMissing(["coupon", "shippingAddress"])
                 ->items()
                 ->get()
             as $item
@@ -146,8 +146,8 @@ final class CartTotals
         }
 
         // calculate shipping
-        if ($cart->address) {
-            $shipping = $cart->address->government->shipping_fees ?? 0;
+        if ($cart->shippingAddress) {
+            $shipping = $cart->shippingAddress->government->shipping_fees ?? 0;
             $total = round($total + $shipping, 2);
         }
 

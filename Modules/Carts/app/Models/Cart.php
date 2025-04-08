@@ -59,10 +59,10 @@ class Cart extends Model
     }
 
     /**
-     * address
+     * shippingAddress
      * @return BelongsTo<Address, $this>
      */
-    public function address(): BelongsTo
+    public function shippingAddress(): BelongsTo
     {
         return $this->belongsTo(Address::class);
     }
