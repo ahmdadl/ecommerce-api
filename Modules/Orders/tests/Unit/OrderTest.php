@@ -16,7 +16,7 @@ test("order_has_relations", function () {
 
     expect($order->user)
         ->toBeInstanceOf(User::class)
-        ->and($order->address)
+        ->and($order->shippingAddress)
         ->toBeInstanceOf(OrderAddress::class)
         ->and($order->coupon)
         ->toBeInstanceOf(OrderCoupon::class)

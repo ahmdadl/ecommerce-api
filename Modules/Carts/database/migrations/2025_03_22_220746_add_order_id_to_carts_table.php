@@ -16,7 +16,8 @@ return new class extends Migration {
                 ->foreignUlid("order_id")
                 ->nullable()
                 ->after("coupon_id")
-                ->constrained();
+                ->constrained()
+                ->noActionOnDelete();
         });
     }
 

@@ -28,7 +28,7 @@ class OrderFactory extends Factory
         return [
             "user_id" => fn() => User::factory()->customer(),
             "coupon_id" => fn() => OrderCoupon::factory(),
-            "address_id" => fn() => OrderAddress::factory(),
+            "shipping_address_id" => fn() => OrderAddress::factory(),
             "totals" => CartTotals::default(),
             "payment_method" => PaymentMethod::inRandomOrder()->first()->code,
             "status" => OrderStatus::PENDING,

@@ -65,7 +65,7 @@ class Order extends Model
     /**
      * @return BelongsTo<OrderAddress, $this>
      */
-    public function address(): BelongsTo
+    public function shippingAddress(): BelongsTo
     {
         return $this->belongsTo(OrderAddress::class);
     }

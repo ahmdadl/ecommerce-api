@@ -17,7 +17,9 @@ return new class extends Migration {
                 ->foreignUlid("coupon_id")
                 ->nullable()
                 ->constrained("order_coupons");
-            $table->foreignUlid("address_id")->constrained("order_addresses");
+            $table
+                ->foreignUlid("shipping_address_id")
+                ->constrained("order_addresses");
         });
     }
 

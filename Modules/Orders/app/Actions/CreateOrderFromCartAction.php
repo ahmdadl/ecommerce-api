@@ -43,14 +43,14 @@ class CreateOrderFromCartAction
         }
 
         // create order address
-        $orderAddress = CreateOrderAddressAction::new()->handle(
+        $orderShippingAddress = CreateOrderAddressAction::new()->handle(
             $cart->shippingAddress
         );
 
         // create order
         $order = Order::create([
             "user_id" => user()?->id,
-            "address_id" => $orderAddress->id,
+            "shipping_address_id" => $orderShippingAddress->id,
             "coupon_id" => $orderCoupon?->id,
             "totals" => $cart->totals,
             "payment_method" => $paymentMethod,
