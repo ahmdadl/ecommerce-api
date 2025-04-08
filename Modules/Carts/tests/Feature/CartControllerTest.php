@@ -191,3 +191,13 @@ test("cart_automatically_selects_first_address_when_no_default", function () {
         ->assertOk()
         ->assertSee($firstAddress->id);
 });
+
+test("can_create_cart_address", function () {
+    asCustomer()
+        ->postJson(
+            route("api.cart.create-address", []),
+            $address = Address::factory()->raw()
+        )
+        ->assertOk()
+        ->assertSee($address["first_name"]);
+});

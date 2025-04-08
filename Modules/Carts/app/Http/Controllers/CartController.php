@@ -15,7 +15,9 @@ use Modules\Products\Models\Product;
 use Modules\Carts\Services\CartService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Modules\Addresses\Http\Requests\CreateAddressRequest;
 use Modules\Addresses\Models\Address;
+use Modules\Carts\Actions\CreateCartAddressAction;
 use Modules\Carts\Actions\ResetCartAction;
 use Modules\Carts\Actions\SetCartAddressAction;
 use Modules\Coupons\Actions\ValidateCouponAction;
@@ -199,5 +201,17 @@ class CartController extends Controller
         $resetAction->handle();
 
         return $this->index($request, $resetAction->cartService);
+    }
+
+    /**
+     * create address and set as cart address
+     */
+    public function createCartAddress(
+        CreateAddressRequest $request,
+        CreateCartAddressAction $action
+    ): JsonResponse {
+        $action->handle($request->validated());
+
+        return $this->index($request, $action->cartService);
     }
 }
