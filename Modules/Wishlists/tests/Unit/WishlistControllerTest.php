@@ -38,7 +38,7 @@ describe("WishlistsController", function () {
         asGuest()
             ->getJson(route("api.wishlist.index"))
             ->assertOk()
-            ->assertJsonCount(0, "data.record.items");
+            ->assertJsonCount(0, "data.wishlist.items");
     });
 
     test("store adds product to wishlist for authenticated user", function () {
@@ -48,7 +48,7 @@ describe("WishlistsController", function () {
         asCustomer($user)
             ->postJson(route("api.wishlist.store", $product))
             ->assertOk()
-            ->assertJsonCount(1, "data.record.items")
+            ->assertJsonCount(1, "data.wishlist.items")
             ->assertJsonFragment(["product_id" => $product->id]);
     });
 
@@ -82,7 +82,7 @@ describe("WishlistsController", function () {
 
         deleteJson(route("api.wishlist.destroy", $wishlistItem))
             ->assertOk()
-            ->assertJsonCount(0, "data.record.items");
+            ->assertJsonCount(0, "data.wishlist.items");
     });
 
     test("destroy fails for non-existent wishlist item", function () {
@@ -116,7 +116,7 @@ describe("WishlistsController", function () {
             asCustomer($user)
                 ->deleteJson(route("api.wishlist.clear"))
                 ->assertOk()
-                ->assertJsonCount(0, "data.record.items");
+                ->assertJsonCount(0, "data.wishlist.items");
         }
     );
 
@@ -132,7 +132,7 @@ describe("WishlistsController", function () {
 
         deleteJson(route("api.wishlist.clear"))
             ->assertOk()
-            ->assertJsonCount(0, "data.record.items");
+            ->assertJsonCount(0, "data.wishlist.items");
     });
 });
 

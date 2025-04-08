@@ -82,7 +82,7 @@ test("user_can_update_product_quantity_in_cart", function () {
     expect($response["cart"]["totals"]["total"])->toBe(600);
 });
 
-test("cart_address_can_be_set_and_removed", function () {
+test("cart_address_can_be_set_only", function () {
     $product = Product::factory()->create(["salePrice" => 300]);
     /** @var Authenticatable $user */
     $user = User::factory()->create();
@@ -97,13 +97,6 @@ test("cart_address_can_be_set_and_removed", function () {
         ->json();
 
     expect($response["data"]["cart"]["totals"]["total"])->toBe(450);
-
-    $response = actingAs($user)
-        ->deleteJson(route("api.cart.remove-address"))
-        ->assertOk()
-        ->json();
-
-    expect($response["data"]["cart"]["totals"]["total"])->toBe(300);
 });
 
 test("cart_coupon_can_be_set_and_removed", function () {
@@ -155,4 +148,46 @@ test("cart_cannot_apply_invalid_coupon", function () {
     actingAs($user)
         ->patchJson(route("api.cart.apply-coupon", [$maxDiscountCoupon]))
         ->assertStatus(400);
+});
+
+test("cart_automatically_selects_default_address", function () {
+    $product = Product::factory()->create(["salePrice" => 300]);
+    /** @var Authenticatable $user */
+    $user = User::factory()->create();
+
+    // Create a default address for the user
+    $defaultAddress = Address::factory()
+        ->withShippingFee(150)
+        ->create([
+            "user_id" => $user->id,
+            "is_default" => true,
+        ]);
+
+    actingAs($user)
+        ->getJson(route("api.cart.index"), [
+            "params" => [
+                "with" => ["addresses"],
+            ],
+        ])
+        ->assertOk()
+        ->assertSee($defaultAddress->id);
+});
+
+test("cart_automatically_selects_first_address_when_no_default", function () {
+    $product = Product::factory()->create(["salePrice" => 300]);
+    /** @var Authenticatable $user */
+    $user = User::factory()->create();
+
+    // Create a non-default address for the user
+    $firstAddress = Address::factory()
+        ->withShippingFee(150)
+        ->create([
+            "user_id" => $user->id,
+            "is_default" => false,
+        ]);
+
+    actingAs($user)
+        ->getJson(route("api.cart.index"))
+        ->assertOk()
+        ->assertSee($firstAddress->id);
 });

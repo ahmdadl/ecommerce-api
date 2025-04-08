@@ -22,7 +22,7 @@ Route::middleware(["auth:customer,guest"])
         Route::patch("address/{address}", "setCartAddress")->name(
             "set-address"
         );
-        Route::delete("address", "removeCartAddress")->name("remove-address");
+        // Route::delete("address", "removeCartAddress")->name("remove-address");
 
         // coupon routes
         Route::patch("coupon/{activeCoupon}", "applyCartCoupon")->name(

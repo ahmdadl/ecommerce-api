@@ -3,6 +3,7 @@
 namespace Modules\Addresses\Models;
 
 use Illuminate\Database\Eloquent\Attributes\UseFactory;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Model;
@@ -28,6 +29,16 @@ class Address extends Model
         return [
             "is_default" => "boolean",
         ];
+    }
+
+    /**
+     * Scope a query to only include users with the specified role.
+     *
+     * @param  Builder<Address>  $query
+     */
+    public function scopeDefault(Builder $query, bool $default = true): void
+    {
+        $query->where("is_default", $default);
     }
 
     /**

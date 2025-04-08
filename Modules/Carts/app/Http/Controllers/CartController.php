@@ -46,10 +46,23 @@ class CartController extends Controller
 
         if (in_array("addresses", $loadedArray)) {
             $response["addresses"] = AddressResource::collection(
-                Address::where("user_id", user()?->id)
+                $addresses = Address::where("user_id", user()?->id)
                     ->with(["government", "city"])
                     ->get()
             );
+
+            // check if cart has no address, then set default address or first
+            if (!$cartService->cart->address) {
+                $defaultAddress =
+                    Address::default()->first() ?? Address::first();
+                $defaultAddress && $cartService->setAddress($defaultAddress);
+            }
+        } else {
+            if (!$cartService->cart->address) {
+                $defaultAddress =
+                    Address::default()->first() ?? Address::first();
+                $defaultAddress && $cartService->setAddress($defaultAddress);
+            }
         }
 
         if (in_array("paymentMethods", $loadedArray)) {
