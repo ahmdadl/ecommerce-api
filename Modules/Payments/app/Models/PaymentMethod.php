@@ -84,9 +84,7 @@ class PaymentMethod extends Model
     public function imageUrl(): Attribute
     {
         return Attribute::make(
-            get: fn() => url(
-                "/assets/icons/payments/" . $this->attributes["image"]
-            )
+            get: fn() => url("/img/payments/" . $this->attributes["image"])
         )->shouldCache();
     }
 
