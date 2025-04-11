@@ -30,5 +30,14 @@ class UsersDatabaseSeeder extends Seeder
                 "email" => "admin@gmail.com",
                 "password" => Hash::make("123123123"),
             ]);
+
+        User::factory()
+            ->customer()
+            ->male()
+            ->create([
+                "name" => "Ahmed Customer",
+                "email" => "ahmdadl@gmail.com",
+                "password" => Hash::make("123123123"),
+            ]);
     }
 }
