@@ -30,7 +30,7 @@ class OrdersController extends Controller
     public function show(Request $request, Order $order): JsonResponse
     {
         $order->loadMissing([
-            "address",
+            "shippingAddress",
             "coupon",
             "paymentAttempts",
             "items",

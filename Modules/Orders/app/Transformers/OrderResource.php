@@ -15,7 +15,7 @@ class OrderResource extends JsonResource
         return [
             "id" => $this->id,
             "user_id" => $this->user_id,
-            "address_id" => $this->address_id,
+            "shipping_address_id" => $this->shipping_address_id,
             "status" => __("orders::t.status." . $this->status->value),
             "payment_status" => __(
                 "orders::t.payment_status." . $this->payment_status->value
@@ -27,9 +27,13 @@ class OrderResource extends JsonResource
             "items" => OrderItemResource::collection(
                 $this->whenLoaded("items")
             ),
-            "address" => $this->whenLoaded("address"),
-            "coupon" => $this->whenLoaded("coupon"),
-            "paymentAttempts" => $this->whenLoaded("paymentAttempts"),
+            "shippingAddress" => new OrderAddressResource(
+                $this->whenLoaded("shippingAddress")
+            ),
+            "coupon" => new OrderCouponResource($this->whenLoaded("coupon")),
+            "paymentAttempts" => OrderPaymentAttemptsResource::collection(
+                $this->whenLoaded("paymentAttempts")
+            ),
         ];
     }
 }

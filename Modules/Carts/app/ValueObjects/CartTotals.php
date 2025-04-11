@@ -95,7 +95,7 @@ final class CartTotals
             discount: $product->discountedPrice * $quantity,
             products: 1,
             items: $quantity,
-            subtotal: $product->salePrice * $quantity,
+            subtotal: $product->price * $quantity,
             coupon: 0,
             shipping: 0,
             taxes: ($product->salePrice * $quantity) / 1.15,
@@ -159,7 +159,7 @@ final class CartTotals
             subtotal: $subtotal,
             coupon: $coupon,
             shipping: $shipping,
-            taxes: $taxes,
+            taxes: round($total - $taxes, 2),
             total: round($total)
         );
     }
