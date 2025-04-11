@@ -19,12 +19,11 @@ class GetAllCitiesController extends Controller
     {
         $cities = City::active();
 
+        $governmentId = $request->string("government_id")->value();
+
         $cities->when(
-            $request->integer("government_id"),
-            fn($q, int $governmentId) => $q->where(
-                "government_id",
-                $governmentId
-            )
+            $governmentId,
+            fn($q) => $q->where("government_id", $governmentId)
         );
 
         /** @var LengthAwarePaginator|Collection */
