@@ -15,6 +15,7 @@ class PaymentMethodResource extends JsonResource
         return [
             "code" => $this->code,
             "name" => $this->name,
+            "image" => $this->imageUrl,
         ];
     }
 }

@@ -26,6 +26,7 @@ class PaymentMethod extends Model
             "is_active" => true,
             "require_receipt" => false,
             "is_online" => false,
+            "image" => "cash.svg",
         ],
         [
             "code" => "fawry",
@@ -34,6 +35,7 @@ class PaymentMethod extends Model
             "is_active" => false,
             "require_receipt" => true,
             "is_online" => false,
+            "image" => "fawry.webp",
         ],
         [
             "code" => "instapay",
@@ -42,6 +44,7 @@ class PaymentMethod extends Model
             "is_active" => true,
             "require_receipt" => true,
             "is_online" => false,
+            "image" => "instapay.png",
         ],
     ];
 
@@ -71,7 +74,20 @@ class PaymentMethod extends Model
     {
         return Attribute::make(
             get: fn() => $this->attributes["name_" . app()->getLocale()]
-        );
+        )->shouldCache();
+    }
+
+    /**
+     * get image withUrl
+     * @return Attribute<string, void>
+     */
+    public function imageUrl(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => url(
+                "/assets/icons/payments/" . $this->attributes["image"]
+            )
+        )->shouldCache();
     }
 
     /**
