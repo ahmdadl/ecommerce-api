@@ -17,5 +17,6 @@
     "Orders": true,
     "Wishlists": true,
     "CompareLists": true,
-    "ContactUs": true
+    "ContactUs": true,
+    "Faqs": true
 }
