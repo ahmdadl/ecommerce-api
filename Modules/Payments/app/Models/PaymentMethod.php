@@ -46,6 +46,24 @@ class PaymentMethod extends Model
             "is_online" => false,
             "image" => "instapay.png",
         ],
+        [
+            "code" => "vodafoneCash",
+            "name_en" => "Pay with Vodafone Cash",
+            "name_ar" => "الدفع بفودافون كاش ",
+            "is_active" => true,
+            "require_receipt" => false,
+            "is_online" => true,
+            "image" => "vodafone-cash.png",
+        ],
+        [
+            "code" => "etisalatCash",
+            "name_en" => "Pay with Etisalat Cash",
+            "name_ar" => "الدفع بإتصالات كاش ",
+            "is_active" => true,
+            "require_receipt" => false,
+            "is_online" => true,
+            "image" => "etisalat-cash.png",
+        ],
     ];
 
     /**
