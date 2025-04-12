@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Modules\Carts\Http\Controllers\CartsController;
+use Modules\Carts\Http\Controllers\OnlinePaymentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,5 +16,15 @@ use Modules\Carts\Http\Controllers\CartsController;
 */
 
 Route::group([], function () {
-    // Route::resource('carts', CartsController::class)->names('carts');
+    Route::prefix("/payments/{paymentAttempt}/")
+        ->name("payments.")
+        ->controller(OnlinePaymentController::class)
+        ->group(function () {
+            Route::get("", "index")->name("index");
+            Route::get("success", "success")->name("success");
+            Route::get("after-success", "afterSuccess")->name("afterSuccess");
+
+            Route::get("failed", "failed")->name("failed");
+            Route::get("after-failed", "afterFailed")->name("afterFailed");
+        });
 });

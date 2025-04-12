@@ -33,4 +33,20 @@ class PaymentAttempt extends Model
     {
         return $this->belongsTo(Order::class);
     }
+
+    public function updateToSuccess(): void
+    {
+        $this->update(["status" => OrderPaymentStatus::PAID]);
+
+        $this->order()->update(["payment_status" => OrderPaymentStatus::PAID]);
+    }
+
+    public function updateToFailed(): void
+    {
+        $this->update(["status" => OrderPaymentStatus::FAILED]);
+
+        $this->order()->update([
+            "payment_status" => OrderPaymentStatus::FAILED,
+        ]);
+    }
 }

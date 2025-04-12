@@ -38,6 +38,15 @@ class CreateOrderController extends Controller
             return api()->record(new OrderResource($order));
         }
 
+        if ($paymentMethod->is_online) {
+            return api()->success([
+                "payment_url" => route(
+                    "payments.index",
+                    $order->paymentAttempts()->latest()->first()
+                ),
+            ]);
+        }
+
         return api()->error();
     }
 }

@@ -15,6 +15,7 @@ use Modules\Orders\Database\Factories\OrderFactory;
 use Modules\Orders\Enums\OrderPaymentStatus;
 use Modules\Orders\Enums\OrderStatus;
 use Modules\Payments\Models\PaymentMethod;
+use Modules\Users\Models\Customer;
 use Modules\Users\Models\User;
 
 #[UseFactory(OrderFactory::class)]
@@ -47,11 +48,11 @@ class Order extends Model
     }
 
     /**
-     * @return BelongsTo<User, $this>
+     * @return BelongsTo<Customer, $this>
      */
     public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Customer::class);
     }
 
     /**

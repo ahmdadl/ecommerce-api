@@ -17,10 +17,7 @@ return new class extends Migration {
             $table->uid();
             $table->foreignUlid("user_id")->constrained();
             $table->json("totals");
-            $table->enum(
-                "payment_method",
-                PaymentMethod::all()->pluck("code")->toArray()
-            );
+            $table->string("payment_method", 30);
             $table
                 ->enum("status", OrderStatus::values())
                 ->default(OrderStatus::PENDING->value);

@@ -15,10 +15,7 @@ return new class extends Migration {
         Schema::create("payment_attempts", function (Blueprint $table) {
             $table->uid();
             $table->foreignUlid("order_id")->constrained();
-            $table->enum(
-                "payment_method",
-                PaymentMethod::all()->pluck("code")->toArray()
-            );
+            $table->string("payment_method", 30);
             $table
                 ->enum("status", OrderPaymentStatus::values())
                 ->default(OrderPaymentStatus::PENDING->value);

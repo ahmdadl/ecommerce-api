@@ -25,6 +25,7 @@ class CreateOrderRequest extends FormRequest
             "receipt" => [
                 "required_if:payment_method," .
                 $paymentMethodsWithReceipt->implode(","),
+                "nullable",
                 "string",
                 "max:255",
                 "exists:uploads,id",
