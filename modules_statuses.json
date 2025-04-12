@@ -16,5 +16,6 @@
     "Payments": true,
     "Orders": true,
     "Wishlists": true,
-    "CompareLists": true
+    "CompareLists": true,
+    "ContactUs": true
 }
