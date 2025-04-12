@@ -299,9 +299,9 @@ final readonly class CartService
      */
     private function removeAddons(): void
     {
-        $this->cart->setRelation("coupon", null);
+        $this->cart->coupon()->associate(null);
 
-        $this->cart->setRelation("order", null);
+        $this->cart->order()->associate(null);
     }
 
     /**

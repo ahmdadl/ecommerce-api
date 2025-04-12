@@ -14,6 +14,7 @@ class CreateOrderFromCartAction
     public function handle(
         Cart $cart,
         string $paymentMethod,
+        ?string $receipt = null,
         OrderStatus $status = OrderStatus::PENDING,
         OrderPaymentStatus $orderPaymentStatus = OrderPaymentStatus::PENDING
     ): ?Order {
@@ -27,7 +28,8 @@ class CreateOrderFromCartAction
             $this->createOrderPaymentAttempt(
                 $cart->order_id,
                 $paymentMethod,
-                $orderPaymentStatus
+                $orderPaymentStatus,
+                $receipt
             );
 
             return Order::firstWhere("id", $cart->order_id);
@@ -48,6 +50,7 @@ class CreateOrderFromCartAction
         );
 
         // create order
+        /** @var Order $order */
         $order = Order::create([
             "user_id" => user()?->id,
             "shipping_address_id" => $orderShippingAddress->id,
@@ -74,7 +77,8 @@ class CreateOrderFromCartAction
             // @phpstan-ignore-next-line
             $order->id,
             $paymentMethod,
-            $orderPaymentStatus
+            $orderPaymentStatus,
+            $receipt
         );
 
         $cart->order_id = $order->id;
@@ -89,12 +93,14 @@ class CreateOrderFromCartAction
     public function createOrderPaymentAttempt(
         string $orderId,
         string $paymentMethod,
-        OrderPaymentStatus $orderPaymentStatus
+        OrderPaymentStatus $orderPaymentStatus,
+        ?string $receipt = null
     ): void {
         PaymentAttempt::create([
             "order_id" => $orderId,
             "payment_method" => $paymentMethod,
             "status" => $orderPaymentStatus,
+            "receipt" => $receipt,
         ]);
     }
 }

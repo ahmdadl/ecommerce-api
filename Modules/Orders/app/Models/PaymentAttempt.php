@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Modules\Orders\Database\Factories\PaymentAttemptFactory;
 use Modules\Orders\Enums\OrderPaymentStatus;
+use Modules\Uploads\Casts\UploadablePathCast;
 
 #[UseFactory(PaymentAttemptFactory::class)]
 class PaymentAttempt extends Model
@@ -20,6 +21,7 @@ class PaymentAttempt extends Model
     {
         return [
             "status" => OrderPaymentStatus::class,
+            "receipt" => UploadablePathCast::class,
             "payment_details" => "array",
         ];
     }

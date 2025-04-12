@@ -22,6 +22,7 @@ return new class extends Migration {
             $table
                 ->enum("status", OrderPaymentStatus::values())
                 ->default(OrderPaymentStatus::PENDING->value);
+            $table->string("receipt")->nullable();
             $table->json("payment_details")->nullable();
             $table->timestamps();
         });

@@ -16,6 +16,7 @@ class PaymentMethodResource extends JsonResource
             "code" => $this->code,
             "name" => $this->name,
             "image" => $this->imageUrl,
+            "require_receipt" => $this->require_receipt,
         ];
     }
 }
