@@ -2,12 +2,13 @@
 
 namespace Modules\Settings\ValueObjects;
 
-class GeneralSettings
+class TopHeaderSettings
 {
     public function __construct(
         public readonly string $image,
         public readonly string $body,
-        public readonly string $endtime = ""
+        public readonly string $end_time,
+        public bool $is_active = true
     ) {}
 
     public static function fromArray(array $data): self
@@ -15,7 +16,8 @@ class GeneralSettings
         return new self(
             $data["image"] ?? "",
             $data["body"][app()->getLocale()] ?? "",
-            $data["endtime"] ?? ""
+            $data["end_time"] ?? "",
+            (bool) $data["is_active"] ?? false
         );
     }
 
@@ -23,8 +25,9 @@ class GeneralSettings
     {
         return [
             "name" => $this->image,
-            "description" => $this->body,
-            "maintenanceMode" => $this->endtime,
+            "body" => $this->body,
+            "end_time" => $this->end_time,
+            "is_active" => $this->is_active,
         ];
     }
 }

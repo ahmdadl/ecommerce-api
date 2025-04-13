@@ -101,26 +101,33 @@ class SettingResource extends Resource
                                         ->translateLabel()
                                         ->maxLength(500)
                                 ),
-                                Forms\Components\FileUpload::make(
-                                    "data.top_header.image"
+                                // Forms\Components\FileUpload::make(
+                                //     "data.top_header.image"
+                                // )
+                                //     ->translateLabel()
+                                //     ->image()
+                                //     ->maxSize(1 * 512)
+                                //     ->disk("public")
+                                //     ->helperText("Maximum file size: .5MB.")
+                                //     ->storeFiles(false)
+                                //     ->dehydrateStateUsing(
+                                //         fn($state) => $state &&
+                                //             FilamentUtils::storeSingleFile(
+                                //                 $state
+                                //             )
+                                //     ),
+
+                                Forms\Components\Toggle::make(
+                                    "data.top_header.is_active"
                                 )
                                     ->translateLabel()
-                                    ->image()
-                                    ->maxSize(1 * 512)
-                                    ->disk("public")
-                                    ->helperText("Maximum file size: .5MB.")
-                                    ->storeFiles(false)
-                                    ->dehydrateStateUsing(
-                                        fn(
-                                            $state
-                                        ) => FilamentUtils::storeMultipleFile(
-                                            $state
-                                        )
-                                    ),
+                                    ->default(true),
 
-                                Forms\Components\DatePicker::make(
-                                    "data.top_header.endtime"
-                                )->translateLabel(),
+                                Forms\Components\DateTimePicker::make(
+                                    "data.top_header.end_time"
+                                )
+                                    ->translateLabel()
+                                    ->minDate(now()),
                             ])
                             ->columns(2),
                     ])

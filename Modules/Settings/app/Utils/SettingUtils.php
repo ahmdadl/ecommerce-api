@@ -15,6 +15,8 @@ class SettingUtils
             "general" => \Modules\Settings\ValueObjects\GeneralSettings::class,
             "contact" => \Modules\Settings\ValueObjects\ContactSettings::class,
             "social" => \Modules\Settings\ValueObjects\SocialSettings::class,
+            "top_header" =>
+                \Modules\Settings\ValueObjects\TopHeaderSettings::class,
         ];
 
         foreach ($settings as $group => $data) {
