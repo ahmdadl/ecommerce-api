@@ -2,9 +2,9 @@
 
 namespace Modules\Faqs\Filament\Resources;
 
-use Modules\Faqs\Filament\Resources\FaqResource\Pages;
-use Modules\Faqs\Filament\Resources\FaqResource\RelationManagers;
-use Modules\Faqs\Models\Faq;
+use Modules\Faqs\Filament\Resources\FaqCategoryResource\Pages;
+use Modules\Faqs\Filament\Resources\FaqCategoryResource\RelationManagers;
+use Modules\Faqs\Models\FaqCategory;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Forms\Components as I;
@@ -17,9 +17,9 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 use Filament\Tables\Enums\FiltersLayout;
 
-class FaqResource extends Resource implements HasShieldPermissions
+class FaqCategoryResource extends Resource implements HasShieldPermissions
 {
-    protected static ?string $model = Faq::class;
+    protected static ?string $model = FaqCategory::class;
 
     protected static ?string $navigationIcon = "heroicon-o-rectangle-stack";
 
@@ -33,22 +33,11 @@ class FaqResource extends Resource implements HasShieldPermissions
     public static function form(Form $form): Form
     {
         return $form->schema([
-            I\Select::make("faq_category_id")
-                ->label("Category")
-                ->relationship("category", "title")
-                ->searchable()
-                ->preload()
-                ->required(),
+            ...multiLangInput(
+                I\Textarea::make("title")->required()->columnSpanFull()
+            ),
 
             I\Toggle::make("is_active")->translateLabel()->default(true),
-
-            ...multiLangInput(
-                I\Textarea::make("question")->required()->maxLength(255)
-            ),
-            ...multiLangInput(
-                I\Textarea::make("answer")->required()->maxLength(500)
-            ),
-
             sortOrderInput(static::$model),
         ]);
     }
@@ -57,29 +46,23 @@ class FaqResource extends Resource implements HasShieldPermissions
     {
         return $table
             ->columns([
-                C\TextColumn::make("category.title")
-                    ->label(__("Category"))
-                    ->searchable()
-                    ->sortable(),
-                C\TextColumn::make("question")
+                C\TextColumn::make("id")
                     ->translateLabel()
-                    ->searchable()
-                    ->sortable(),
-                C\TextColumn::make("answer")
-                    ->translateLabel()
-                    ->searchable()
                     ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->toggleable(isToggledHiddenByDefault: true)
+                    ->searchable(),
+
+                C\TextColumn::make("title")
+                    ->translateLabel()
+                    ->searchable()
+                    ->sortable(),
 
                 C\ToggleColumn::make("is_active")
                     ->translateLabel()
                     ->sortable()
                     ->toggleable(true),
 
-                C\TextColumn::make("sort_order")
-                    ->numeric()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                C\TextColumn::make("sort_order")->numeric()->sortable(),
 
                 C\TextColumn::make("created_at")
                     ->dateTime()
@@ -88,11 +71,6 @@ class FaqResource extends Resource implements HasShieldPermissions
             ])
             ->filters(
                 [
-                    F\SelectFilter::make("faq_category_id")
-                        ->relationship("category", "title")
-                        ->searchable()
-                        ->translateLabel(),
-
                     F\Filter::make("created_at")
                         ->form([
                             I\DatePicker::make(
@@ -156,9 +134,9 @@ class FaqResource extends Resource implements HasShieldPermissions
     public static function getPages(): array
     {
         return [
-            "index" => Pages\ListFaqs::route("/"),
-            "create" => Pages\CreateFaq::route("/create"),
-            "edit" => Pages\EditFaq::route("/{record}/edit"),
+            "index" => Pages\ListFaqCategories::route("/"),
+            "create" => Pages\CreateFaqCategory::route("/create"),
+            "edit" => Pages\EditFaqCategory::route("/{record}/edit"),
         ];
     }
 }
