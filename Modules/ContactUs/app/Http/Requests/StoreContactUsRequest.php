@@ -16,7 +16,7 @@ class StoreContactUsRequest extends FormRequest
             "name" => ["required", "string", "max:100"],
             "email" => ["required", "email", "max:255"],
             "phone" => ["nullable", "string", "max:15", new PhoneNumber()],
-            "subject" => ["required", "string", "max:150"],
+            "subject" => ["nullable", "string", "max:150"],
             "message" => ["required", "string", "max:1000"],
             "order_id" => ["nullable", "string", "max:50"],
         ];
