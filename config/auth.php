@@ -46,6 +46,11 @@ return [
             "provider" => "users",
         ],
 
+        "admin" => [
+            "driver" => "session",
+            "provider" => "admins",
+        ],
+
         "guest" => [
             "driver" => "sanctum",
             "provider" => "guests",
@@ -85,9 +90,14 @@ return [
             "model" => env("USER_AUTH_MODEL", User::class),
         ],
 
+        "admins" => [
+            "driver" => "eloquent",
+            "model" => Admin::class,
+        ],
+
         "guests" => [
             "driver" => "eloquent",
-            "model" => env("GUEST_AUTH_MODEL", Guest::class),
+            "model" => Guest::class,
         ],
 
         "customers" => [

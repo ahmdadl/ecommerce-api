@@ -8,6 +8,7 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Support\Facades\Cache;
+use Modules\Core\Utils\FilamentUtils;
 use Modules\Settings\Models\Setting;
 use Modules\Settings\Filament\Resources\SettingResource\Pages;
 
@@ -87,6 +88,39 @@ class SettingResource extends Resource
                                     ->label(__("facebook"))
                                     ->url()
                                     ->maxLength(255),
+                            ])
+                            ->columns(2),
+
+                        Forms\Components\Tabs\Tab::make("top_header")
+                            ->translateLabel()
+                            ->schema([
+                                ...multiLangInput(
+                                    Forms\Components\Textarea::make(
+                                        "data.top_header.body"
+                                    )
+                                        ->translateLabel()
+                                        ->maxLength(500)
+                                ),
+                                Forms\Components\FileUpload::make(
+                                    "data.top_header.image"
+                                )
+                                    ->translateLabel()
+                                    ->image()
+                                    ->maxSize(1 * 512)
+                                    ->disk("public")
+                                    ->helperText("Maximum file size: .5MB.")
+                                    ->storeFiles(false)
+                                    ->dehydrateStateUsing(
+                                        fn(
+                                            $state
+                                        ) => FilamentUtils::storeMultipleFile(
+                                            $state
+                                        )
+                                    ),
+
+                                Forms\Components\DatePicker::make(
+                                    "data.top_header.endtime"
+                                )->translateLabel(),
                             ])
                             ->columns(2),
                     ])
