@@ -13,6 +13,7 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get("/test", function () {
-    dd(settings());
-});
+// Route::get("/test", function () {
+// dump("asdasd");
+// dd(settings());
+// });
