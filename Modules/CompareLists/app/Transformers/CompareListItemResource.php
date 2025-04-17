@@ -4,6 +4,7 @@ namespace Modules\CompareLists\Transformers;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Modules\Products\Transformers\ProductResource;
 
 class CompareListItemResource extends JsonResource
 {
@@ -16,7 +17,9 @@ class CompareListItemResource extends JsonResource
             "id" => $this->id,
             "compare_list_id" => $this->compare_list_id,
             "product_id" => $this->product_id,
-            "product" => $this->whenLoaded("product", $this->product),
+            "product" => new ProductResource(
+                $this->whenLoaded("product", $this->product)
+            ),
             // "created_at" => $this->created_at,
         ];
     }

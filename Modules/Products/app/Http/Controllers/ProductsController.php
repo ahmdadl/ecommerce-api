@@ -33,6 +33,15 @@ class ProductsController extends Controller
 
         $request->whenHas("withBrand", fn() => $product->loadMissing("brand"));
 
-        return api()->record(new ProductResource($product));
+        $record = new ProductResource($product);
+
+        $relatedProducts = Product::where("category_id", $product->category_id)
+            ->where("id", "!=", $product->id)
+            ->inRandomOrder()
+            ->limit(7)
+            ->get();
+        $relatedProducts = ProductResource::collection($relatedProducts);
+
+        return api()->success(compact("record", "relatedProducts"));
     }
 }

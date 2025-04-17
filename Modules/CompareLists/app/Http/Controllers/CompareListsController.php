@@ -21,7 +21,10 @@ class CompareListsController extends Controller
         CompareListService $service
     ): JsonResponse {
         $compareList = $service->compareList;
-        $compareList->loadMissing(["items", "items.product"]);
+        $compareList->loadMissing([
+            "items.product.category",
+            "items.product.brand",
+        ]);
         $compareList->unsetRelation("compareListable");
         return api()->record(new CompareListResource($compareList));
     }

@@ -17,6 +17,11 @@ class ProductResource extends JsonResource
         // @phpstan-ignore-next-line
         $images = collect($this->images)->map("uploads_url")->values();
 
+        $images = [];
+        for ($i = 0; $i < 4; $i++) {
+            $images[] = "https://picsum.photos/seed/$this->id.$i/600/600";
+        }
+
         return [
             "id" => $this->id,
             "category_id" => $this->category_id,
