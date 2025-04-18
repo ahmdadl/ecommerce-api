@@ -33,6 +33,8 @@ class ProductsController extends Controller
 
         $request->whenHas("withBrand", fn() => $product->loadMissing("brand"));
 
+        $request->whenHas("withTags", fn() => $product->loadMissing("tags"));
+
         $record = new ProductResource($product);
 
         $relatedProducts = Product::where("category_id", $product->category_id)

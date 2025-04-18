@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Modules\Brands\Transformers\BrandResource;
 use Modules\Categories\Transformers\CategoryResource;
+use Modules\Tags\Filament\Resources\TagResource;
 
 class ProductResource extends JsonResource
 {
@@ -47,8 +48,10 @@ class ProductResource extends JsonResource
             "meta_title" => $this->meta_title,
             "meta_description" => $this->meta_description,
             "meta_keywords" => $this->meta_keywords,
-            "category" => new CategoryResource($this->whenLoaded("category")), // Relationship
+
+            "category" => new CategoryResource($this->whenLoaded("category")),
             "brand" => new BrandResource($this->whenLoaded("brand")),
+            "tags" => TagResource::collection($this->whenLoaded("tags")),
         ];
     }
 }
