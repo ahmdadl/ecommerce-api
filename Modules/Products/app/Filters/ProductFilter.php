@@ -34,15 +34,13 @@ class ProductFilter extends ModelFilter
     // Filter by tag id
     public function tag(string $value)
     {
-        return $this->builder->whereRelation("tags", "id", $value);
+        return $this->builder->whereRelation("tags", "tag_id", $value);
     }
 
     // Filter by tag slug
     public function tagSlug(string $value)
     {
-        return $this->builder->whereHas("tags", function ($query) use ($value) {
-            $query->whereRelation("tag", "slug", $value);
-        });
+        return $this->builder->whereRelation("tags", "slug", $value);
     }
 
     // Filter by title (assuming JSON field search)
@@ -117,6 +115,16 @@ class ProductFilter extends ModelFilter
     }
 
     /**
+     * filter by tags
+     */
+    public function tags(array $value)
+    {
+        return $this->builder->whereHas("tags", function ($query) use ($value) {
+            $query->whereIn("tag_id", $value);
+        });
+    }
+
+    /**
      * {@inheritDoc}
      */
     protected function getAllowedFilters(): array
@@ -140,6 +148,7 @@ class ProductFilter extends ModelFilter
             "categories" => "array",
             "brands" => "array",
             "price" => "string",
+            "tags" => "array",
         ];
     }
 }

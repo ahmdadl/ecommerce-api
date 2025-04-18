@@ -364,7 +364,7 @@ it("filters products by specific tag slug", function () {
     $product1->tags()->attach($tag1);
     $product2->tags()->attach($tag2);
 
-    $this->request->replace(["tag" => $tag1->slug]);
+    $this->request->replace(["tagSlug" => $tag1->slug]);
     $filter = new ProductFilter($this->request);
 
     $products = Product::filter($filter)->get();

@@ -13,6 +13,8 @@ use Modules\Core\Traits\HasActionHelpers;
 use Modules\Products\Filters\ProductFilter;
 use Modules\Products\Models\Product;
 use Modules\Products\Transformers\ProductResource;
+use Modules\Tags\Models\Tag;
+use Modules\Tags\Transformers\TagResource;
 
 class GetProductsAction
 {
@@ -52,6 +54,14 @@ class GetProductsAction
             $response["brand"] = new BrandResource(
                 Brand::active()
                     ->where("slug", $request->string("forBrand")->value())
+                    ->first()
+            );
+        }
+
+        if ($request->has("forTag")) {
+            $response["tag"] = new TagResource(
+                Tag::active()
+                    ->where("slug", $request->string("forTag")->value())
                     ->first()
             );
         }

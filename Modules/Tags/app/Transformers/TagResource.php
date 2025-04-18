@@ -4,7 +4,7 @@ namespace Modules\Tags\Transformers;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Modules\Products\Filament\Resources\ProductResource;
+use Modules\Products\Transformers\ProductResource;
 
 class TagResource extends JsonResource
 {
@@ -19,9 +19,9 @@ class TagResource extends JsonResource
             "slug" => $this->slug,
             // 'is_active' => $this->is_active,
             "products_count" => $this->whenCounted("products"),
-            "products" => ProductResource::collection(
-                $this->whenLoaded("products")
-            ),
+            // "products" => ProductResource::collection(
+            //     $this->whenLoaded("products")
+            // ),
         ];
     }
 }
