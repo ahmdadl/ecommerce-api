@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Modules\Tags\Http\Controllers\GetTagProductsController;
 use Modules\Tags\Http\Controllers\TagsController;
 
 /*
@@ -12,8 +13,8 @@ use Modules\Tags\Http\Controllers\TagsController;
  * routes are loaded by the RouteServiceProvider within a group which
  * is assigned the "api" middleware group. Enjoy building your API!
  *
-*/
+ */
 
-Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
-    // Route::apiResource('tags', TagsController::class)->names('tags');
-});
+Route::get("/{activeTag}", GetTagProductsController::class)
+    ->name("tags.index")
+    ->middleware("auth:guest,customer");
