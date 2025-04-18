@@ -26,7 +26,9 @@ class CompareListsController extends Controller
             "items.product.brand",
         ]);
         $compareList->unsetRelation("compareListable");
-        return api()->record(new CompareListResource($compareList));
+        return api()->success([
+            "compareList" => new CompareListResource($compareList),
+        ]);
     }
 
     /**
