@@ -31,6 +31,20 @@ class ProductFilter extends ModelFilter
         return $this->builder->whereRelation("brand", "slug", $value);
     }
 
+    // Filter by tag id
+    public function tag(string $value)
+    {
+        return $this->builder->whereRelation("tags", "id", $value);
+    }
+
+    // Filter by tag slug
+    public function tagSlug(string $value)
+    {
+        return $this->builder->whereHas("tags", function ($query) use ($value) {
+            $query->whereRelation("tag", "slug", $value);
+        });
+    }
+
     // Filter by title (assuming JSON field search)
     public function title(string $value)
     {
@@ -112,6 +126,8 @@ class ProductFilter extends ModelFilter
             "categorySlug" => "string",
             "brand" => "string",
             "brandSlug" => "string",
+            "tag" => "string",
+            "tagSlug" => "string",
             "title" => "string",
             "min_price" => "float",
             "max_price" => "float",

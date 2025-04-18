@@ -6,6 +6,7 @@ use Modules\Brands\Models\Brand;
 use Modules\Categories\Models\Category;
 use Modules\Products\Filters\ProductFilter;
 use Modules\Products\Models\Product;
+use Modules\Tags\Models\Tag;
 
 uses(RefreshDatabase::class);
 
@@ -334,4 +335,42 @@ it("ignores invalid filter parameters", function () {
     $products = Product::filter($filter)->get();
 
     expect($products)->toHaveCount(2); // No filtering applied
+});
+
+it("filters products by specific tag_id", function () {
+    $tag1 = Tag::factory()->create();
+    $tag2 = Tag::factory()->create();
+    $product1 = Product::factory()->create();
+    $product2 = Product::factory()->create();
+    $product1->tags()->attach($tag1);
+    $product2->tags()->attach($tag2);
+
+    $this->request->replace(["tag" => $tag1->id]);
+    $filter = new ProductFilter($this->request);
+
+    $products = Product::filter($filter)->get();
+
+    expect($products)
+        ->toHaveCount(1)
+        ->and($products->first()->id)
+        ->toBe($product1->id);
+});
+
+it("filters products by specific tag slug", function () {
+    $tag1 = Tag::factory()->create();
+    $tag2 = Tag::factory()->create();
+    $product1 = Product::factory()->create();
+    $product2 = Product::factory()->create();
+    $product1->tags()->attach($tag1);
+    $product2->tags()->attach($tag2);
+
+    $this->request->replace(["tag" => $tag1->slug]);
+    $filter = new ProductFilter($this->request);
+
+    $products = Product::filter($filter)->get();
+
+    expect($products)
+        ->toHaveCount(1)
+        ->and($products->first()->id)
+        ->toBe($product1->id);
 });

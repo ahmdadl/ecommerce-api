@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Modules\Products\Models\Product;
 use Modules\Categories\Models\Category;
 use Modules\Brands\Models\Brand;
+use Modules\Tags\Models\Tag;
 
 class GetProductFiltersAction
 {
@@ -32,6 +33,7 @@ class GetProductFiltersAction
             "categories" => $this->getCategories(),
             "brands" => $this->getBrands(),
             "price_range" => $this->getPriceRange(),
+            "tags" => $this->getTags(),
         ];
     }
 
@@ -106,6 +108,37 @@ class GetProductFiltersAction
             "min" => $stats->min_price ?? 0,
             "max" => $stats->max_price ?? 0,
         ];
+    }
+
+    /**
+     * Get available tags
+     * @return \Illuminate\Support\Collection
+     */
+    protected function getTags()
+    {
+        $pivotQuery = DB::table("product_tag")
+            ->whereIn("product_id", $this->builder->pluck("id"))
+            ->select("tag_id");
+
+        $tagsIds = $pivotQuery->pluck("tag_id")->unique();
+
+        $productCounts = $pivotQuery
+            ->selectRaw("COUNT(*) as products_count")
+            ->groupBy("tag_id")
+            ->pluck("products_count", "tag_id");
+
+        return Tag::whereIn("id", $tagsIds)
+            ->select("id", "title", "slug")
+            ->active()
+            ->get()
+            ->map(function ($tag) use ($productCounts) {
+                return [
+                    "id" => $tag->id,
+                    "title" => $tag->title,
+                    "slug" => $tag->slug,
+                    "products_count" => $productCounts[$tag->id] ?? 0,
+                ];
+            });
     }
 
     /**

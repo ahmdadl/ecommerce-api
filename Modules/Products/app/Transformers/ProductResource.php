@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Modules\Brands\Transformers\BrandResource;
 use Modules\Categories\Transformers\CategoryResource;
-use Modules\Tags\Filament\Resources\TagResource;
+use Modules\Tags\Transformers\TagResource;
 
 class ProductResource extends JsonResource
 {
