@@ -21,6 +21,7 @@ use Modules\Core\Models\Scopes\HasActiveState;
 use Modules\Core\Models\Scopes\HasMetaTags;
 use Modules\Products\Database\Factories\ProductFactory;
 use Modules\Products\Filters\ProductFilter;
+use Modules\Tags\Models\Tag;
 use Modules\Wishlists\Models\Wishlist;
 use Modules\Wishlists\Models\WishlistItem;
 use Spatie\Translatable\HasTranslations;
@@ -237,5 +238,14 @@ class Product extends Model
     public function compareItems(): HasMany
     {
         return $this->hasMany(CompareListItem::class);
+    }
+
+    /**
+     * tags
+     * @return BelongsToMany<Tag, $this>
+     */
+    public function tags(): BelongsToMany
+    {
+        return $this->belongsToMany(Tag::class);
     }
 }

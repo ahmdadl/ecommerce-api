@@ -6,10 +6,13 @@ use Modules\Brands\Models\Brand;
 use Illuminate\Support\Str;
 use Modules\Carts\Models\Cart;
 use Modules\Carts\Models\CartItem;
+use Modules\Tags\Models\Tag;
 use Modules\Users\Models\User;
 use Modules\Wishlists\Services\WishlistService;
 
 use function Pest\Laravel\actingAs;
+use function Pest\Laravel\assertDatabaseHas;
+use function Pest\Laravel\assertDatabaseMissing;
 
 it("can be created with factory", function () {
     $product = Product::factory()->create([
@@ -210,4 +213,30 @@ it("calculates carted quantity for current user", function () {
 
     $product->refresh();
     expect($product->cartedQuantity)->toBe(2);
+});
+
+test("product_has_many_tags", function () {
+    $product = Product::factory()->create();
+
+    $tags = Tag::factory()->count(3)->create();
+
+    $product->tags()->sync($tags);
+
+    expect($product->tags()->count())->toBe(3);
+
+    $tag = $tags->first();
+
+    assertDatabaseHas("product_tag", [
+        "product_id" => $product->id,
+        "tag_id" => $tag->id,
+    ]);
+
+    $product->tags()->detach($tag);
+
+    expect($product->tags()->count())->toBe(2);
+
+    assertDatabaseMissing("product_tag", [
+        "product_id" => $product->id,
+        "tag_id" => $tag->id,
+    ]);
 });
