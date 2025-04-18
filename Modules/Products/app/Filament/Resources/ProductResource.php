@@ -92,6 +92,13 @@ class ProductResource extends Resource implements HasShieldPermissions
                                 ->searchable()
                                 ->preload()
                                 ->required(),
+
+                            Forms\Components\Select::make("tags")
+                                ->label("Tags")
+                                ->relationship("tags", "title")
+                                ->multiple()
+                                ->preload()
+                                ->searchable(),
                         ]),
                     Forms\Components\Tabs\Tab::make("price")
                         ->icon("heroicon-o-currency-dollar")
@@ -154,6 +161,12 @@ class ProductResource extends Resource implements HasShieldPermissions
     {
         return $table
             ->columns([
+                TextColumn::make("id")
+                    ->translateLabel()
+                    ->sortable()
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+
                 ImageColumn::make("image")
                     ->translateLabel()
                     ->getStateUsing(
@@ -166,7 +179,8 @@ class ProductResource extends Resource implements HasShieldPermissions
                             : null
                     )
                     ->label("image")
-                    ->circular(),
+                    ->circular()
+                    ->toggleable(),
 
                 TextColumn::make("title")
                     ->translateLabel()
@@ -182,17 +196,20 @@ class ProductResource extends Resource implements HasShieldPermissions
                 TextColumn::make("category.title")
                     ->label(__("Category"))
                     ->searchable()
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
 
                 TextColumn::make("brand.title")
                     ->label(__("Brand"))
                     ->searchable()
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
 
                 TextColumn::make("price")
                     ->translateLabel()
                     ->money("egp")
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(),
 
                 TextColumn::make("salePrice")
                     ->translateLabel()
@@ -203,7 +220,8 @@ class ProductResource extends Resource implements HasShieldPermissions
                     ->translateLabel()
                     ->money("egp")
                     ->sortable()
-                    ->toggleable(true),
+                    ->toggleable(true)
+                    ->toggleable(isToggledHiddenByDefault: true),
 
                 TextColumn::make("stock")
                     ->translateLabel()
@@ -214,7 +232,8 @@ class ProductResource extends Resource implements HasShieldPermissions
                 TextColumn::make("sku")
                     ->translateLabel()
                     ->searchable()
-                    ->toggleable(true),
+                    ->toggleable(true)
+                    ->toggleable(isToggledHiddenByDefault: true),
 
                 ToggleColumn::make("is_main")
                     ->translateLabel()

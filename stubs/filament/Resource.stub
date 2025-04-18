@@ -32,7 +32,7 @@ class {{ resourceClass }} extends Resource implements HasShieldPermissions
     {
         return $form
             ->schema([
-                I::make("is_active")
+                I\TextInput::make("is_active")
                                 ->translateLabel()
                                 ->default(true),
                             sortOrderInput(static::$model),
