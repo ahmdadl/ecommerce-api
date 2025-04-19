@@ -11,7 +11,7 @@ const CACHED_DATA = {
                 "ar": "Optio quia dolorem qui ab. Qui enim error ducimus provident rerum neque."
             },
             "slug": "protein-powders",
-            "image": "https::\/picsum.photos\/seed\/01jrkff9kcd0xvxxjhbev260pc\/600\/600",
+            "image": "https:\/\/picsum.photos\/seed\/01jrkff9kcd0xvxxjhbev260pc\/600\/600",
             "meta_title": {
                 "en": "gdfgrt",
                 "ar": "bvcbf ardfdfasfdسيب سيشب يس"
@@ -30,7 +30,7 @@ const CACHED_DATA = {
                 "ar": "Nostrum voluptate autem voluptas et sit corporis deserunt. Doloremque neque ut vitae voluptate non ut. Dignissimos vitae dignissimos eius nesciunt et facilis quo sit. Assumenda et sed nesciunt aut."
             },
             "slug": "pre-workout",
-            "image": "https::\/picsum.photos\/seed\/01jrkff9kffn0q2k7rppxkpe5j\/600\/600",
+            "image": "https:\/\/picsum.photos\/seed\/01jrkff9kffn0q2k7rppxkpe5j\/600\/600",
             "meta_title": [],
             "meta_description": [],
             "meta_keywords": null
@@ -46,7 +46,7 @@ const CACHED_DATA = {
                 "ar": "Commodi hic tempora et omnis voluptatem. Doloremque hic dicta saepe et vitae ex quia. Dolor aut iure rerum dolorum odit explicabo iure autem. Temporibus ratione est atque dolorem similique nihil."
             },
             "slug": "post-workout",
-            "image": "https::\/picsum.photos\/seed\/01jrkff9khr8020zkeefnetys7\/600\/600",
+            "image": "https:\/\/picsum.photos\/seed\/01jrkff9khr8020zkeefnetys7\/600\/600",
             "meta_title": [],
             "meta_description": [],
             "meta_keywords": null
@@ -62,7 +62,7 @@ const CACHED_DATA = {
                 "ar": "Libero fugit consequuntur non nostrum accusamus quos. Accusamus laboriosam et aliquam ut et qui. Reprehenderit quo optio officia facilis dolor reprehenderit cum."
             },
             "slug": "vitamins",
-            "image": "https::\/picsum.photos\/seed\/01jrkff9kk4seqt6r9qak6jstf\/600\/600",
+            "image": "https:\/\/picsum.photos\/seed\/01jrkff9kk4seqt6r9qak6jstf\/600\/600",
             "meta_title": [],
             "meta_description": [],
             "meta_keywords": null
@@ -78,7 +78,7 @@ const CACHED_DATA = {
                 "ar": "Aperiam expedita autem vitae. Qui omnis doloribus quia odit. Cum aliquam consectetur modi beatae omnis et. Mollitia esse ratione nobis non est minima corrupti."
             },
             "slug": "minerals",
-            "image": "https::\/picsum.photos\/seed\/01jrkff9knj7p3zjbx16vfmbdm\/600\/600",
+            "image": "https:\/\/picsum.photos\/seed\/01jrkff9knj7p3zjbx16vfmbdm\/600\/600",
             "meta_title": [],
             "meta_description": [],
             "meta_keywords": null
@@ -94,7 +94,7 @@ const CACHED_DATA = {
                 "ar": "Sint sequi repellendus non omnis sit. Consequuntur repellat corrupti dolorem dicta id esse consequatur. Mollitia voluptatem fugiat sequi molestiae laudantium quia sunt."
             },
             "slug": "amino-acids",
-            "image": "https::\/picsum.photos\/seed\/01jrkff9kqmeqe3kqk4faagvw0\/600\/600",
+            "image": "https:\/\/picsum.photos\/seed\/01jrkff9kqmeqe3kqk4faagvw0\/600\/600",
             "meta_title": [],
             "meta_description": [],
             "meta_keywords": null
@@ -110,7 +110,7 @@ const CACHED_DATA = {
                 "ar": "Soluta nisi aperiam alias maxime. Vitae aut ut dignissimos praesentium quibusdam. Ratione deserunt dicta omnis dolorem non eaque ullam."
             },
             "slug": "fat-burners",
-            "image": "https::\/picsum.photos\/seed\/01jrkff9ks7hz5jtfz55v3tw5p\/600\/600",
+            "image": "https:\/\/picsum.photos\/seed\/01jrkff9ks7hz5jtfz55v3tw5p\/600\/600",
             "meta_title": [],
             "meta_description": [],
             "meta_keywords": null
@@ -128,7 +128,7 @@ const CACHED_DATA = {
                 "ar": "Labore dolorem eius dolorum voluptatum assumenda odit non corrupti. Omnis unde nesciunt explicabo molestias earum. Dignissimos et nemo adipisci quis. Exercitationem adipisci ab libero qui."
             },
             "slug": "optimum-nutrition",
-            "image": "https::\/picsum.photos\/seed\/01jrkff9kwqapm7j3f36rd39vg\/600\/600",
+            "image": "https:\/\/picsum.photos\/seed\/01jrkff9kwqapm7j3f36rd39vg\/600\/600",
             "meta_title": [],
             "meta_description": [],
             "meta_keywords": null
@@ -144,7 +144,7 @@ const CACHED_DATA = {
                 "ar": "A deleniti voluptatem non esse eius eos. Rerum provident in ipsam suscipit dolor corporis illum. Quia rerum est voluptate sint earum."
             },
             "slug": "muscletech",
-            "image": "https::\/picsum.photos\/seed\/01jrkff9kya17majm2nnjhna0j\/600\/600",
+            "image": "https:\/\/picsum.photos\/seed\/01jrkff9kya17majm2nnjhna0j\/600\/600",
             "meta_title": [],
             "meta_description": [],
             "meta_keywords": null
@@ -160,7 +160,7 @@ const CACHED_DATA = {
                 "ar": "Soluta saepe cumque cum voluptatem ducimus laboriosam minus tempore. Facere molestiae voluptatem optio tenetur odit. Quis maxime eligendi et libero quis excepturi quisquam. Qui consequatur praesentium dolores sit nihil praesentium similique."
             },
             "slug": "myprotein",
-            "image": "https::\/picsum.photos\/seed\/01jrkff9kzk6bg5xwm3r4m7rxs\/600\/600",
+            "image": "https:\/\/picsum.photos\/seed\/01jrkff9kzk6bg5xwm3r4m7rxs\/600\/600",
             "meta_title": [],
             "meta_description": [],
             "meta_keywords": null
@@ -176,7 +176,7 @@ const CACHED_DATA = {
                 "ar": "Exercitationem repudiandae soluta et rem fuga. Sunt totam commodi libero iste consequatur numquam. Corrupti atque aut tempore et eos. Minima unde enim ipsum ut omnis at."
             },
             "slug": "bsn",
-            "image": "https::\/picsum.photos\/seed\/01jrkff9m2cv71w652ar5rrknh\/600\/600",
+            "image": "https:\/\/picsum.photos\/seed\/01jrkff9m2cv71w652ar5rrknh\/600\/600",
             "meta_title": [],
             "meta_description": [],
             "meta_keywords": null
@@ -192,7 +192,7 @@ const CACHED_DATA = {
                 "ar": "Unde assumenda vitae beatae nulla necessitatibus voluptates. Non mollitia voluptatem recusandae quam corrupti animi omnis. Commodi deserunt aut dolorum dolores optio expedita magnam aut. Ratione beatae aut in cumque."
             },
             "slug": "dymatize",
-            "image": "https::\/picsum.photos\/seed\/01jrkff9m4vw4pzgc39ewptw4g\/600\/600",
+            "image": "https:\/\/picsum.photos\/seed\/01jrkff9m4vw4pzgc39ewptw4g\/600\/600",
             "meta_title": [],
             "meta_description": [],
             "meta_keywords": null
@@ -208,7 +208,7 @@ const CACHED_DATA = {
                 "ar": "Modi voluptatibus vel adipisci alias dolore autem id. Necessitatibus sed eaque libero veniam ea. Excepturi consectetur repellat recusandae atque tempora veniam architecto eum. Incidunt quo sunt cupiditate minus."
             },
             "slug": "cellucor",
-            "image": "https::\/picsum.photos\/seed\/01jrkff9m53zz5fbk2gq1001kg\/600\/600",
+            "image": "https:\/\/picsum.photos\/seed\/01jrkff9m53zz5fbk2gq1001kg\/600\/600",
             "meta_title": [],
             "meta_description": [],
             "meta_keywords": null
@@ -224,7 +224,7 @@ const CACHED_DATA = {
                 "ar": "Ea eos deserunt at ducimus odit ad atque voluptate. Corporis eveniet non quo omnis ut modi aliquam. Alias at et quibusdam. Porro sunt quod enim."
             },
             "slug": "grenade",
-            "image": "https::\/picsum.photos\/seed\/01jrkff9m7bsg7t8qexr5p8byw\/600\/600",
+            "image": "https:\/\/picsum.photos\/seed\/01jrkff9m7bsg7t8qexr5p8byw\/600\/600",
             "meta_title": [],
             "meta_description": [],
             "meta_keywords": null
@@ -240,7 +240,7 @@ const CACHED_DATA = {
                 "ar": "Repudiandae ducimus ea explicabo dolores laudantium fugiat error. Voluptas qui accusamus quibusdam soluta et eaque. Eos recusandae aut id rerum. Fugiat exercitationem cupiditate quibusdam voluptates odio."
             },
             "slug": "rsp-nutrition",
-            "image": "https::\/picsum.photos\/seed\/01jrkff9m9g9y3r9nv9bp5vtt6\/600\/600",
+            "image": "https:\/\/picsum.photos\/seed\/01jrkff9m9g9y3r9nv9bp5vtt6\/600\/600",
             "meta_title": [],
             "meta_description": [],
             "meta_keywords": null
@@ -256,7 +256,7 @@ const CACHED_DATA = {
                 "ar": "Consequuntur id est sed et voluptatibus. Explicabo aut molestiae repudiandae iusto neque ut. Eum fugiat minus quos incidunt. Nulla delectus velit accusantium soluta doloribus."
             },
             "slug": "jym-supplement-science",
-            "image": "https::\/picsum.photos\/seed\/01jrkff9mb0t8sget4z866ff1k\/600\/600",
+            "image": "https:\/\/picsum.photos\/seed\/01jrkff9mb0t8sget4z866ff1k\/600\/600",
             "meta_title": [],
             "meta_description": [],
             "meta_keywords": null
@@ -272,7 +272,7 @@ const CACHED_DATA = {
                 "ar": "Ut ducimus modi occaecati doloribus assumenda. Laborum est ex recusandae ducimus eligendi modi ducimus. Vero et beatae cupiditate iste aut autem."
             },
             "slug": "ghost-lifestyle",
-            "image": "https::\/picsum.photos\/seed\/01jrkff9mcjpypxqn85gemjcvv\/600\/600",
+            "image": "https:\/\/picsum.photos\/seed\/01jrkff9mcjpypxqn85gemjcvv\/600\/600",
             "meta_title": [],
             "meta_description": [],
             "meta_keywords": null
@@ -311,9 +311,9 @@ const CACHED_DATA = {
         "top_header": {
             "body": {
                 "en": "Get 30% OFF your first purchase with our premium subscription! Unlock unlimited access to top-tier features.",
-                "ar": "احصل على خصم 30% على أول اشتراك في باقتنا المميزة! استمتع بالوصول غير المحدود إلى المزايا الرائعة"
+                "ar": "احصل على خصم 30% على أول اشتراك في باقتنا المميزة! استمتع بالوصول غير المحدود إلى المزايا الرائعةl;"
             },
-            "is_active": true,
+            "is_active": false,
             "end_time": "2025-05-08 00:00:01"
         }
     }

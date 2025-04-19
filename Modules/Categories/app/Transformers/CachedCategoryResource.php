@@ -12,7 +12,7 @@ class CachedCategoryResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $image = "https::/picsum.photos/seed/$this->id/600/600";
+        $image = "https://picsum.photos/seed/$this->id/600/600";
 
         return [
             "id" => $this->id,
