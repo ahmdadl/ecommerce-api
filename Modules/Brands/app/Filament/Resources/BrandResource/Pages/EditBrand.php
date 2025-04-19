@@ -22,6 +22,10 @@ class EditBrand extends EditRecord
 
     protected function mutateFormDataBeforeFill(array $data): array
     {
+        if (empty($data["media"])) {
+            return $data;
+        }
+
         $data["media"] = basename($data["media"]);
 
         $data["media"] = \Modules\Uploads\Models\Upload::find(

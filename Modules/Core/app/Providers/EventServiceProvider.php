@@ -4,7 +4,9 @@ namespace Modules\Core\Providers;
 
 use Illuminate\Console\Events\CommandFinished;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
+use Modules\Core\Events\CachedSpaDataUpdated;
 use Modules\Core\Listeners\RunAfterCommand;
+use Modules\Core\Listeners\WriteCachedSpaDataListener;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -15,6 +17,7 @@ class EventServiceProvider extends ServiceProvider
      */
     protected $listen = [
         CommandFinished::class => [RunAfterCommand::class],
+        CachedSpaDataUpdated::class => [WriteCachedSpaDataListener::class],
     ];
 
     /**

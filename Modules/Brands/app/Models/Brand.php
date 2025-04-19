@@ -3,6 +3,7 @@
 namespace Modules\Brands\Models;
 
 use Cviebrock\EloquentSluggable\Sluggable;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Attributes\UseFactory;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Model;
@@ -13,10 +14,12 @@ use Modules\Brands\Database\Factories\BrandFactory;
 use Modules\Core\Models\Scopes\HasActiveState;
 use Modules\Core\Models\Scopes\HasMetaTags;
 use Modules\Core\Models\Scopes\HasSortOrderAttribute;
+use Modules\Core\Observers\CachedSpaDataUpdatedObserver;
 use Modules\Products\Models\Product;
 use Modules\Uploads\Casts\UploadablePathCast;
 use Spatie\Translatable\HasTranslations;
 
+#[ObservedBy(CachedSpaDataUpdatedObserver::class)]
 #[UseFactory(BrandFactory::class)]
 class Brand extends Model
 {

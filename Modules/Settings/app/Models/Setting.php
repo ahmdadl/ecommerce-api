@@ -2,9 +2,11 @@
 
 namespace Modules\Settings\Models;
 
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Model;
-use Spatie\Translatable\HasTranslations;
+use Modules\Core\Observers\CachedSpaDataUpdatedObserver;
 
+#[ObservedBy(CachedSpaDataUpdatedObserver::class)]
 class Setting extends Model
 {
     protected function casts(): array

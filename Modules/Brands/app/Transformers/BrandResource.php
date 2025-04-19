@@ -13,12 +13,14 @@ class BrandResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $image = "https::/picsum.photos/seed/$this->id/600/600";
+
         return [
             "id" => $this->id,
             "title" => $this->title,
             "description" => $this->description,
             "slug" => $this->slug,
-            "image" => $this->image,
+            "image" => $image,
             "is_main" => $this->is_main,
             "sort_order" => $this->sort_order,
             // "is_active" => $this->is_active,

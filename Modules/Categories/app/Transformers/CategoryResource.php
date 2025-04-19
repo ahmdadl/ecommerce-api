@@ -13,12 +13,14 @@ class CategoryResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $image = "https::/picsum.photos/seed/$this->id/600/600";
+
         return [
             "id" => $this->id,
             "title" => $this->title,
             "description" => $this->description,
             "slug" => $this->slug,
-            "image" => $this->image,
+            "image" => $image,
             // "is_main" => $this->is_main,
             // "sort_order" => $this->sort_order,
             // "is_active" => $this->is_active,
@@ -26,10 +28,15 @@ class CategoryResource extends JsonResource
             "meta_description" => $this->meta_description,
             "meta_keywords" => $this->meta_keywords,
             "products_count" => $this->whenCounted("products"),
-            // "created_at" => $this->created_at,
-            // "updated_at" => $this->updated_at,
             "products" => ProductResource::collection(
                 $this->whenLoaded("products")
+            ),
+
+            // un localized
+            "un_localized_title" => fn() => $request->whenHas(
+                "withUnLocalized",
+                fn() => $this->getTranslations("title"),
+                null
             ),
         ];
     }
