@@ -66,11 +66,13 @@ class SettingResource extends Resource
                                 )
                                     ->label(__("phoneNumbers"))
                                     ->placeholder(__("phoneNumbers")),
-                                Forms\Components\TextInput::make(
-                                    "data.contact.address"
-                                )
-                                    ->label(__("address"))
-                                    ->maxLength(255),
+                                ...multiLangInput(
+                                    Forms\Components\TextInput::make(
+                                        "data.contact.address"
+                                    )
+                                        ->label(__("address"))
+                                        ->maxLength(255)
+                                ),
                                 Forms\Components\TextInput::make(
                                     "data.contact.googleMapUrl"
                                 )
@@ -86,6 +88,30 @@ class SettingResource extends Resource
                                     "data.social.facebook"
                                 )
                                     ->label(__("facebook"))
+                                    ->url()
+                                    ->maxLength(255),
+                                Forms\Components\TextInput::make(
+                                    "data.social.twitter"
+                                )
+                                    ->label(__("twitter"))
+                                    ->url()
+                                    ->maxLength(255),
+                                Forms\Components\TextInput::make(
+                                    "data.social.instagram"
+                                )
+                                    ->label(__("instagram"))
+                                    ->url()
+                                    ->maxLength(255),
+                                Forms\Components\TextInput::make(
+                                    "data.social.youtube"
+                                )
+                                    ->label(__("youtube"))
+                                    ->url()
+                                    ->maxLength(255),
+                                Forms\Components\TextInput::make(
+                                    "data.social.whatsapp"
+                                )
+                                    ->label(__("whatsapp"))
                                     ->url()
                                     ->maxLength(255),
                             ])

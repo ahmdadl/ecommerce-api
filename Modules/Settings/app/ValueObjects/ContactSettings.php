@@ -16,7 +16,7 @@ class ContactSettings
         return new self(
             email: $data["email"] ?? "contact@example.com",
             phoneNumbers: $data["phoneNumbers"] ?? [],
-            address: $data["address"] ?? "",
+            address: $data["address"][app()->getLocale()] ?? "",
             googleMapUrl: $data["googleMapUrl"] ?? ""
         );
     }

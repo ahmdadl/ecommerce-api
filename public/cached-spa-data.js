@@ -281,23 +281,32 @@ const CACHED_DATA = {
     "settings": {
         "general": {
             "name": {
-                "en": "sdafsdaf",
-                "ar": "sadfsadf"
+                "en": "Supps Store",
+                "ar": "Supps Store"
             },
             "description": {
-                "en": null,
-                "ar": null
+                "en": "ShopHub is your one-stop destination for all\n                                your shopping needs. We offer a wide range of\n                                products at competitive prices.",
+                "ar": "ShopHub is your one-stop destination for all\n                                your shopping needs. We offer a wide range of\n                                products at competitive prices. arabic"
             },
             "maintenance_mode": false
         },
         "contact": {
-            "email": null,
-            "phoneNumbers": [],
-            "address": null,
-            "googleMapUrl": null
+            "email": "support@supps.com",
+            "phoneNumbers": [
+                "+1 (555) 123-4567"
+            ],
+            "address": {
+                "en": "25 El Tahrir Street, Downtown (El Wustaa), Cairo",
+                "ar": "25 El Tahrir Street, Downtown (El Wustaa), Cairo arabic"
+            },
+            "googleMapUrl": "https:\/\/maps.app.goo.gl\/8HQq6qBPjGnjtraE9"
         },
         "social": {
-            "facebook": null
+            "facebook": "https:\/\/www.facebook.com",
+            "twitter": "https:\/\/x.com",
+            "instagram": "https:\/\/www.instagram.com",
+            "youtube": null,
+            "whatsapp": "https:\/\/wa.me\/201345676798"
         },
         "top_header": {
             "body": {

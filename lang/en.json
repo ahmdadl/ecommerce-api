@@ -86,5 +86,9 @@
     "use the following code to reset your password": "Use the following code to reset your password",
     "This code will expire in :count minutes.": "This code will expire in :count minutes.",
     "top_header": "Top Header",
-    "end_time": "End Time"
+    "end_time": "End Time",
+    "twitter": "Twitter (X)",
+    "youtube": "Youtube",
+    "linkedin": "Linkedin",
+    "instagram": "Instagram"
 }
