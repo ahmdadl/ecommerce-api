@@ -125,6 +125,22 @@ class ProductFilter extends ModelFilter
     }
 
     /**
+     * search by multiple fields
+     */
+    public function searchQuery(string $value)
+    {
+        return $this->builder
+            ->where(function ($query) use ($value) {
+                $query
+                    ->where("title->en", "like", "%$value%")
+                    ->orWhere("title->ar", "like", "%$value%");
+            })
+            ->orWhere("sku", "like", "%$value%")
+            ->orWhere("slug", $value)
+            ->orWhere("id", $value);
+    }
+
+    /**
      * {@inheritDoc}
      */
     protected function getAllowedFilters(): array
@@ -149,6 +165,7 @@ class ProductFilter extends ModelFilter
             "brands" => "array",
             "price" => "string",
             "tags" => "array",
+            "searchQuery" => "string",
         ];
     }
 }

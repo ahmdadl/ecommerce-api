@@ -28,11 +28,13 @@ class GetProductsAction
             ->with($this->getLazyLoadRelations($request))
             ->orderBy(...$this->getOrderBy($request));
 
+        $perPage = $request->integer("perPage", 15);
+
         $response = [];
 
         $productsQueryClone = clone $productsQuery;
 
-        $products = $productsQuery->paginate();
+        $products = $productsQuery->paginate($perPage);
         $response["records"] = ProductResource::collection($products);
         $response["paginationInfo"] = $this->getPaginationInfo($products);
 
