@@ -301,7 +301,7 @@ class OrderResource extends Resource implements HasShieldPermissions
     {
         return [
             "index" => Pages\ListOrders::route("/"),
-            "view" => Pages\OrderDetailsPage::route("/{record}"),
+            // "view" => Pages\OrderDetailsPage::route("/{record}"),
         ];
     }
 }
