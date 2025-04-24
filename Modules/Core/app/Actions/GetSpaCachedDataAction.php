@@ -7,6 +7,8 @@ use Modules\Brands\Transformers\CachedBrandResource;
 use Modules\Categories\Models\Category;
 use Modules\Categories\Transformers\CachedCategoryResource;
 use Modules\Core\Traits\HasActionHelpers;
+use Modules\PageMetas\Models\PageMeta;
+use Modules\PageMetas\Transformers\CachedPageMetaResource;
 use Modules\Settings\Models\Setting;
 
 final class GetSpaCachedDataAction
@@ -54,6 +56,10 @@ final class GetSpaCachedDataAction
         );
 
         $data["settings"] = Setting::getInstance()->data;
+
+        $data["pageMetas"] = CachedPageMetaResource::collection(
+            PageMeta::all()
+        );
 
         return $data;
     }

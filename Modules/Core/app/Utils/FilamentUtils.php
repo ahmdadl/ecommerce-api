@@ -14,8 +14,13 @@ class FilamentUtils
             return null;
         }
 
+        $key = array_key_first($state);
+        if (empty($key)) {
+            return null;
+        }
+
         /** @var \Livewire\Features\SupportFileUploads\TemporaryUploadedFile|string $file */
-        $file = $state[array_key_first($state)];
+        $file = $state[$key];
 
         if (is_string($file)) {
             // @phpstan-ignore-next-line

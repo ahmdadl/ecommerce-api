@@ -19,5 +19,6 @@
     "CompareLists": true,
     "ContactUs": true,
     "Faqs": true,
-    "Tags": true
+    "Tags": true,
+    "PageMetas": true
 }
