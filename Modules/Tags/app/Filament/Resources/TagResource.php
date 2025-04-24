@@ -33,11 +33,37 @@ class TagResource extends Resource implements HasShieldPermissions
     public static function form(Form $form): Form
     {
         return $form->schema([
-            ...multiLangInput(
-                I\TextInput::make("title")->translateLabel()->required()
-            ),
-
-            I\Toggle::make("is_active")->translateLabel()->default(true),
+            I\Tabs::make("categoryDetails")
+                ->translateLabel()
+                ->tabs([
+                    I\Tabs\Tab::make("content")
+                        ->icon("heroicon-o-globe-alt")
+                        ->translateLabel()
+                        ->schema([
+                            ...multiLangInput(
+                                I\TextInput::make("title")
+                                    ->translateLabel()
+                                    ->required()
+                            ),
+                            ...multiLangInput(
+                                I\Textarea::make("description")
+                                    ->translateLabel()
+                                    ->rows(4)
+                            ),
+                        ])
+                        ->columns(2),
+                    I\Tabs\Tab::make("settings")
+                        ->icon("heroicon-o-cog")
+                        ->translateLabel()
+                        ->schema([
+                            I\Toggle::make("is_active")
+                                ->translateLabel()
+                                ->default(true),
+                        ])
+                        ->columns(2),
+                    metaTabInputs(),
+                ])
+                ->columnSpanFull(),
         ]);
     }
 

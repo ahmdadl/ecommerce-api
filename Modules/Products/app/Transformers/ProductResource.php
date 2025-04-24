@@ -48,6 +48,7 @@ class ProductResource extends JsonResource
             "meta_title" => $this->meta_title,
             "meta_description" => $this->meta_description,
             "meta_keywords" => $this->meta_keywords,
+            "meta_image" => $images[0],
 
             "category" => new CategoryResource($this->whenLoaded("category")),
             "brand" => new BrandResource($this->whenLoaded("brand")),

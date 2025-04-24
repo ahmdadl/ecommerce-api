@@ -17,6 +17,10 @@ class TagResource extends JsonResource
             "id" => $this->id,
             "title" => $this->title,
             "slug" => $this->slug,
+            "description" => $this->description,
+            "meta_title" => $this->meta_title,
+            "meta_description" => $this->meta_description,
+            "meta_keywords" => $this->meta_keywords,
             // 'is_active' => $this->is_active,
             "products_count" => $this->whenCounted("products"),
             // "products" => ProductResource::collection(

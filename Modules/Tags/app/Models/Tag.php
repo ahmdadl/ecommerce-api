@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Modules\Core\Models\Scopes\HasActiveState;
+use Modules\Core\Models\Scopes\HasMetaTags;
 use Modules\Products\Models\Product;
 use Spatie\Translatable\HasTranslations;
 use Modules\Tags\Database\Factories\TagFactory;
@@ -17,9 +18,14 @@ use Modules\Tags\Database\Factories\TagFactory;
 class Tag extends Model
 {
     /** @use HasFactory<TagFactory> */
-    use HasFactory, HasUlids, HasTranslations, Sluggable, HasActiveState;
+    use HasFactory,
+        HasUlids,
+        HasTranslations,
+        Sluggable,
+        HasActiveState,
+        HasMetaTags;
 
-    protected array $translatable = ["title"];
+    protected array $translatable = ["title", "description"];
 
     /**
      * slug source
