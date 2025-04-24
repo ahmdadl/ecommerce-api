@@ -11,4 +11,18 @@ enum OrderStatus: string
     case SHIPPED = "shipped";
     case DELIVERED = "delivered";
     case CANCELLED = "cancelled";
+
+    /**
+     * get status color
+     */
+    public function color(): string
+    {
+        return match ($this) {
+            self::PENDING => "warning",
+            self::PROCESSING => "primary",
+            self::SHIPPED => "success",
+            self::DELIVERED => "success",
+            self::CANCELLED => "danger",
+        };
+    }
 }

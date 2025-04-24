@@ -11,4 +11,18 @@ enum OrderPaymentStatus: string
     case FAILED = "failed";
     case CANCELLED = "cancelled";
     case EXPIRED = "expired";
+
+    /**
+     * get status color
+     */
+    public function color(): string
+    {
+        return match ($this) {
+            self::PENDING => "warning",
+            self::PAID => "success",
+            self::FAILED => "danger",
+            self::CANCELLED => "danger",
+            self::EXPIRED => "gray",
+        };
+    }
 }
