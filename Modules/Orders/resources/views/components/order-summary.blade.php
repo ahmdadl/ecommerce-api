@@ -9,7 +9,7 @@
     <div class="flex justify-between items-start flex-wrap">
         <div>
             <h2 class="text-xl font-bold text-gray-800 dark:text-gray-200">
-                {{ __('orders::t.orderId', ['id' => $order->id]) }}
+                {{ __('orders::t.orderId', ['id' => '']) }} <x-orders::copy :content="$order->id" />
             </h2>
             <p class="text-sm text-gray-500 dark:text-gray-400">
                 {{ __('orders::t.placedOn', [
