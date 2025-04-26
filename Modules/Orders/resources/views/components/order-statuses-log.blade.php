@@ -9,7 +9,7 @@
         {{ __('orders::t.status_log') }}
     </h3>
 
-    <table class="w-full">
+    <table class="w-full border-collapse border border-gray-400">
         <thead>
             <tr>
                 @foreach ([__('type'), __('orders::t.status_word'), __('orders::t.updatedBy'), __('orders::t.date'), __('orders::t.notes')] as $key)

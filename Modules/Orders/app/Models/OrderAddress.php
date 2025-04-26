@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Modules\Addresses\Models\Address;
 use Modules\Cities\Models\City;
 use Modules\Governments\Models\Government;
@@ -18,7 +19,7 @@ use Spatie\Translatable\HasTranslations;
 class OrderAddress extends Model
 {
     /** @use HasFactory<OrderAddressFactory> */
-    use HasFactory, HasUlids, HasTranslations;
+    use HasFactory, HasUlids, HasTranslations, SoftDeletes;
 
     protected array $translatable = ["city_title"];
 

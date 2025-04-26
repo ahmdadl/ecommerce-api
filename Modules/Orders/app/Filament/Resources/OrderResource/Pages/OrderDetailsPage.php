@@ -69,6 +69,7 @@ class OrderDetailsPage extends Page
                         ->translateLabel()
                         ->options($statusOptions)
                         ->default($this->order->status->value)
+                        ->enum(OrderStatus::class)
                         ->required(),
 
                     TextInput::make("notes")->translateLabel()->nullable(),
@@ -96,6 +97,7 @@ class OrderDetailsPage extends Page
                         ->translateLabel()
                         ->options($paymentStatusOptions)
                         ->default($this->order->payment_status->value)
+                        ->enum(OrderPaymentStatus::class)
                         ->required(),
 
                     TextInput::make("notes")->translateLabel()->nullable(),

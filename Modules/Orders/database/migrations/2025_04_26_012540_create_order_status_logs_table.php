@@ -12,8 +12,8 @@ return new class extends Migration {
     {
         Schema::create("order_status_logs", function (Blueprint $table) {
             $table->uid();
-            $table->foreignUlid("order_id")->constrained("orders");
-            $table->foreignUlid("user_id")->constrained("users");
+            $table->foreignUlid("order_id")->constrained()->cascadeOnDelete();
+            $table->foreignUlid("user_id")->constrained();
             $table->string("status");
             $table->string("type");
             $table->text("notes")->nullable();

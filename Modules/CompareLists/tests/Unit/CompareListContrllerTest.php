@@ -47,7 +47,7 @@ describe("CompareListsController", function () {
             asCustomer($user)
                 ->postJson(route("api.compare-list.store", $product))
                 ->assertOk()
-                ->assertJsonCount(1, "data.record.items")
+                ->assertJsonCount(1, "data.compareList.items")
                 ->assertJsonFragment(["product_id" => $product->id]);
         }
     );
@@ -85,7 +85,7 @@ describe("CompareListsController", function () {
 
             deleteJson(route("api.compare-list.destroy", $compareListItem))
                 ->assertOk()
-                ->assertJsonCount(0, "data.record.items");
+                ->assertJsonCount(0, "data.compareList.items");
         }
     );
 
@@ -122,7 +122,7 @@ describe("CompareListsController", function () {
             asCustomer($user)
                 ->deleteJson(route("api.compare-list.clear"))
                 ->assertOk()
-                ->assertJsonCount(0, "data.record.items");
+                ->assertJsonCount(0, "data.compareList.items");
         }
     );
 });

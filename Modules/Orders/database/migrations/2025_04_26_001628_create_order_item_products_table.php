@@ -12,7 +12,10 @@ return new class extends Migration {
     {
         Schema::create("order_item_products", function (Blueprint $table) {
             $table->uid();
-            $table->foreignUlid("order_item_id")->constrained();
+            $table
+                ->foreignUlid("order_item_id")
+                ->constrained()
+                ->cascadeOnDelete();
             $table
                 ->foreignUlid("product_id")
                 ->constrained()

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Translatable\HasTranslations;
 use Modules\Orders\Database\Factories\OrderStatusLogFactory;
 use Modules\Orders\Enums\OrderPaymentStatus;
@@ -19,7 +20,7 @@ use Modules\Users\Models\User;
 class OrderStatusLog extends Model
 {
     /** @use HasFactory<OrderStatusLogFactory> */
-    use HasFactory, HasUlids;
+    use HasFactory, HasUlids, SoftDeletes;
 
     /**
      * cast fields

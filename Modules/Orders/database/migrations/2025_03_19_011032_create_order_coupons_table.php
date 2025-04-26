@@ -21,6 +21,7 @@ return new class extends Migration {
                 ->default(CouponDiscountType::PERCENTAGE->value);
             $table->float("value");
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -18,13 +18,12 @@ return new class extends Migration {
             $table->foreignUlid("user_id")->constrained();
             $table->json("totals");
             $table->string("payment_method", 30);
+            $table->string("status", 50)->default(OrderStatus::PENDING->value);
             $table
-                ->enum("status", OrderStatus::values())
-                ->default(OrderStatus::PENDING->value);
-            $table
-                ->enum("payment_status", OrderPaymentStatus::values())
+                ->string("payment_status", 50)
                 ->default(OrderPaymentStatus::PENDING->value);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

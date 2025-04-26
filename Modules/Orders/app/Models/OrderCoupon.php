@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Modules\Coupons\Enums\CouponDiscountType;
 use Modules\Coupons\Models\Coupon;
 use Modules\Orders\Database\Factories\OrderCouponFactory;
@@ -15,7 +16,7 @@ use Modules\Orders\Database\Factories\OrderCouponFactory;
 class OrderCoupon extends Model
 {
     /** @use HasFactory<OrderCouponFactory> */
-    use HasFactory, HasUlids;
+    use HasFactory, HasUlids, SoftDeletes;
 
     protected function casts(): array
     {
