@@ -22,6 +22,7 @@ use Modules\Core\Models\Scopes\HasMetaTags;
 use Modules\Products\Database\Factories\ProductFactory;
 use Modules\Products\Filters\ProductFilter;
 use Modules\Tags\Models\Tag;
+use Modules\Uploads\Casts\UploadableMultiplePathsCast;
 use Modules\Wishlists\Models\Wishlist;
 use Modules\Wishlists\Models\WishlistItem;
 use Spatie\Translatable\HasTranslations;
@@ -66,7 +67,7 @@ class Product extends Model
             "is_main" => "boolean",
             "price" => "float",
             "salePrice" => "float",
-            "images" => "array",
+            "images" => UploadableMultiplePathsCast::class,
         ];
     }
 

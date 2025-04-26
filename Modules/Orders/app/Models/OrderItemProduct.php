@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Translatable\HasTranslations;
 use Modules\Orders\Database\Factories\OrderItemProductFactory;
 use Modules\Products\Models\Product;
+use Modules\Uploads\Casts\UploadableMultiplePathsCast;
 
 #[UseFactory(OrderItemProductFactory::class)]
 class OrderItemProduct extends Model
@@ -26,7 +27,7 @@ class OrderItemProduct extends Model
     protected function casts(): array
     {
         return [
-            "images" => "array",
+            "images" => UploadableMultiplePathsCast::class,
         ];
     }
 
