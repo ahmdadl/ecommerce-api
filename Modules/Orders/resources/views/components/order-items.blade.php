@@ -9,6 +9,9 @@
         @foreach ($order->items ?? [] as $item)
             <div class="flex items-start border-b border-gray-200 dark:border-gray-700 pb-4">
                 <div class="flex-shrink-0 h-16 w-16 rounded-md overflow-hidden">
+                    @php
+                        $item->loadMissing('product');
+                    @endphp
                     <img src="{{ $item->product->images[0] ?? '' }}" alt="{{ $item->product->title ?? '' }}"
                         class="object-cover max-w-full" />
                 </div>
