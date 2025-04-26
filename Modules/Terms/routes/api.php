@@ -15,6 +15,6 @@ use Modules\Terms\Http\Controllers\TermsController;
  *
  */
 
-Route::get("/terms-conditions", GetTermsController::class)
+Route::get("/terms-and-conditions", GetTermsController::class)
     ->middleware("auth-public")
     ->name("terms.index");

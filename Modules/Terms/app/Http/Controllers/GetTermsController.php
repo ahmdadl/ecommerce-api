@@ -5,6 +5,7 @@ namespace Modules\Terms\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use Modules\Terms\Transformers\TermResource;
 
 class GetTermsController extends Controller
 {
@@ -16,12 +17,10 @@ class GetTermsController extends Controller
         $terms = cache()->rememberForever(
             "api_terms",
             fn() => \Modules\Terms\Models\Term::active()
-                ->orderBySortOrder()
+                ->orderBySortOrderAsc()
                 ->get()
         );
 
-        return api()->records(
-            \Modules\Terms\Transformers\TermResource::collection($terms)
-        );
+        return api()->records(TermResource::collection($terms));
     }
 }

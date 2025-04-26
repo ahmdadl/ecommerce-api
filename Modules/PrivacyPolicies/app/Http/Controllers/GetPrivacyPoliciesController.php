@@ -18,7 +18,7 @@ class GetPrivacyPoliciesController extends Controller
     {
         $privacyPolicies = Cache::rememberForever(
             "api_privacy_policies",
-            fn() => PrivacyPolicy::active()->orderBySortOrder()->get()
+            fn() => PrivacyPolicy::active()->orderBySortOrderAsc()->get()
         );
 
         return api()->records(
