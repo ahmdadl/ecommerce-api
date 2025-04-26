@@ -15,6 +15,6 @@ use Modules\Tags\Http\Controllers\TagsController;
  *
  */
 
-Route::get("/{activeTag}", GetTagProductsController::class)
-    ->name("tags.index")
-    ->middleware("auth:guest,customer");
+// Route::get("/tags/{activeTag}", GetTagProductsController::class)
+//     ->name("tags.index")
+//     ->middleware("auth:guest,customer");
