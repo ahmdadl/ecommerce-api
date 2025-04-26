@@ -3,12 +3,14 @@
 namespace Modules\Orders\Models;
 
 use Illuminate\Database\Eloquent\Attributes\UseFactory;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Modules\Orders\Database\Factories\PaymentAttemptFactory;
 use Modules\Orders\Enums\OrderPaymentStatus;
+use Modules\Payments\Models\PaymentMethod;
 use Modules\Uploads\Casts\UploadablePathCast;
 
 #[UseFactory(PaymentAttemptFactory::class)]
@@ -24,6 +26,20 @@ class PaymentAttempt extends Model
             "receipt" => UploadablePathCast::class,
             "payment_details" => "array",
         ];
+    }
+
+    /**
+     * @return Attribute<PaymentMethod|null, void>
+     */
+    public function paymentMethodRecord(): Attribute
+    {
+        return Attribute::make(
+            // @phpstan-ignore-next-line
+            fn(?string $value, array $attributes) => PaymentMethod::firstWhere(
+                "code",
+                $attributes["payment_method"]
+            )
+        )->shouldCache();
     }
 
     /**

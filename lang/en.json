@@ -91,5 +91,8 @@
     "youtube": "Youtube",
     "linkedin": "Linkedin",
     "instagram": "Instagram",
-    "keywords": "Keywords"
+    "keywords": "Keywords",
+    "changeStatus": "Change Status",
+    "status": "Status",
+    "notes": "Notes"
 }
