@@ -21,5 +21,6 @@
     "Faqs": true,
     "Tags": true,
     "PageMetas": true,
-    "PrivacyPolicies": true
+    "PrivacyPolicies": true,
+    "Terms": true
 }

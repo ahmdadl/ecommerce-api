@@ -1,13 +1,13 @@
 <?php
 
-namespace Modules\PrivacyPolicies\Providers;
+namespace Modules\Terms\Providers;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 
 class RouteServiceProvider extends ServiceProvider
 {
-    protected string $name = "PrivacyPolicies";
+    protected string $name = "Terms";
 
     /**
      * Called before routes are registered.

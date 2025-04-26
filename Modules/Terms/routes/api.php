@@ -1,8 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Modules\PrivacyPolicies\Http\Controllers\GetPrivacyPoliciesController;
-use Modules\PrivacyPolicies\Http\Controllers\PrivacyPoliciesController;
+use Modules\Terms\Http\Controllers\GetTermsController;
+use Modules\Terms\Http\Controllers\TermsController;
 
 /*
  *--------------------------------------------------------------------------
@@ -15,6 +15,6 @@ use Modules\PrivacyPolicies\Http\Controllers\PrivacyPoliciesController;
  *
  */
 
-Route::get("/privacy-policies", GetPrivacyPoliciesController::class)
+Route::get("/terms-conditions", GetTermsController::class)
     ->middleware("auth-public")
-    ->name("privacy-policies.index");
+    ->name("terms.index");
