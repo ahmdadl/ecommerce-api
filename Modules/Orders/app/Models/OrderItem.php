@@ -44,13 +44,4 @@ class OrderItem extends Model
     {
         return $this->hasOne(OrderItemProduct::class, "order_item_id");
     }
-
-    /**
-     * main product
-     * @return BelongsTo<Product, $this>
-     */
-    public function mainProduct(): BelongsTo
-    {
-        return $this->belongsTo(Product::class);
-    }
 }

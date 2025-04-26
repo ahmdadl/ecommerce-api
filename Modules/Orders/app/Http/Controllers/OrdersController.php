@@ -33,7 +33,6 @@ class OrdersController extends Controller
             "shippingAddress",
             "coupon",
             "paymentAttempts",
-            "items",
             "items.product",
         ]);
 
