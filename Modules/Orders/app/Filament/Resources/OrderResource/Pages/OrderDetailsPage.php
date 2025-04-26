@@ -12,6 +12,8 @@ use Modules\Orders\Models\Order;
 use Filament\Infolists\Components;
 use Filament\Infolists\Infolist;
 use Filament\Notifications\Notification;
+use Modules\Orders\Actions\ChangeOrderPaymentStatusAction;
+use Modules\Orders\Actions\ChangeOrderStatusAction;
 use Modules\Orders\Enums\OrderPaymentStatus;
 use Modules\Orders\Enums\OrderStatus;
 use Modules\Orders\Models\PaymentAttempt;
@@ -34,6 +36,7 @@ class OrderDetailsPage extends Page
             "shippingAddress",
             "paymentAttempts",
             "items.product",
+            "statusLogs.user",
         ]);
 
         $this->order = $record;
@@ -71,8 +74,11 @@ class OrderDetailsPage extends Page
                     TextInput::make("notes")->translateLabel()->nullable(),
                 ])
                 ->action(function (array $data) {
-                    $this->order->status = OrderStatus::from($data["status"]);
-                    $this->order->save();
+                    ChangeOrderStatusAction::new()->handle(
+                        $this->order,
+                        OrderStatus::from($data["status"]),
+                        $data["notes"]
+                    );
 
                     $this->orderStatus = $this->order->status->value;
 
@@ -95,10 +101,11 @@ class OrderDetailsPage extends Page
                     TextInput::make("notes")->translateLabel()->nullable(),
                 ])
                 ->action(function (array $data) {
-                    $this->order->payment_status = OrderPaymentStatus::from(
-                        $data["payment_status"]
+                    ChangeOrderPaymentStatusAction::new()->handle(
+                        $this->order,
+                        OrderPaymentStatus::from($data["payment_status"]),
+                        $data["notes"]
                     );
-                    $this->order->save();
 
                     $this->paymentStatus = $this->order->payment_status->value;
 

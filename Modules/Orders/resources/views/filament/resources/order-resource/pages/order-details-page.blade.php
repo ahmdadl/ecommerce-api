@@ -16,4 +16,6 @@
     </div>
 
     <x-orders::order-items :order="$order" />
+
+    <x-orders::order-statuses-log :order="$order" />
 </x-filament-panels::page>

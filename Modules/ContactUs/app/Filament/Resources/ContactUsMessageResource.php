@@ -271,7 +271,7 @@ class ContactUsMessageResource extends Resource implements HasShieldPermissions
         return [
             "index" => Pages\ListContactUsMessages::route("/"),
             // "create" => Pages\CreateContactUsMessage::route("/create"),
-            "view" => Pages\ViewContactMessage::route("/{record}"),
+            "view" => Pages\ViewContactUsMessageForAdmin::route("/{record}"),
         ];
     }
 }

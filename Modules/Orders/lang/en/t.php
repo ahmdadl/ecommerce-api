@@ -15,6 +15,8 @@ return [
         "paid" => "Paid",
         "failed" => "Failed",
         "cancelled" => "Cancelled",
+        "refunded" => "Refunded",
+        "expired" => "Expired",
     ],
     "cart_is_empty" => "Cart is empty",
     "orderId" => "Order #:id",
@@ -43,4 +45,12 @@ return [
     "items" => "Items",
     "coupon" => "Coupon",
     "paymentAttempts" => "Payment Attempts",
+    "status_log" => "Status Log",
+    "notes" => "Notes",
+    "updatedBy" => "Updated By",
+    "date" => "Date",
+    "status_log_type" => [
+        "order" => "Order",
+        "payment" => "Payment",
+    ],
 ];

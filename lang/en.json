@@ -94,5 +94,6 @@
     "keywords": "Keywords",
     "changeStatus": "Change Status",
     "status": "Status",
-    "notes": "Notes"
+    "notes": "Notes",
+    "type": "Type"
 }

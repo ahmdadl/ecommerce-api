@@ -8,7 +8,7 @@ use Filament\Notifications\Notification;
 use Modules\ContactUs\Actions\ReplyContactUsMessageAction;
 use Modules\ContactUs\Filament\Resources\ContactUsMessageResource;
 
-class ViewContactMessage extends ViewRecord
+class ViewContactUsMessageForAdmin extends ViewRecord
 {
     protected static string $resource = ContactUsMessageResource::class;
 
