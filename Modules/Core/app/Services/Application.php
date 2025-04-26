@@ -108,4 +108,18 @@ final class Application
     {
         return request()->header("app-env") === "development";
     }
+
+    /**
+     * Get supported applications
+     */
+    public static function getSupportedApplications(): array
+    {
+        return [
+            // self::APP_ADMIN,
+            self::APP_WEBSITE,
+            self::APP_WEBSITE_TEST,
+            self::APP_ANDROID,
+            self::APP_IOS,
+        ];
+    }
 }

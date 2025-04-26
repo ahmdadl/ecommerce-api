@@ -4,6 +4,7 @@ namespace Modules\Core\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Modules\Core\Exceptions\ApiException;
 use Modules\Core\Services\Application;
 
 class SetApplicationTypeMiddleware
@@ -15,11 +16,15 @@ class SetApplicationTypeMiddleware
     {
         $applicationType = $request->header(Application::APPLICATION_HEADER);
 
-        abort_if(
-            empty($applicationType),
-            400,
-            "Missing required header: " . Application::APPLICATION_HEADER
-        );
+        if (empty($applicationType)) {
+            throw new ApiException("Missing required header: application-type");
+        }
+
+        if (
+            !in_array($applicationType, Application::getSupportedApplications())
+        ) {
+            throw new ApiException("Application type is not supported");
+        }
 
         Application::setApplicationType($applicationType);
 
