@@ -20,5 +20,6 @@
     "ContactUs": true,
     "Faqs": true,
     "Tags": true,
-    "PageMetas": true
+    "PageMetas": true,
+    "PrivacyPolicies": true
 }

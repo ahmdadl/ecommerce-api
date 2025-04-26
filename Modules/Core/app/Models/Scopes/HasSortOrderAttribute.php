@@ -38,7 +38,7 @@ trait HasSortOrderAttribute
      *
      * @param  Builder<Model>  $query
      */
-    public function scopeSortOrderAsc(Builder $query): void
+    public function scopeOrderBySortOrderAsc(Builder $query): void
     {
         $query->orderBy("sort_order", "asc");
     }
@@ -48,7 +48,7 @@ trait HasSortOrderAttribute
      *
      * @param  Builder<Model>  $query
      */
-    public function scopeSortOrder(Builder $query): void
+    public function scopeOrderBySortOrder(Builder $query): void
     {
         $query->orderBy("sort_order", "desc");
     }
