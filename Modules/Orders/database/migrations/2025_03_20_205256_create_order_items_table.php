@@ -13,9 +13,6 @@ return new class extends Migration {
         Schema::create("order_items", function (Blueprint $table) {
             $table->uid();
             $table->foreignUlid("order_id")->constrained();
-            $table->foreignUlid("product_id")->constrained();
-            $table->json("title");
-            $table->string("sku", 255)->nullable();
             $table->integer("quantity");
             $table->json("totals");
             $table->timestamps();

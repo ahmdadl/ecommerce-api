@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Modules\Carts\Casts\CartTotalsCast;
 use Spatie\Translatable\HasTranslations;
 use Modules\Orders\Database\Factories\OrderItemFactory;
@@ -37,9 +38,18 @@ class OrderItem extends Model
     }
 
     /**
+     * @return BelongsTo<OrderItemProduct, $this>
+     */
+    public function product(): HasOne
+    {
+        return $this->hasOne(OrderItemProduct::class, "order_item_id");
+    }
+
+    /**
+     * main product
      * @return BelongsTo<Product, $this>
      */
-    public function product(): BelongsTo
+    public function mainProduct(): BelongsTo
     {
         return $this->belongsTo(Product::class);
     }

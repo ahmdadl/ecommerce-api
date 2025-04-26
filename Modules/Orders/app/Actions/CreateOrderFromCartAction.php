@@ -7,6 +7,7 @@ use Modules\Core\Exceptions\ApiException;
 use Modules\Orders\Enums\OrderPaymentStatus;
 use Modules\Orders\Enums\OrderStatus;
 use Modules\Orders\Models\Order;
+use Modules\Orders\Models\OrderItemProduct;
 use Modules\Orders\Models\PaymentAttempt;
 
 class CreateOrderFromCartAction
@@ -63,13 +64,13 @@ class CreateOrderFromCartAction
 
         // create order items
         foreach ($cart->items()->with("product")->get() as $item) {
-            $order->items()->create([
-                "product_id" => $item->product_id,
-                "title" => $item->product?->getTranslations("title"),
-                "sku" => $item->product?->sku,
+            $orderItem = $order->items()->create([
                 "quantity" => $item->quantity,
                 "totals" => $item->totals,
             ]);
+
+            // create order item product
+            OrderItemProduct::createFromProduct($orderItem->id, $item->product);
         }
 
         // create order payment attempt
