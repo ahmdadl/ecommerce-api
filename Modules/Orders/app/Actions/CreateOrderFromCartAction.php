@@ -33,7 +33,12 @@ class CreateOrderFromCartAction
                 $receipt
             );
 
-            return Order::firstWhere("id", $cart->order_id);
+            $order = Order::firstWhere("id", $cart->order_id);
+            $order->payment_method = $paymentMethod;
+            $order->payment_status = $orderPaymentStatus;
+            $order->save();
+
+            return $order;
         }
 
         // create order coupon if found
@@ -58,7 +63,6 @@ class CreateOrderFromCartAction
             "coupon_id" => $orderCoupon?->id,
             "totals" => $cart->totals,
             "payment_method" => $paymentMethod,
-            "status" => $status,
             "payment_status" => $orderPaymentStatus,
         ]);
 
@@ -80,6 +84,15 @@ class CreateOrderFromCartAction
             $paymentMethod,
             $orderPaymentStatus,
             $receipt
+        );
+
+        // set order status
+        asUser(
+            $order->user,
+            fn() => ChangeOrderStatusAction::new()->handle(
+                $order,
+                OrderStatus::PENDING
+            )
         );
 
         $cart->order_id = $order->id;

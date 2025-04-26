@@ -53,4 +53,6 @@ return [
         "order" => "Order",
         "payment" => "Payment",
     ],
+    "receipt" => "Receipt",
+    "receipt_not_found" => "Receipt not found",
 ];

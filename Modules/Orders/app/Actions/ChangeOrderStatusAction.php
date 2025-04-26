@@ -31,7 +31,7 @@ class ChangeOrderStatusAction
         $order->statusLogs()->create([
             "status" => $orderStatus,
             "type" => OrderStatusLogType::ORDER,
-            "user_id" => auth("web")->id(),
+            "user_id" => user()->id,
             "notes" => $notes,
         ]);
     }

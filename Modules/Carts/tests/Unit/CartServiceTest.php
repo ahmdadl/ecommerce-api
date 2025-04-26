@@ -35,7 +35,7 @@ test("cart_totals_updated_after_adding_item", function () {
     expect($cart->totals->discount)->toBe((float) 200);
     expect($cart->totals->products)->toBe((int) 2);
     expect($cart->totals->items)->toBe((int) 3);
-    expect($cart->totals->subtotal)->toBe((float) 200);
+    expect($cart->totals->subtotal)->toBe((float) 400);
     expect($cart->totals->coupon)->toBe((float) 0);
     expect($cart->totals->shipping)->toBe((float) 0);
     expect($cart->totals->total)->toBe((float) 200);

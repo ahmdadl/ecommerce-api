@@ -14,7 +14,7 @@ return new class extends Migration {
         Schema::create("order_coupons", function (Blueprint $table) {
             $table->uid();
             $table->foreignUlid("coupon_id")->constrained();
-            $table->string("code", 50)->unique();
+            $table->string("code", 50)->index();
             $table->string("name")->nullable();
             $table
                 ->enum("discount_type", CouponDiscountType::values())

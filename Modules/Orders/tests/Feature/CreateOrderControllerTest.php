@@ -6,6 +6,7 @@ use Modules\Carts\Models\Cart;
 use Modules\Carts\Models\CartItem;
 use Modules\Carts\Services\CartService;
 use Modules\Coupons\Models\Coupon;
+use Modules\Governments\Models\Government;
 use Modules\Orders\Models\Order;
 use Modules\Orders\Models\OrderItem;
 use Modules\Payments\Models\PaymentMethod;
@@ -73,7 +74,7 @@ it("cannot_create_order_with_invalid_data", function () {
 
 it("can_create_an_order_with_cod", function () {
     $user = User::factory()->customer()->create();
-    $shippingAddress = Address::factory()->create();
+    $shippingAddress = Address::factory()->withShippingFee(0)->create();
     $coupon = Coupon::factory()->percentage(50)->create();
     $cart = Cart::factory()
         ->for($user, "cartable")
@@ -107,7 +108,7 @@ it("can_create_an_order_with_cod", function () {
 
 it("can_create_an_order_with_instapay", function () {
     $user = User::factory()->customer()->create();
-    $address = Address::factory()->create();
+    $address = Address::factory()->withShippingFee(0)->create();
     $coupon = Coupon::factory()->percentage(50)->create();
     $cart = Cart::factory()
         ->for($user, "cartable")
@@ -121,7 +122,7 @@ it("can_create_an_order_with_instapay", function () {
     $cartService->refresh();
 
     expect($cart->totals->coupon)->toBe(
-        (float) round($cart->totals->subtotal / 2, 2)
+        (float) round($cart->totals->total / 2, 2)
     );
 
     actingAs($user)

@@ -1,5 +1,7 @@
 <?php
 
+use Modules\Users\Models\User;
+
 if (!function_exists("api")) {
     /**
      * api response
@@ -251,5 +253,18 @@ if (!function_exists("parsePhone")) {
         } catch (\Exception $e) {
             return false;
         }
+    }
+}
+
+if (!function_exists("asUser")) {
+    function asUser(User $user, callable $callback, ?string $guard = null): void
+    {
+        $currentUser = auth($guard)->user();
+
+        auth($guard)->setUser($user);
+
+        $callback();
+
+        auth($guard)->setUser($currentUser);
     }
 }
