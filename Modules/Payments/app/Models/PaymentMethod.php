@@ -26,7 +26,7 @@ class PaymentMethod extends Model
             "is_active" => true,
             "require_receipt" => false,
             "is_online" => false,
-            "image" => "cash.svg",
+            "image" => "cash-on-delivery.png",
         ],
         [
             "code" => "fawry",
