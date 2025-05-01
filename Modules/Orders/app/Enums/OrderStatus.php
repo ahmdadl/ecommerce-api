@@ -25,4 +25,12 @@ enum OrderStatus: string
             self::CANCELLED => "danger",
         };
     }
+
+    /**
+     * get localized name
+     */
+    public function localized(): string
+    {
+        return __("orders::t.status.{$this->value}");
+    }
 }

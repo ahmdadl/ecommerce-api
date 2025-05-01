@@ -7,6 +7,7 @@ use Modules\Core\Traits\HasActionHelpers;
 use Modules\Orders\Enums\OrderStatus;
 use Modules\Orders\Enums\OrderStatusLogType;
 use Modules\Orders\Models\Order;
+use Modules\Users\Notifications\OrderStatusUpdatedNotification;
 
 class ChangeOrderStatusAction
 {
@@ -34,5 +35,7 @@ class ChangeOrderStatusAction
             "user_id" => user()->id,
             "notes" => $notes,
         ]);
+
+        $order->user->notify(new OrderStatusUpdatedNotification($order));
     }
 }

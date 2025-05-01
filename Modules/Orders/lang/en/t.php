@@ -55,4 +55,26 @@ return [
     ],
     "receipt" => "Receipt",
     "receipt_not_found" => "Receipt not found",
+
+    "mail" => [
+        "title" => "Order Updated",
+        "header" => "Order Updated",
+        "order_details" => "Order Details",
+        "title_message" => "Your order has been updated",
+        "thank_you" =>
+            "Thank you for your order! Below are the details of your order.",
+        "order_status" => "Order Status",
+        "order_date" => "Order Date",
+        "order_items" => "Order Items",
+        "product" => "Product",
+        "quantity" => "Quantity",
+        "price" => "Price",
+        "total" => "Total",
+        "grand_total" => "Grand Total",
+        "payment_method" => "Payment Method",
+        "shipping_address" => "Shipping Address",
+        "contact_us" => "If you have any questions, feel free to contact us at",
+        "support_email" => "Support Email",
+        "all_rights_reserved" => "All rights reserved.",
+    ],
 ];

@@ -268,3 +268,10 @@ if (!function_exists("asUser")) {
         auth($guard)->setUser($currentUser);
     }
 }
+
+if (!function_exists("frontUrl")) {
+    function frontUrl(string $path = ""): string
+    {
+        return config("app.front_url", "") . "/" . ltrim($path, "/");
+    }
+}

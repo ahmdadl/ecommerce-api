@@ -25,4 +25,12 @@ enum OrderPaymentStatus: string
             self::EXPIRED => "gray",
         };
     }
+
+    /**
+     * get localized name
+     */
+    public function localized(): string
+    {
+        return __("orders::t.payment_status.{$this->value}");
+    }
 }
