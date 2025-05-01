@@ -137,7 +137,19 @@
                     <tbody>
                         @foreach ($order->items as $item)
                             <tr>
-                                <td>{{ $item->product->title }}</td>
+                                <td>
+                                    <table>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <img src="{{ $item->product->images[0] }}" alt="Product Image"
+                                                        style="max-width: 50px;" />
+                                                </td>
+                                                <td>{{ $item->product->title }}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
                                 <td>{{ $item->quantity }}</td>
                                 <td>{{ number_format($item->totals->subtotal, 2) }} EGP</td>
                                 <td>{{ number_format($item->totals->total, 2) }} EGP</td>
