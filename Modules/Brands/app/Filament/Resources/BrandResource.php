@@ -106,9 +106,8 @@ class BrandResource extends Resource implements HasShieldPermissions
                     ->searchable()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\IconColumn::make("is_main")
+                Tables\Columns\ToggleColumn::make("is_main")
                     ->translateLabel()
-                    ->boolean()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\IconColumn::make("is_active")
                     ->translateLabel()

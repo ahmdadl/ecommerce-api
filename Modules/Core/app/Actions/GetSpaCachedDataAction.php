@@ -48,11 +48,11 @@ final class GetSpaCachedDataAction
         $data = [];
 
         $data["categories"] = CachedCategoryResource::collection(
-            Category::active()->get()
+            Category::withCount("products")->active()->get()
         );
 
         $data["brands"] = CachedBrandResource::collection(
-            Brand::active()->get()
+            Brand::withCount("products")->active()->get()
         );
 
         $data["settings"] = Setting::getInstance()->data;

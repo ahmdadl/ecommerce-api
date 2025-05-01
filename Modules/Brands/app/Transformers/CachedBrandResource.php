@@ -23,6 +23,8 @@ class CachedBrandResource extends JsonResource
             "meta_title" => $this->getTranslations("meta_title"),
             "meta_description" => $this->getTranslations("meta_description"),
             "meta_keywords" => $this->meta_keywords,
+            "is_main" => $this->is_main,
+            "products_count" => $this->whenCounted("products"),
         ];
     }
 }

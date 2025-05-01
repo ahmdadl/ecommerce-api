@@ -21,7 +21,7 @@ class UploadableMultiplePathsCast implements CastsAttributes
         mixed $value,
         array $attributes
     ): array {
-        return is_array($value) ? $value : json_decode($value, true);
+        return is_array($value) ? $value : json_decode($value ?? "[]", true);
         // return !empty($value)
         //     ? array_map(fn($x) => uploads_url($x), json_decode($value, true))
         //     : [];

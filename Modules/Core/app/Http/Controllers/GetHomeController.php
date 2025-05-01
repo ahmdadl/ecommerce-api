@@ -21,7 +21,10 @@ class GetHomeController extends Controller
         $banners = cache()->rememberForever(
             "banners_" . app()->getLocale(),
             fn() => BannerResource::collection(
-                Banner::active()->orderBySortOrderAsc()->get()
+                Banner::with("actionable")
+                    ->active()
+                    ->orderBySortOrderAsc()
+                    ->get()
             )
         );
 
