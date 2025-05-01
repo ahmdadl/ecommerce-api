@@ -36,6 +36,10 @@ class ChangeOrderStatusAction
             "notes" => $notes,
         ]);
 
-        $order->user->notify(new OrderStatusUpdatedNotification($order));
+        rescue(
+            fn() => $order->user->notify(
+                new OrderStatusUpdatedNotification($order)
+            )
+        );
     }
 }

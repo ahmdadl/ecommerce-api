@@ -38,7 +38,9 @@ class OrderStatusUpdatedNotification extends Notification implements ShouldQueue
     public function toMail($notifiable): MailMessage
     {
         return (new MailMessage())
-            ->subject("Your Order Status Has Changed")
+            ->subject(
+                __("orders::t.mail.subject." . $this->order->status->value)
+            )
             ->view("orders::emails.order_updated", [
                 "order" => $this->order,
                 "user" => $notifiable,

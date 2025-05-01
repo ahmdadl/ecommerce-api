@@ -142,8 +142,8 @@
                                         <tbody>
                                             <tr>
                                                 <td>
-                                                    <img src="{{ $item->product->images[0] }}" alt="Product Image"
-                                                        style="max-width: 50px;" />
+                                                    <img src="{{ $item->product->images[0] ?? '' }}"
+                                                        alt="Product Image" style="max-width: 50px;" />
                                                 </td>
                                                 <td>{{ $item->product->title }}</td>
                                             </tr>

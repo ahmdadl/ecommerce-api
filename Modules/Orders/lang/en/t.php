@@ -76,5 +76,13 @@ return [
         "contact_us" => "If you have any questions, feel free to contact us at",
         "support_email" => "Support Email",
         "all_rights_reserved" => "All rights reserved.",
+
+        "subject" => [
+            "pending" => "Your order has been placed",
+            "processing" => "Your order is being processed",
+            "shipped" => "Your order has been shipped",
+            "delivered" => "Your order has been delivered",
+            "cancelled" => "Your order has been cancelled",
+        ],
     ],
 ];
