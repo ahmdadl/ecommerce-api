@@ -13,6 +13,10 @@ class SetCurrentLocaleMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
+        if (app()->runningUnitTests() || app()->runningInConsole()) {
+            return $next($request);
+        }
+
         $locale = $request->header("locale-code");
 
         if (!in_array($locale, config("app.supported_locales"))) {

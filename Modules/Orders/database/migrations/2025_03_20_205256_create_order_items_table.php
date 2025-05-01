@@ -13,6 +13,10 @@ return new class extends Migration {
         Schema::create("order_items", function (Blueprint $table) {
             $table->uid();
             $table->foreignUlid("order_id")->constrained()->cascadeOnDelete();
+            $table
+                ->foreignUlid("product_id")
+                ->constrained()
+                ->noActionOnDelete();
             $table->integer("quantity");
             $table->json("totals");
             $table->timestamps();

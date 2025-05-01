@@ -14,7 +14,6 @@ class UploadableMultiplePathsCast implements CastsAttributes
      * Cast the given value.
      *
      * @param  array<string, mixed>  $attributes
-     * @param array<string, int> $value
      */
     public function get(
         Model $model,
@@ -22,9 +21,9 @@ class UploadableMultiplePathsCast implements CastsAttributes
         mixed $value,
         array $attributes
     ): array {
-        return $value ?? [];
+        return is_array($value) ? $value : json_decode($value, true);
         // return !empty($value)
-        //     ? array_map(fn($x) => uploads_url($x), $value)
+        //     ? array_map(fn($x) => uploads_url($x), json_decode($value, true))
         //     : [];
     }
 
@@ -38,7 +37,7 @@ class UploadableMultiplePathsCast implements CastsAttributes
         string $key,
         mixed $value,
         array $attributes
-    ): array {
-        return $value ?? [];
+    ): string {
+        return json_encode($value);
     }
 }

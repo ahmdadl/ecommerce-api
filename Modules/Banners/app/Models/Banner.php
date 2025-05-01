@@ -38,6 +38,16 @@ class Banner extends Model
     }
 
     /**
+     * {@inheritDoc}
+     */
+    protected static function booted(): void
+    {
+        parent::booted();
+
+        static::saved(callback: fn() => forgetLocalizedCache("banners"));
+    }
+
+    /**
      * actionable type
      *
      * @return MorphTo<Model, $this>

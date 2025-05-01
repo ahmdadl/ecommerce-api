@@ -23,6 +23,8 @@ return new class extends Migration {
             $table->decimal("salePrice", 10, 2)->nullable();
             $table->integer("stock");
             $table->string("sku")->nullable();
+            $table->unsignedInteger("views")->default(0);
+            $table->unsignedInteger("sold_quantity")->default(0);
             $table->activeState();
             $table->metaTags();
             $table->timestamps();

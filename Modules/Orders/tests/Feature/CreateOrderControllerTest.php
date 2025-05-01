@@ -82,14 +82,11 @@ it("can_create_an_order_with_cod", function () {
         ->for($coupon)
         ->create();
     CartItem::factory()->for($cart)->count(2)->create();
+
     $paymentMethod = PaymentMethod::CASH_ON_DELIVERY;
 
     $cartService = new CartService($cart);
     $cartService->refresh();
-
-    expect($cart->totals->coupon)->toBe(
-        (float) round($cart->totals->subtotal / 2, 2)
-    );
 
     $response = actingAs($user)
         ->postJson(route("api.orders.store"), [
@@ -100,9 +97,8 @@ it("can_create_an_order_with_cod", function () {
 
     $order = Order::firstWhere("id", $response["data"]["record"]["id"]);
 
-    expect($order->totals->coupon)->toBe(
-        (float) round($order->totals->subtotal / 2, 2)
-    );
+    expect($order->totals->coupon)->toBe($cart->totals->coupon);
+    expect($order->totals->total)->toBe($cart->totals->total);
     expect(OrderItem::count())->toBe(2);
 });
 
@@ -120,10 +116,6 @@ it("can_create_an_order_with_instapay", function () {
 
     $cartService = new CartService($cart);
     $cartService->refresh();
-
-    expect($cart->totals->coupon)->toBe(
-        (float) round($cart->totals->total / 2, 2)
-    );
 
     actingAs($user)
         ->postJson(route("api.orders.store"), [
@@ -144,8 +136,7 @@ it("can_create_an_order_with_instapay", function () {
 
     $order = Order::firstWhere("id", $response["data"]["record"]["id"]);
 
-    expect($order->totals->coupon)->toBe(
-        (float) round($order->totals->subtotal / 2, 2)
-    );
+    expect($order->totals->coupon)->toBe($cart->totals->coupon);
+    expect($order->totals->total)->toBe($cart->totals->total);
     expect(OrderItem::count())->toBe(2);
 });

@@ -19,6 +19,7 @@ use Modules\Categories\Models\Category;
 use Modules\CompareLists\Models\CompareListItem;
 use Modules\Core\Models\Scopes\HasActiveState;
 use Modules\Core\Models\Scopes\HasMetaTags;
+use Modules\Orders\Models\OrderItem;
 use Modules\Products\Database\Factories\ProductFactory;
 use Modules\Products\Filters\ProductFilter;
 use Modules\Tags\Models\Tag;
@@ -72,7 +73,7 @@ class Product extends Model
     }
 
     /**
-     * boot model
+     * {@inheritDoc}
      */
     public static function boot(): void
     {
@@ -83,6 +84,8 @@ class Product extends Model
                 $product->salePrice = $product->price;
             }
         });
+
+        static::saved(fn() => forgetLocalizedCache("best-sellers"));
     }
 
     /**
@@ -248,5 +251,14 @@ class Product extends Model
     public function tags(): BelongsToMany
     {
         return $this->belongsToMany(Tag::class);
+    }
+
+    /**
+     * product ordered items
+     * @return HasMany<OrderItem, $this>
+     */
+    public function orderItems(): HasMany
+    {
+        return $this->hasMany(OrderItem::class);
     }
 }

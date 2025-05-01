@@ -33,11 +33,18 @@ class ProductFactory extends Factory
                 "ar" => fake()->paragraph,
             ],
             "is_main" => fake()->boolean(20),
-            "images" => null,
+            "images" => [
+                "https://picsum.photos/seed/" .
+                fake()->numberBetween(1, 100) .
+                "/600/600",
+                "https://picsum.photos/seed/" .
+                fake()->numberBetween(1, 100) .
+                "/600/600",
+            ],
             "price" => $price,
             "salePrice" => fake()->boolean(30) ? $price * 0.8 : null,
             "stock" => fake()->numberBetween(10, 100),
-            "sku" => "SKU-" . strtoupper(Str::random(6)),
+            "sku" => "SKU-" . strtoupper(\Illuminate\Support\Str::random(6)),
             "is_active" => true,
             "meta_title" => [
                 "en" => fake()->sentence,

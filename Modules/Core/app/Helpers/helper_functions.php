@@ -275,3 +275,12 @@ if (!function_exists("frontUrl")) {
         return config("app.front_url", "") . "/" . ltrim($path, "/");
     }
 }
+
+if (!function_exists("forgetLocalizedCache")) {
+    function forgetLocalizedCache(string $key): void
+    {
+        foreach (config("app.supported_locales") as $locale) {
+            cache()->forget($key . "_" . $locale);
+        }
+    }
+}

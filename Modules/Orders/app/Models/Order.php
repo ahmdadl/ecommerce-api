@@ -35,6 +35,16 @@ class Order extends Model
     }
 
     /**
+     * {@inheritDoc}
+     */
+    protected static function booted(): void
+    {
+        parent::booted();
+
+        static::created(fn() => forgetLocalizedCache("best-sellers"));
+    }
+
+    /**
      * @return Attribute<PaymentMethod|null, void>
      */
     public function paymentMethodRecord(): Attribute
