@@ -30,7 +30,9 @@ class SettingsServiceProvider extends ServiceProvider
             module_path($this->name, "database/migrations")
         );
 
-        config()->set("app.name", settings("general")->name);
+        if (!$this->app->runningUnitTests()) {
+            config()->set("app.name", settings("general")->name);
+        }
     }
 
     /**

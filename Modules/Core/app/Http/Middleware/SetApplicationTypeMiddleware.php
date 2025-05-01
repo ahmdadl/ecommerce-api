@@ -14,6 +14,10 @@ class SetApplicationTypeMiddleware
      */
     public function handle(Request $request, Closure $next): mixed
     {
+        if (app()->runningUnitTests() || app()->runningInConsole()) {
+            return $next($request);
+        }
+
         $applicationType = $request->header(Application::APPLICATION_HEADER);
 
         if (empty($applicationType)) {

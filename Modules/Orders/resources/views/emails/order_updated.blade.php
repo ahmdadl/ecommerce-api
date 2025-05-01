@@ -173,7 +173,7 @@
             </div>
 
             <p>{{ __('orders::t.mail.contact_us') }} <a
-                    href="{{ settings('contact')->email }}">{{ __('orders::t.mail.support_email') }}</a>.</p>
+                    href="{{ settings('contact')?->email }}">{{ __('orders::t.mail.support_email') }}</a>.</p>
         </div>
         <div class="footer">
             <p>© {{ date('Y') }} {{ config('app.name') }}. {{ __('orders::t.mail.all_rights_reserved') }}</p>

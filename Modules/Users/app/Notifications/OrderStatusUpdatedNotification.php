@@ -58,4 +58,13 @@ class OrderStatusUpdatedNotification extends Notification implements ShouldQueue
             "type" => "order_status_updated",
         ];
     }
+
+    public function toDatabase($notifiable): array
+    {
+        return [
+            "status" => $this->order->status->localized(),
+            "order_id" => $this->order->id,
+            "type" => "order_status_updated",
+        ];
+    }
 }

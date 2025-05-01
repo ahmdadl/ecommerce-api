@@ -49,12 +49,6 @@ class CoreServiceProvider extends ServiceProvider
             $switch->locales(["ar", "en"]);
         });
 
-        // individually prohibit commands
-        Commands\SetupCommand::prohibit($this->app->isProduction());
-        Commands\InstallCommand::prohibit($this->app->isProduction());
-        Commands\GenerateCommand::prohibit($this->app->isProduction());
-        Commands\PublishCommand::prohibit($this->app->isProduction());
-        // or prohibit the above commands all at once
         FilamentShield::prohibitDestructiveCommands($this->app->isProduction());
     }
 
