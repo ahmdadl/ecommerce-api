@@ -15,7 +15,7 @@ use Modules\Orders\Http\Controllers\OrdersController;
  *
  */
 
-Route::middleware(["auth:customer"])
+Route::middleware(["auth:guest,customer"])
     ->prefix("orders")
     ->name("orders.")
     ->group(function () {

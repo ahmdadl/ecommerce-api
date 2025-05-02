@@ -55,14 +55,15 @@ class CartController extends Controller
             // check if cart has no address, then set default address or first
             if (!$cartService->cart->shippingAddress) {
                 $defaultAddress =
-                    Address::default()->first() ?? Address::first();
+                    $addresses->default()->first() ?? $addresses->first();
                 $defaultAddress &&
                     $cartService->setShippingAddress($defaultAddress);
             }
         } else {
             if (!$cartService->cart->shippingAddress) {
                 $defaultAddress =
-                    Address::default()->first() ?? Address::first();
+                    user()->addresses()->default()->first() ??
+                    user()->addresses()->first();
                 $defaultAddress &&
                     $cartService->setShippingAddress($defaultAddress);
             }

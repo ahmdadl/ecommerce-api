@@ -4,6 +4,8 @@ namespace Modules\Orders\Http\Requests;
 
 use Illuminate\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Modules\Addresses\Models\Address;
+use Modules\Core\Exceptions\ApiException;
 use Modules\Payments\Models\PaymentMethod;
 
 class CreateOrderRequest extends FormRequest
@@ -68,6 +70,29 @@ class CreateOrderRequest extends FormRequest
                 }
 
                 $this->merge(compact("paymentMethodRecord"));
+
+                // validate cart
+                $cart = cartService()->cart;
+                if ($cart->items()->count() === 0) {
+                    throw new ApiException(__("orders::t.cart_is_empty"));
+                }
+
+                if ($cart->shipping_address_id) {
+                    if (
+                        !user("customer")
+                            ?->addresses()
+                            ->where("id", $cart->shipping_address_id)
+                            ->exists()
+                    ) {
+                        throw new ApiException(
+                            __("orders::t.shipping_address_not_found")
+                        );
+                    }
+                } else {
+                    throw new ApiException(
+                        __("orders::t.shipping_address_is_required")
+                    );
+                }
             },
         ];
     }

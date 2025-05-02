@@ -3,6 +3,8 @@
 return [
     "address_is_required" => "Address is required",
     "payment_method_not_found" => "Payment method not found",
+    "shipping_address_not_found" => "Shipping address not found",
+    "shipping_address_is_required" => "Shipping address is required",
     "status" => [
         "pending" => "Pending",
         "processing" => "Processing",

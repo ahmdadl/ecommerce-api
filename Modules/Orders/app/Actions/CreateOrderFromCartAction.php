@@ -19,11 +19,6 @@ class CreateOrderFromCartAction
         OrderStatus $status = OrderStatus::PENDING,
         OrderPaymentStatus $orderPaymentStatus = OrderPaymentStatus::PENDING
     ): ?Order {
-        // validate cart
-        if ($cart->items()->count() === 0) {
-            throw new ApiException(__("orders::t.cart_is_empty"));
-        }
-
         // check if order created before on cart then create payment attempt only
         if (!empty($cart->order_id)) {
             $this->createOrderPaymentAttempt(
