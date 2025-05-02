@@ -70,7 +70,7 @@ class UserResource extends Resource
                 ->label("Active"),
             T\TextColumn::make("gender")
                 ->translateLabel()
-                ->state(fn($record) => __($record->gender->value))
+                ->state(fn($record) => __($record->gender?->value))
                 ->toggleable(false),
             T\TextColumn::make("created_at")
                 ->translateLabel()
