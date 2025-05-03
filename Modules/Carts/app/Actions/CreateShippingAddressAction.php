@@ -2,6 +2,7 @@
 
 namespace Modules\Carts\Actions;
 
+use Illuminate\Container\Attributes\CurrentUser;
 use Modules\Addresses\Models\Address;
 use Modules\Carts\Services\CartService;
 
@@ -12,7 +13,7 @@ class CreateShippingAddressAction
     public function handle(array $validatedData): Address
     {
         $address = Address::create([
-            "user_id" => user()->id,
+            "user_id" => $this->cartService->cart->cartable_id,
             ...$validatedData,
         ]);
 

@@ -103,3 +103,12 @@ test("user_can_delete_address", function () {
         "deleted_at" => null,
     ]);
 });
+
+it("can_validate_address", function () {
+    $address = Address::factory()->make();
+
+    asGuest();
+    postJson(route("api.addresses.validate"), $address->toArray())
+        ->assertOk()
+        ->assertSee($address->email);
+});

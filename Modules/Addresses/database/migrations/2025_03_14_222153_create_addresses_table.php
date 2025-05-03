@@ -20,6 +20,7 @@ return new class extends Migration {
             $table->string("title", 100)->nullable();
             $table->string("address", 250);
             $table->string("phone", 12);
+            $table->string("email", 150);
             $table->timestamps();
             $table->softDeletes();
         });

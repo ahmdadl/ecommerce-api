@@ -41,7 +41,9 @@ class AuthUserController extends Controller
         RegisterUserRequest $request,
         RegisterUserAction $action
     ): JsonResponse {
-        $user = $action->handle($request->validated());
+        [$user, $access_token] = $action->handle($request->validated());
+
+        $user->access_token = $access_token;
 
         return api()->success([
             "record" => new CustomerResource($user),

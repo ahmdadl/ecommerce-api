@@ -5,6 +5,7 @@ namespace Modules\Users\Models;
 use Filament\Panel;
 use Illuminate\Database\Eloquent\Attributes\UseFactory;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -109,6 +110,26 @@ class User extends Authenticatable
                 array_merge($credentials, ["role" => static::$role?->value]),
                 $remember
             );
+    }
+
+    /**
+     * is guest
+     * @return Attribute<boolean, void>
+     */
+    public function isGuest(): Attribute
+    {
+        return Attribute::make(get: fn() => false);
+    }
+
+    /**
+     * is customer
+     * @return Attribute<boolean, void>
+     */
+    public function isCustomer(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => static::$role === UserRole::CUSTOMER
+        )->shouldCache();
     }
 
     /**

@@ -4,6 +4,8 @@ namespace Modules\Addresses\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\Validator;
+use Modules\Core\Rules\LowercaseEmail;
 use Modules\Core\Rules\PhoneNumber;
 
 class CreateAddressRequest extends FormRequest
@@ -34,6 +36,14 @@ class CreateAddressRequest extends FormRequest
                     ->ignore($this->user()->id)
                     ->withoutTrashed(),
             ],
+            "email" => [
+                "required",
+                "email",
+                "max:150",
+                Rule::unique("users")
+                    ->ignore($this->user()->id)
+                    ->withoutTrashed(),
+            ],
             "is_default" => ["nullable", "boolean"],
         ];
     }
@@ -44,5 +54,16 @@ class CreateAddressRequest extends FormRequest
     public function authorize(): bool
     {
         return true;
+    }
+
+    /**
+     * Prepare the data for validation.
+     *
+     * @return void
+     */
+    protected function prepareForValidation()
+    {
+        /** @var \Illuminate\Http\Request $this */
+        $this->lowercaseEmail();
     }
 }

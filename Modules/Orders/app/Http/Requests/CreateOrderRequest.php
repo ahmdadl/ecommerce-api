@@ -77,21 +77,23 @@ class CreateOrderRequest extends FormRequest
                     throw new ApiException(__("orders::t.cart_is_empty"));
                 }
 
-                if ($cart->shipping_address_id) {
-                    if (
-                        !user("customer")
-                            ?->addresses()
-                            ->where("id", $cart->shipping_address_id)
-                            ->exists()
-                    ) {
+                if (!user()->isGuest) {
+                    if ($cart->shipping_address_id) {
+                        if (
+                            !user("customer")
+                                ?->addresses()
+                                ->where("id", $cart->shipping_address_id)
+                                ->exists()
+                        ) {
+                            throw new ApiException(
+                                __("orders::t.shipping_address_not_found")
+                            );
+                        }
+                    } else {
                         throw new ApiException(
-                            __("orders::t.shipping_address_not_found")
+                            __("orders::t.shipping_address_is_required")
                         );
                     }
-                } else {
-                    throw new ApiException(
-                        __("orders::t.shipping_address_is_required")
-                    );
                 }
             },
         ];

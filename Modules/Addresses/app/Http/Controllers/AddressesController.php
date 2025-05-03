@@ -31,6 +31,7 @@ class AddressesController extends Controller
         $address = Address::create([
             "user_id" => user()->id,
             ...$request->validated(),
+            "email" => $request->string("email")->lower()->value(),
         ]);
 
         return api()->record(new AddressResource($address));
@@ -63,7 +64,7 @@ class AddressesController extends Controller
      */
     public function validate(CreateAddressRequest $request): JsonResponse
     {
-        $address = new Address($request->validated());
+        $address = new Address([...$request->validated()]);
         $address->loadMissing(["government", "city"]);
 
         return api()->record(new AddressResource($address));

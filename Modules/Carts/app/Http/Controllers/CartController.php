@@ -64,8 +64,8 @@ class CartController extends Controller
         } else {
             if (!$cartService->cart->shippingAddress) {
                 $defaultAddress =
-                    user()?->addresses()->default()->first() ??
-                    user()?->addresses()->first();
+                    user("customer")?->addresses()->default()->first() ??
+                    user("customer")?->addresses()->first();
                 if ($defaultAddress) {
                     $cartService->setShippingAddress($defaultAddress);
                 }

@@ -24,6 +24,7 @@ class AddressResource extends JsonResource
             "last_name" => $this->last_name,
             "title" => $this->title,
             "address" => $this->address,
+            "email" => $this->email,
             "phone" => $this->phone,
             "is_default" => $this->is_default,
             "government" => new GovernmentResource(

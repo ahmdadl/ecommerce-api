@@ -14,10 +14,9 @@ use Modules\Addresses\Http\Controllers\AddressesController;
  *
  */
 
-Route::post("addresses/validate", [
-    AddressesController::class,
-    "validate",
-])->middleware("auth:guest");
+Route::post("addresses/validate", [AddressesController::class, "validate"])
+    ->middleware("auth:guest")
+    ->name("addresses.validate");
 
 Route::apiResource("addresses", AddressesController::class)
     ->parameter("addresses", "myAddress")

@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Modules\Orders\Http\Controllers\CreateGuestOrderController;
 use Modules\Orders\Http\Controllers\CreateOrderController;
 use Modules\Orders\Http\Controllers\OrdersController;
 
@@ -15,11 +16,20 @@ use Modules\Orders\Http\Controllers\OrdersController;
  *
  */
 
-Route::middleware(["auth:guest,customer"])
-    ->prefix("orders")
+Route::prefix("orders")
     ->name("orders.")
     ->group(function () {
-        Route::get("{order}", [OrdersController::class, "show"])->name("show");
+        Route::middleware(["auth:guest"])->group(function () {
+            Route::post("guests", CreateGuestOrderController::class)->name(
+                "store-as-guest"
+            );
+        });
 
-        Route::post("", CreateOrderController::class)->name("store");
+        Route::middleware(["auth:customer"])->group(function () {
+            Route::get("{order}", [OrdersController::class, "show"])->name(
+                "show"
+            );
+
+            Route::post("", CreateOrderController::class)->name("store");
+        });
     });

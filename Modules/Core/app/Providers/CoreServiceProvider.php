@@ -16,6 +16,7 @@ use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use BezhanSalleh\FilamentShield\FilamentShield;
 use BezhanSalleh\FilamentShield\Commands;
+use Illuminate\Http\Request;
 
 class CoreServiceProvider extends ServiceProvider
 {
@@ -50,6 +51,22 @@ class CoreServiceProvider extends ServiceProvider
         });
 
         FilamentShield::prohibitDestructiveCommands($this->app->isProduction());
+
+        // Register the request macro
+        Request::macro("lowercaseEmail", function (string $key = "email") {
+            /** @var \Illuminate\Http\Request $this */
+            if ($this->has($key)) {
+                $this->merge([
+                    $key => strtolower($this->input($key)),
+                ]);
+            }
+            return $this;
+        });
+
+        Request::macro("email", function () {
+            /** @var \Illuminate\Http\Request $this */
+            return $this->string("email")->lower()->value();
+        });
     }
 
     /**

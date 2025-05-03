@@ -30,7 +30,8 @@ class AddressFactory extends Factory
             "last_name" => fake()->name,
             "title" => fake()->sentence(1),
             "address" => fake()->address,
-            "phone" => "201034" . random_int(100000, 999999),
+            "phone" => fakePhone(),
+            "email" => fake()->unique()->email,
             "is_default" => false,
         ];
     }

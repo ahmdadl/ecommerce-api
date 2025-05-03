@@ -11,16 +11,19 @@ use Modules\Wishlists\Actions\MergeGuestWishlistToUserAction;
 
 class RegisterUserAction
 {
-    public function handle(array $data): ?User
+    /**
+     * create user
+     * @return array{User, string}
+     */
+    public function handle(array $data): array
     {
         $data["name"] = $data["first_name"] . " " . $data["last_name"];
         unset($data["first_name"], $data["last_name"]);
 
         $user = User::create([...$data, "role" => UserRole::CUSTOMER]);
 
-        $user->access_token = $user->createToken(
-            Application::getApplicationType()
-        )->plainTextToken;
+        $access_token = $user->createToken(Application::getApplicationType())
+            ->plainTextToken;
 
         /** @var Guest $guest */
         $guest = auth("guest")->user();
@@ -29,6 +32,6 @@ class RegisterUserAction
         // merge guest wishlist to user wishlist
         MergeGuestWishlistToUserAction::new()->handle($guest, $user);
 
-        return $user;
+        return [$user, $access_token];
     }
 }

@@ -4,6 +4,7 @@ namespace Modules\Guests\Models;
 
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Attributes\UseFactory;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
@@ -43,6 +44,24 @@ class Guest extends AuthenticatableModel
         static::creating(function (self $user) {
             $user->totals = UserTotals::default();
         });
+    }
+
+    /**
+     * is guest
+     * @return Attribute<boolean, void>
+     */
+    public function isGuest(): Attribute
+    {
+        return Attribute::make(get: fn() => true);
+    }
+
+    /**
+     * is customer
+     * @return Attribute<boolean, void>
+     */
+    public function isCustomer(): Attribute
+    {
+        return Attribute::make(get: fn() => false);
     }
 
     /**
