@@ -13,7 +13,7 @@ class CreateShippingAddressAction
     public function handle(array $validatedData): Address
     {
         $address = Address::create([
-            "user_id" => $this->cartService->cart->cartable_id,
+            "user_id" => user()->id,
             ...$validatedData,
         ]);
 

@@ -7,6 +7,7 @@ use Modules\Core\Services\Application;
 use Modules\Guests\Models\Guest;
 use Modules\Users\Enums\UserRole;
 use Modules\Users\Models\User;
+use Modules\Users\Notifications\NewCustomerNotification;
 use Modules\Wishlists\Actions\MergeGuestWishlistToUserAction;
 
 class RegisterUserAction
@@ -31,6 +32,8 @@ class RegisterUserAction
         MergeGuestCartToUserAction::new()->handle($guest, $user);
         // merge guest wishlist to user wishlist
         MergeGuestWishlistToUserAction::new()->handle($guest, $user);
+
+        $user->notify(new NewCustomerNotification());
 
         return [$user, $access_token];
     }

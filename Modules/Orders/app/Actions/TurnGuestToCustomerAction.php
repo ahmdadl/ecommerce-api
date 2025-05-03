@@ -5,6 +5,7 @@ namespace Modules\Orders\Actions;
 use Modules\Core\Traits\HasActionHelpers;
 use Modules\Users\Actions\Auth\RegisterUserAction;
 use Modules\Users\Models\User;
+use Modules\Users\Notifications\ChangeGuestPasswordNotification;
 
 class TurnGuestToCustomerAction
 {
@@ -31,7 +32,9 @@ class TurnGuestToCustomerAction
         auth()->setUser($customer);
 
         // notify customer about password
-        // $customer->notify(new ForgetPasswordNotification($customer));
+        rescue(
+            fn() => $customer->notify(new ChangeGuestPasswordNotification())
+        );
 
         return [$customer, $access_token];
     }

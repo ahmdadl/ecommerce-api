@@ -25,6 +25,7 @@ use Modules\Users\Casts\UserTotalCast;
 use Modules\Users\Database\Factories\UserFactory;
 use Modules\Users\Enums\UserGender;
 use Modules\Users\Enums\UserRole;
+use Modules\Users\Notifications\NewCustomerNotification;
 use Modules\Users\ValueObjects\UserTotals;
 use Modules\Wishlists\Models\Wishlist;
 use Modules\Wishlists\Models\WishlistItem;

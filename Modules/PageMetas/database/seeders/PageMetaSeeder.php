@@ -288,6 +288,26 @@ class PageMetaSeeder extends Seeder
                 ],
                 "keywords" => ["Order Tracking", "Shipment", "Delivery"],
             ],
+            [
+                "page_url" => "checkout",
+                "title" => [
+                    "en" => "Secure Checkout - Fast & Safe Payment",
+                    "ar" => "إتمام الدفع بأمان - عملية شراء سريعة وآمنة",
+                ],
+                "description" => [
+                    "en" =>
+                        "Complete your purchase securely and easily. All transactions are encrypted for your safety.",
+                    "ar" =>
+                        "أكمل عملية الشراء بسهولة وأمان. جميع المعاملات مشفرة لضمان سلامتك.",
+                ],
+                "keywords" => [
+                    "Checkout",
+                    "Payment",
+                    "Order",
+                    "Place Order",
+                    "Cart",
+                ],
+            ],
         ];
 
         PageMeta::query()->delete();
