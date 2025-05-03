@@ -57,4 +57,15 @@ class AddressesController extends Controller
 
         return api()->noContent();
     }
+
+    /**
+     * validate address request
+     */
+    public function validate(CreateAddressRequest $request): JsonResponse
+    {
+        $address = new Address($request->validated());
+        $address->loadMissing(["government", "city"]);
+
+        return api()->record(new AddressResource($address));
+    }
 }

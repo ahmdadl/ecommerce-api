@@ -14,10 +14,12 @@ use Modules\Addresses\Http\Controllers\AddressesController;
  *
  */
 
-Route::middleware(["auth:customer"])
-    ->controller(AddressesController::class)
-    ->group(function () {
-        Route::apiResource("addresses", AddressesController::class)
-            ->parameter("addresses", "myAddress")
-            ->only(["index", "store", "update", "destroy"]);
-    });
+Route::post("addresses/validate", [
+    AddressesController::class,
+    "validate",
+])->middleware("auth:guest");
+
+Route::apiResource("addresses", AddressesController::class)
+    ->parameter("addresses", "myAddress")
+    ->only(["index", "store", "update", "destroy"])
+    ->middleware("auth:customer");
