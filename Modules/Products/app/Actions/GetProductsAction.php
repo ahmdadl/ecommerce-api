@@ -48,7 +48,7 @@ class GetProductsAction
             $response["category"] = new CategoryResource(
                 Category::active()
                     ->where("slug", $request->string("forCategory")->value())
-                    ->first()
+                    ->firstOrFail()
             );
         }
 
@@ -56,7 +56,7 @@ class GetProductsAction
             $response["brand"] = new BrandResource(
                 Brand::active()
                     ->where("slug", $request->string("forBrand")->value())
-                    ->first()
+                    ->firstOrFail()
             );
         }
 
@@ -64,7 +64,7 @@ class GetProductsAction
             $response["tag"] = new TagResource(
                 Tag::active()
                     ->where("slug", $request->string("forTag")->value())
-                    ->first()
+                    ->firstOrFail()
             );
         }
 

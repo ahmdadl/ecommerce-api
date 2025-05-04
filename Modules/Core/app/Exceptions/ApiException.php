@@ -14,7 +14,7 @@ class ApiException extends Exception
     public function render(Request $request): JsonResponse|false
     {
         if ($request->wantsJson()) {
-            return api()->error($this->getMessage(), 400);
+            return api()->error($this->getMessage(), $this->getCode());
         }
 
         return false;
