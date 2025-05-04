@@ -67,32 +67,40 @@ class CreateOrderRequest extends FormRequest
                             "payment_method",
                             __("order::t.payment_method_not_found")
                         );
+                } else {
+                    $this->merge(compact("paymentMethodRecord"));
                 }
-
-                $this->merge(compact("paymentMethodRecord"));
 
                 // validate cart
                 $cart = cartService()->cart;
                 if ($cart->items()->count() === 0) {
-                    throw new ApiException(__("orders::t.cart_is_empty"));
+                    $validator
+                        ->errors()
+                        ->add("cart", __("orders::t.cart_is_empty"));
                 }
 
                 if (!user()->isGuest) {
                     if ($cart->shipping_address_id) {
                         if (
-                            !user("customer")
+                            !user()
                                 ?->addresses()
                                 ->where("id", $cart->shipping_address_id)
                                 ->exists()
                         ) {
-                            throw new ApiException(
-                                __("orders::t.shipping_address_not_found")
-                            );
+                            $validator
+                                ->errors()
+                                ->add(
+                                    "shipping_address",
+                                    __("orders::t.shipping_address_not_found")
+                                );
                         }
                     } else {
-                        throw new ApiException(
-                            __("orders::t.shipping_address_is_required")
-                        );
+                        $validator
+                            ->errors()
+                            ->add(
+                                "shipping_address",
+                                __("orders::t.shipping_address_is_required")
+                            );
                     }
                 }
             },

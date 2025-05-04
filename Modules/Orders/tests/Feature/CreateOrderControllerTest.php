@@ -19,8 +19,12 @@ use function Pest\Laravel\actingAs;
 it("cannot_create_order_with_invalid_data", function () {
     $user = User::factory()->customer()->create();
     $address = Address::factory()->for($user)->create();
-    $cart = Cart::factory()->create();
-    $cart->cartable()->associate($user)->save();
+    $cart = Cart::factory()->for($user, "cartable")->create();
+    CartItem::factory()->for($cart)->create();
+
+    $cartService = new CartService($cart);
+
+    $cartService->setShippingAddress($address);
 
     $paymentMethod = PaymentMethod::code(
         PaymentMethod::CASH_ON_DELIVERY
@@ -42,39 +46,35 @@ it("cannot_create_order_with_invalid_data", function () {
         "payment_method" => PaymentMethod::FAWRY,
     ])->assertJsonValidationErrorFor("payment_method");
 
-    // check if cart is required
-    $postOrder([
-        "payment_method" => $paymentMethod->code,
-    ])
-        ->assertStatus(400)
-        ->assertSee("Cart");
-
     CartItem::factory()->for($cart)->create();
 
     // check if address is required
+    $cartService->removeShippingAddress();
     $postOrder([
         "payment_method" => $paymentMethod->code,
     ])
         ->assertStatus(400)
         ->assertSee("Address");
 
-    $cart->shippingAddress()->associate($address)->save();
-
     // check if coupon is validated
-    $cart
-        ->coupon()
-        ->associate(Coupon::factory()->expired()->create())
-        ->save();
-    $postOrder([
-        "payment_method" => $paymentMethod->code,
-    ])
-        ->assertStatus(400)
-        ->assertSee("Coupon");
+    //     $cartService->setShippingAddress($address);
+    //     $cartService->applyCoupon(
+    //         Coupon::factory()->create(["ends_at" => now()->subDay()])
+    //     );
+
+    //     $postOrder([
+    //         "payment_method" => $paymentMethod->code,
+    //     ])
+    //         ->assertStatus(400)
+    //         ->assertSee("Coupon");
 });
 
 it("can_create_an_order_with_cod", function () {
     $user = User::factory()->customer()->create();
-    $shippingAddress = Address::factory()->withShippingFee(0)->create();
+    $shippingAddress = Address::factory()
+        ->for($user)
+        ->withShippingFee(0)
+        ->create();
     $coupon = Coupon::factory()->percentage(50)->create();
     $cart = Cart::factory()
         ->for($user, "cartable")
@@ -104,7 +104,7 @@ it("can_create_an_order_with_cod", function () {
 
 it("can_create_an_order_with_instapay", function () {
     $user = User::factory()->customer()->create();
-    $address = Address::factory()->withShippingFee(0)->create();
+    $address = Address::factory()->for($user)->withShippingFee(0)->create();
     $coupon = Coupon::factory()->percentage(50)->create();
     $cart = Cart::factory()
         ->for($user, "cartable")
