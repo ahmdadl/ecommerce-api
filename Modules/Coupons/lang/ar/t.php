@@ -1,10 +1,10 @@
 <?php
 
 return [
-    "coupons" => "Coupons",
-    "coupon" => "Coupon",
-    "invalid_coupon" => "Invalid coupon.",
-    "coupon_expired" => "Coupon expired.",
-    "invalid_total_price" => "Invalid total price.",
-    "max_discount_reached" => "Max discount reached.",
+    "coupons" => "كوبونات الخصم",
+    "coupon" => "كوبون",
+    "invalid_coupon" => "كوبون غير صالح",
+    "coupon_expired" => "انتهت صلاحية الكوبون",
+    "invalid_total_price" => "سعر إجمالي غير صالح",
+    "max_discount_reached" => "تم الوصول لأقصى خصم",
 ];
