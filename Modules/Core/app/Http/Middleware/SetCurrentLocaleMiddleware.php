@@ -17,7 +17,7 @@ class SetCurrentLocaleMiddleware
             return $next($request);
         }
 
-        $locale = $request->header("locale-code");
+        $locale = $request->header("locale-code", config("app.locale"));
 
         if (!in_array($locale, config("app.supported_locales"))) {
             throw new ApiException("Locale is not supported");

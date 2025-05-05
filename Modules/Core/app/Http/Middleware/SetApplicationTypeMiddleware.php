@@ -20,14 +20,13 @@ class SetApplicationTypeMiddleware
 
         $applicationType = $request->header(Application::APPLICATION_HEADER);
 
-        if (empty($applicationType)) {
-            throw new ApiException("Missing required header: application-type");
-        }
-
         if (
+            empty($applicationType) ||
             !in_array($applicationType, Application::getSupportedApplications())
         ) {
-            throw new ApiException("Application type is not supported");
+            throw new ApiException(
+                "Application is missing or type is not supported"
+            );
         }
 
         Application::setApplicationType($applicationType);

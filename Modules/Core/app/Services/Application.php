@@ -18,7 +18,7 @@ final class Application
      *
      * @const string
      */
-    const APP_WEBSITE = "wui";
+    const APP_WEBSITE = "webOs";
 
     /**
      * Website Test Application on production database
