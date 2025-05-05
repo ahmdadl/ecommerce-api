@@ -29,6 +29,8 @@ final readonly class CartService
     public function addItem(Product $product, int $quantity = 1): void
     {
         DB::transaction(function () use ($product, $quantity) {
+            $product->lockForUpdate();
+
             CartItem::create([
                 "cart_id" => $this->cart->id,
                 "product_id" => $product->id,
@@ -106,6 +108,8 @@ final readonly class CartService
     public function updateProductQuantity(Product $product, int $quantity): void
     {
         DB::transaction(function () use ($product, $quantity) {
+            $product->lockForUpdate();
+
             $this->cart
                 ->items()
                 ->where("product_id", $product->id)

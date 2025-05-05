@@ -21,6 +21,8 @@ class RemoveFromCartAction
      */
     public function usingProduct(Product $product): void
     {
+        $product->lockForUpdate();
+
         $cartItem = $this->cartService->findCartItemByProduct($product);
 
         if (!$cartItem) {
