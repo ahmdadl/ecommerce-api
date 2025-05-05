@@ -41,6 +41,6 @@ class ContactUsReplyMail extends Mailable implements ShouldQueue
      */
     public function content(): Content
     {
-        return new Content(markdown: "contactus::emails.reply");
+        return new Content(markdown: "contactus::mail.reply");
     }
 }
