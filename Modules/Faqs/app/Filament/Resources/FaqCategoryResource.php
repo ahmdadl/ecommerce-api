@@ -21,9 +21,12 @@ class FaqCategoryResource extends Resource implements HasShieldPermissions
 {
     protected static ?string $model = FaqCategory::class;
 
-    protected static ?string $navigationIcon = "heroicon-o-rectangle-stack";
+    protected static ?string $navigationIcon = "heroicon-o-folder-open";
 
-    protected static ?string $navigationGroup = "Faq";
+    public static function getNavigationGroup(): ?string
+    {
+        return __("Faq");
+    }
 
     public static function getPermissionPrefixes(): array
     {

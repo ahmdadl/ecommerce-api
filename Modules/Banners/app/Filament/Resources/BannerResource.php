@@ -28,7 +28,12 @@ class BannerResource extends Resource implements HasShieldPermissions
 {
     protected static ?string $model = Banner::class;
 
-    protected static ?string $navigationIcon = "heroicon-o-rectangle-stack";
+    protected static ?string $navigationIcon = "heroicon-o-photo";
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __("Content Management");
+    }
 
     public static function form(Form $form): Form
     {

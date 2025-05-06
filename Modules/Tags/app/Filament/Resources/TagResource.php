@@ -21,7 +21,7 @@ class TagResource extends Resource implements HasShieldPermissions
 {
     protected static ?string $model = Tag::class;
 
-    protected static ?string $navigationIcon = "heroicon-o-rectangle-stack";
+    protected static ?string $navigationIcon = "heroicon-o-bookmark";
 
     protected static ?string $navigationGroup = "Catalog";
 

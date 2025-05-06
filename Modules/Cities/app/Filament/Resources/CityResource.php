@@ -23,7 +23,7 @@ class CityResource extends Resource implements HasShieldPermissions
 {
     protected static ?string $model = City::class;
 
-    protected static ?string $navigationIcon = "heroicon-o-rectangle-stack";
+    protected static ?string $navigationIcon = "heroicon-o-map-pin";
 
     protected static ?string $navigationGroup = "localization";
 

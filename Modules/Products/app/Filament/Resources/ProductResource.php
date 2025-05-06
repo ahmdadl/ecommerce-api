@@ -24,7 +24,10 @@ class ProductResource extends Resource implements HasShieldPermissions
 
     protected static ?string $navigationIcon = "heroicon-o-cube";
 
-    protected static ?string $navigationGroup = "Catalog";
+    public static function getNavigationGroup(): ?string
+    {
+        return __("Catalog");
+    }
 
     public static function getNavigationBadge(): ?string
     {

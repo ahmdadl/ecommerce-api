@@ -27,7 +27,12 @@ class ContactUsMessageResource extends Resource implements HasShieldPermissions
 {
     protected static ?string $model = ContactUsMessage::class;
 
-    protected static ?string $navigationIcon = "heroicon-o-rectangle-stack";
+    protected static ?string $navigationIcon = "heroicon-o-envelope";
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __("Communication");
+    }
 
     public static function getPermissionPrefixes(): array
     {

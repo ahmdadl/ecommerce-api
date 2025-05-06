@@ -21,7 +21,12 @@ class PrivacyPolicyResource extends Resource implements HasShieldPermissions
 {
     protected static ?string $model = PrivacyPolicy::class;
 
-    protected static ?string $navigationIcon = "heroicon-o-rectangle-stack";
+    protected static ?string $navigationIcon = "heroicon-o-shield-check";
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __("Privacy");
+    }
 
     public static function getPermissionPrefixes(): array
     {

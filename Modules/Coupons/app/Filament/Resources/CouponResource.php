@@ -25,7 +25,12 @@ class CouponResource extends Resource implements HasShieldPermissions
 {
     protected static ?string $model = Coupon::class;
 
-    protected static ?string $navigationIcon = "heroicon-o-rectangle-stack";
+    protected static ?string $navigationIcon = "heroicon-o-ticket";
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __("Commerce");
+    }
 
     public static function getNavigationBadge(): ?string
     {

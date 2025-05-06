@@ -25,7 +25,12 @@ class OrderResource extends Resource implements HasShieldPermissions
 {
     protected static ?string $model = Order::class;
 
-    protected static ?string $navigationIcon = "heroicon-o-rectangle-stack";
+    protected static ?string $navigationIcon = "heroicon-o-shopping-cart";
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __("Commerce");
+    }
 
     public static function getPermissionPrefixes(): array
     {

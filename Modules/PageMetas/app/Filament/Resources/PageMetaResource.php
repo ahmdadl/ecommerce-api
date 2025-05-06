@@ -22,7 +22,12 @@ class PageMetaResource extends Resource implements HasShieldPermissions
 {
     protected static ?string $model = PageMeta::class;
 
-    protected static ?string $navigationIcon = "heroicon-o-rectangle-stack";
+    protected static ?string $navigationIcon = "heroicon-o-document-text";
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __("Content Management");
+    }
 
     public static function getPermissionPrefixes(): array
     {

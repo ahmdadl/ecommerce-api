@@ -122,5 +122,13 @@
     "Create government": "إنشاء محافظة",
     "Edit city": "تعديل مدينة",
     "Create city": "إنشاء مدينة",
-    "New address": "عنوان جديد"
+    "New address": "عنوان جديد",
+    "Content Management": "إدارة المحتوى",
+    "Commerce": "التجارة",
+    "Communication": "الاتصال",
+    "Settings": "الإعدادات",
+    "Catalog": "الفهرس",
+    "Privacy": "الخصوصية",
+    "Terms": "الشروط",
+    "Faq": "الأسئلة الشائعة"
 }

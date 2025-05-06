@@ -122,5 +122,13 @@
     "Create government": "Create Government",
     "Edit city": "Edit City",
     "Create city": "Create City",
-    "New address": "New Address"
+    "New address": "New Address",
+    "Content Management": "Content Management",
+    "Commerce": "Commerce",
+    "Communication": "Communication",
+    "Settings": "Settings",
+    "Catalog": "Catalog",
+    "Privacy": "Privacy",
+    "Terms": "Terms",
+    "Faq": "Faq"
 }

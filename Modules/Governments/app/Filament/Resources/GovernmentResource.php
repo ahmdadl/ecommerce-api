@@ -19,7 +19,7 @@ class GovernmentResource extends Resource implements HasShieldPermissions
 {
     protected static ?string $model = Government::class;
 
-    protected static ?string $navigationIcon = "heroicon-o-rectangle-stack";
+    protected static ?string $navigationIcon = "heroicon-o-building-office";
 
     protected static ?string $navigationGroup = "localization";
 
