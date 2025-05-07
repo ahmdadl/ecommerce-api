@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -21,6 +22,7 @@ use Modules\Carts\Models\Cart;
 use Modules\Carts\Models\CartItem;
 use Modules\CompareLists\Models\CompareList;
 use Modules\Core\Models\Scopes\HasActiveState;
+use Modules\PageViews\Models\PageView;
 use Modules\Users\Casts\UserTotalCast;
 use Modules\Users\Database\Factories\UserFactory;
 use Modules\Users\Enums\UserGender;
@@ -201,5 +203,14 @@ class User extends Authenticatable
     public function compareList(): HasOne
     {
         return $this->hasOne(CompareList::class, "user_id");
+    }
+
+    /**
+     * views
+     * @return MorphMany<PageView, $this>
+     */
+    public function views(): MorphMany
+    {
+        return $this->morphMany(PageView::class, "viewerable");
     }
 }

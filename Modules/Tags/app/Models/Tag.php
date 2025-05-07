@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Modules\Core\Models\Scopes\HasActiveState;
 use Modules\Core\Models\Scopes\HasMetaTags;
+use Modules\Core\Traits\HasPageViews;
 use Modules\Products\Models\Product;
 use Spatie\Translatable\HasTranslations;
 use Modules\Tags\Database\Factories\TagFactory;
@@ -23,7 +24,8 @@ class Tag extends Model
         HasTranslations,
         Sluggable,
         HasActiveState,
-        HasMetaTags;
+        HasMetaTags,
+        HasPageViews;
 
     protected array $translatable = ["title", "description"];
 

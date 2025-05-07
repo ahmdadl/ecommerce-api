@@ -22,5 +22,6 @@
     "Tags": true,
     "PageMetas": true,
     "PrivacyPolicies": true,
-    "Terms": true
+    "Terms": true,
+    "PageViews": true
 }

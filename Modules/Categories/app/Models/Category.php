@@ -11,11 +11,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Modules\Categories\Database\Factories\CategoryFactory;
-use Modules\Core\Events\CachedSpaDataUpdated;
 use Modules\Core\Models\Scopes\HasActiveState;
 use Modules\Core\Models\Scopes\HasMetaTags;
 use Modules\Core\Models\Scopes\HasSortOrderAttribute;
 use Modules\Core\Observers\CachedSpaDataUpdatedObserver;
+use Modules\Core\Traits\HasPageViews;
 use Modules\Products\Models\Product;
 use Modules\Uploads\Casts\UploadablePathCast;
 use Spatie\Translatable\HasTranslations;
@@ -32,7 +32,8 @@ class Category extends Model
         HasSortOrderAttribute,
         HasTranslations,
         Sluggable,
-        SoftDeletes;
+        SoftDeletes,
+        HasPageViews;
 
     /**
      * translatable fields

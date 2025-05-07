@@ -13,13 +13,16 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Modules\Brands\Models\Brand;
 use Modules\Carts\Models\CartItem;
 use Modules\Categories\Models\Category;
 use Modules\CompareLists\Models\CompareListItem;
 use Modules\Core\Models\Scopes\HasActiveState;
 use Modules\Core\Models\Scopes\HasMetaTags;
+use Modules\Core\Traits\HasPageViews;
 use Modules\Orders\Models\OrderItem;
+use Modules\PageViews\Models\PageView;
 use Modules\Products\Database\Factories\ProductFactory;
 use Modules\Products\Filters\ProductFilter;
 use Modules\Tags\Models\Tag;
@@ -38,7 +41,8 @@ class Product extends Model
         HasMetaTags,
         HasTranslations,
         Sluggable,
-        SoftDeletes;
+        SoftDeletes,
+        HasPageViews;
 
     /**
      * translatable fields

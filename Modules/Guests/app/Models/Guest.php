@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Foundation\Auth\Access\Authorizable;
 use Illuminate\Foundation\Auth\User as AuthenticatableModel;
@@ -15,6 +16,7 @@ use Laravel\Sanctum\HasApiTokens;
 use Modules\Carts\Models\Cart;
 use Modules\Carts\Models\CartItem;
 use Modules\Guests\Database\Factories\GuestFactory;
+use Modules\PageViews\Models\PageView;
 use Modules\Users\Casts\UserTotalCast;
 use Modules\Users\ValueObjects\UserTotals;
 use Modules\Wishlists\Models\Wishlist;
@@ -106,5 +108,14 @@ class Guest extends AuthenticatableModel
             Wishlist::class,
             "wishlistable_id"
         );
+    }
+
+    /**
+     * views
+     * @return MorphMany<PageView, $this>
+     */
+    public function views(): MorphMany
+    {
+        return $this->morphMany(PageView::class, "viewerable");
     }
 }

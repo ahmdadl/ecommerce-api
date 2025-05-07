@@ -1,0 +1,11 @@
+{
+    "name": "PageViews",
+    "alias": "pageviews",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\PageViews\\Providers\\PageViewsServiceProvider"
+    ],
+    "files": []
+}
