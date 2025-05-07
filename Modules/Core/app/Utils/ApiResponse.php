@@ -22,7 +22,7 @@ final class ApiResponse
         return response()->json(
             [
                 "success" => true,
-                "message" => $message ?? __("core::core.success"),
+                "message" => $message ?? __("core::t.success"),
                 "data" => $data,
             ],
             $statusCode
@@ -40,7 +40,7 @@ final class ApiResponse
         return response()->json(
             [
                 "success" => false,
-                "message" => $message ?? __("core::core.error"),
+                "message" => $message ?? __("core::t.error"),
                 "errors" => $errors,
             ],
             $statusCode
@@ -107,7 +107,7 @@ final class ApiResponse
             [
                 "success" => true,
             ],
-            $message ?? __("core::core.empty_success"),
+            $message ?? __("core::t.empty_success"),
             $statusCode
         );
     }
@@ -120,7 +120,7 @@ final class ApiResponse
         ?string $message = null
     ): JsonResponse {
         return $this->error(
-            $message ?? __("core::core.validation_error"),
+            $message ?? __("core::t.validation_error"),
             422,
             $errors
         );
@@ -131,7 +131,7 @@ final class ApiResponse
      */
     public function notFound(?string $message = null): JsonResponse
     {
-        return $this->error($message ?? __("core::core.not_found"), 404);
+        return $this->error($message ?? __("core::t.not_found"), 404);
     }
 
     /**
@@ -139,7 +139,7 @@ final class ApiResponse
      */
     public function unauthorized(?string $message = null): JsonResponse
     {
-        return $this->error($message ?? __("core::core.unauthorized"), 401);
+        return $this->error($message ?? __("core::t.unauthorized"), 401);
     }
 
     /**
@@ -147,7 +147,7 @@ final class ApiResponse
      */
     public function forbidden(?string $message = null): JsonResponse
     {
-        return $this->error($message ?? __("core::core.forbidden"), 403);
+        return $this->error($message ?? __("core::t.forbidden"), 403);
     }
 
     /**
@@ -155,7 +155,7 @@ final class ApiResponse
      */
     public function serverError(?string $message = null): JsonResponse
     {
-        return $this->error($message ?? __("core::core.server_error"), 500);
+        return $this->error($message ?? __("core::t.server_error"), 500);
     }
 
     /**

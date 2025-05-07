@@ -19,6 +19,8 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Modules\Core\Filament\Resources\DashboardResource\Pages\Dashboard;
+use Modules\Core\Filament\Widgets as CoreWidgets;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -41,14 +43,17 @@ class AdminPanelProvider extends PanelProvider
                 in: app_path("Filament/Pages"),
                 for: "App\\Filament\\Pages"
             )
-            ->pages([Pages\Dashboard::class])
+            ->pages([Dashboard::class])
             ->discoverWidgets(
-                in: app_path("Filament/Widgets"),
-                for: "App\\Filament\\Widgets"
+                in: module_path("core", "Filament/Widgets"),
+                for: "Modules\\Core\\Filament\\Widgets"
             )
             ->widgets([
-                Widgets\AccountWidget::class,
-                Widgets\FilamentInfoWidget::class,
+                // Widgets\AccountWidget::class,
+                CoreWidgets\RevenueStatsWidget::class,
+                CoreWidgets\OrdersStatsWidget::class,
+                CoreWidgets\CustomersStatsWidget::class,
+                CoreWidgets\CatalogViewsStatsWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,

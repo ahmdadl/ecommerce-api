@@ -19,7 +19,7 @@ class ShowUploadAction
         // Check if the file exists in storage
         if (!Storage::disk("public")->exists($filePath)) {
             throw new \Illuminate\Contracts\Filesystem\FileNotFoundException(
-                __("core::core.file_not_found")
+                __("core::t.file_not_found")
             );
         }
 
