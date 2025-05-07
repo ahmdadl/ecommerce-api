@@ -24,7 +24,7 @@ it("creates a page view for a product", function () {
 
     $pageView = app(CreatePageViewAction::class)->handle(
         ViewableType::PRODUCT,
-        $product->id,
+        $product->slug,
         getUserAgent(),
         [],
         $user,
@@ -55,7 +55,7 @@ it("creates a page view for a category", function () {
 
     $pageView = app(CreatePageViewAction::class)->handle(
         ViewableType::CATEGORY,
-        $category->id,
+        $category->slug,
         getUserAgent(),
         [],
         $guest
@@ -75,7 +75,7 @@ it("creates a page view for a brand", function () {
 
     $pageView = app(CreatePageViewAction::class)->handle(
         ViewableType::BRAND,
-        $brand->id,
+        $brand->slug,
         getUserAgent(),
         [],
         $user
@@ -95,7 +95,7 @@ it("creates a page view for a tag", function () {
 
     $pageView = app(CreatePageViewAction::class)->handle(
         ViewableType::TAG,
-        $tag->id,
+        $tag->slug,
         getUserAgent(),
         [],
         $guest
