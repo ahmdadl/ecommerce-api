@@ -284,3 +284,20 @@ if (!function_exists("forgetLocalizedCache")) {
         }
     }
 }
+
+if (!function_exists("walletService")) {
+    function walletService(
+        bool $forCurrentUser = true,
+        ?User $user = null
+    ): Modules\Wallets\Services\WalletService {
+        if ($forCurrentUser) {
+            return once(
+                fn() => Modules\Wallets\Services\WalletService::createForCurrentUser()
+            );
+        }
+
+        return once(
+            fn() => Modules\Wallets\Services\WalletService::create($user)
+        );
+    }
+}

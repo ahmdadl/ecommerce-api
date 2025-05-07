@@ -29,6 +29,7 @@ use Modules\Users\Enums\UserGender;
 use Modules\Users\Enums\UserRole;
 use Modules\Users\Notifications\NewCustomerNotification;
 use Modules\Users\ValueObjects\UserTotals;
+use Modules\Wallets\Models\Wallet;
 use Modules\Wishlists\Models\Wishlist;
 use Modules\Wishlists\Models\WishlistItem;
 use Spatie\Permission\Traits\HasRoles;
@@ -212,5 +213,14 @@ class User extends Authenticatable
     public function views(): MorphMany
     {
         return $this->morphMany(PageView::class, "viewerable");
+    }
+
+    /**
+     * wallet
+     * @return HasOne<Wallet, $this>
+     */
+    public function wallet(): HasOne
+    {
+        return $this->hasOne(Wallet::class, "user_id");
     }
 }

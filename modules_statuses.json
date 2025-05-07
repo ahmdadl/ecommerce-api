@@ -23,5 +23,6 @@
     "PageMetas": true,
     "PrivacyPolicies": true,
     "Terms": true,
-    "PageViews": true
+    "PageViews": true,
+    "Wallets": true
 }
