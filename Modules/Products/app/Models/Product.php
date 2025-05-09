@@ -185,7 +185,7 @@ class Product extends Model
                     ->wishlistItems->where("product_id", $this->id)
                     ->first();
             }
-        )->withoutObjectCaching();
+        );
     }
 
     /**
@@ -206,7 +206,7 @@ class Product extends Model
                     ->cartItems->where("product_id", $this->id)
                     ->sum("quantity");
             }
-        )->withoutObjectCaching();
+        );
     }
 
     /** Relations */

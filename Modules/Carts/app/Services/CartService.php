@@ -279,19 +279,6 @@ final readonly class CartService
     public function destroy(): void
     {
         DB::transaction(function () {
-            $this->cart->loadMissing("items.product");
-
-            foreach ($this->cart->items as $item) {
-                $product = $item->product;
-                $cacheKey = sprintf(
-                    "%s:%s:%s",
-                    str_replace("\\", "", Product::class),
-                    $product->getKey(),
-                    "cartedQuantity"
-                );
-                cache()->forget($cacheKey);
-            }
-
             $this->cart->items()->delete();
 
             $this->save();
