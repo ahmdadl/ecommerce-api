@@ -345,7 +345,7 @@ class WalletTransactionResource extends Resource implements HasShieldPermissions
                 A\Action::make("change_status")
                     ->label(__("Status"))
                     ->icon("heroicon-o-arrows-right-left")
-                    ->visible(function (WalletTransaction $record): bool {
+                    ->hidden(function (WalletTransaction $record): bool {
                         if (
                             $record->status !== WalletTransactionStatus::PENDING
                         ) {
