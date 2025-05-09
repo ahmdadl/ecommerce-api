@@ -8,7 +8,8 @@ use Modules\Orders\Enums\OrderPaymentStatus;
 use Modules\Orders\Enums\OrderStatus;
 use Modules\Orders\Models\Order;
 use Modules\Orders\Models\OrderItemProduct;
-use Modules\Orders\Models\PaymentAttempt;
+use Modules\Payments\Enums\PaymentAttemptType;
+use Modules\Payments\Models\PaymentAttempt;
 
 class CreateOrderFromCartAction
 {
@@ -107,10 +108,12 @@ class CreateOrderFromCartAction
         ?string $receipt = null
     ): void {
         PaymentAttempt::create([
-            "order_id" => $orderId,
+            "payable_id" => $orderId,
+            "payable_type" => Order::class,
             "payment_method" => $paymentMethod,
             "status" => $orderPaymentStatus,
             "receipt" => $receipt,
+            "type" => PaymentAttemptType::ORDERS,
         ]);
     }
 }

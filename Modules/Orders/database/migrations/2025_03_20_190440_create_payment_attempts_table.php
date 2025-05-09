@@ -14,11 +14,12 @@ return new class extends Migration {
     {
         Schema::create("payment_attempts", function (Blueprint $table) {
             $table->uid();
-            $table->foreignUlid("order_id")->constrained();
+            $table->ulidMorphs("payable");
             $table->string("payment_method", 30);
             $table
-                ->enum("status", OrderPaymentStatus::values())
+                ->string("status")
                 ->default(OrderPaymentStatus::PENDING->value);
+            $table->string("type");
             $table->string("receipt")->nullable();
             $table->json("payment_details")->nullable();
             $table->timestamps();

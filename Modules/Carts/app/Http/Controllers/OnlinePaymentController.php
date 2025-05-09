@@ -10,7 +10,8 @@ use Illuminate\View\View;
 use Modules\Carts\Models\Cart;
 use Modules\Orders\Enums\OrderPaymentStatus;
 use Modules\Orders\Enums\OrderStatus;
-use Modules\Orders\Models\PaymentAttempt;
+use Modules\Payments\Enums\PaymentAttemptType;
+use Modules\Payments\Models\PaymentAttempt;
 use Modules\Users\Models\Customer;
 
 class OnlinePaymentController extends Controller
@@ -36,13 +37,11 @@ class OnlinePaymentController extends Controller
         Request $request,
         PaymentAttempt $paymentAttempt
     ): View {
-        $order = $paymentAttempt->order;
+        $payable = $paymentAttempt->payable;
 
-        auth("web")->setUser($order->user);
+        auth("web")->setUser($payable->user);
 
         $paymentAttempt->updateToSuccess();
-
-        cartService()->destroy();
 
         return view("carts::payments.success", compact("paymentAttempt"));
     }
@@ -51,13 +50,7 @@ class OnlinePaymentController extends Controller
         Request $request,
         PaymentAttempt $paymentAttempt
     ) {
-        return redirect()->to(
-            config("app.front_url") .
-                "/" .
-                app()->getLocale() .
-                "/profile/orders/" .
-                $paymentAttempt->order_id
-        );
+        return redirect()->to($this->getSuccessUrl($paymentAttempt));
     }
 
     /**
@@ -67,9 +60,11 @@ class OnlinePaymentController extends Controller
         Request $request,
         PaymentAttempt $paymentAttempt
     ): View {
-        $paymentAttempt->update([
-            "status" => OrderPaymentStatus::FAILED,
-        ]);
+        $payable = $paymentAttempt->payable;
+
+        auth("web")->setUser($payable->user);
+
+        $paymentAttempt->updateToFailed();
 
         return view("carts::payments.failed", compact("paymentAttempt"));
     }
@@ -78,11 +73,35 @@ class OnlinePaymentController extends Controller
         Request $request,
         PaymentAttempt $paymentAttempt
     ) {
-        return redirect()->to(
-            config("app.front_url") .
+        return redirect()->to($this->getFailedUrl($paymentAttempt));
+    }
+
+    public function getSuccessUrl(PaymentAttempt $paymentAttempt): string
+    {
+        return match ($paymentAttempt->type) {
+            PaymentAttemptType::ORDERS => config("app.front_url") .
                 "/" .
                 app()->getLocale() .
-                "/checkout?payment_failed=failed payment, please try again"
-        );
+                "/profile/orders/" .
+                $paymentAttempt->payable_id,
+            PaymentAttemptType::WALLET => config("app.front_url") .
+                "/" .
+                app()->getLocale() .
+                "/profile/my-wallet",
+        };
+    }
+
+    public function getFailedUrl(PaymentAttempt $paymentAttempt): string
+    {
+        return match ($paymentAttempt->type) {
+            PaymentAttemptType::ORDERS => config("app.front_url") .
+                "/" .
+                app()->getLocale() .
+                "/checkout?payment_failed=failed payment, please try again",
+            PaymentAttemptType::WALLET => config("app.front_url") .
+                "/" .
+                app()->getLocale() .
+                "/profile/my-wallet?payment_failed=failed payment, please try again",
+        };
     }
 }

@@ -87,4 +87,6 @@ return [
             "cancelled" => "Your order has been cancelled",
         ],
     ],
+
+    "wallet_balance_not_enough" => "Wallet balance not enough",
 ];

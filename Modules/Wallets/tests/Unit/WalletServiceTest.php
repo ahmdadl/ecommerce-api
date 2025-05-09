@@ -1,7 +1,7 @@
 <?php
 
 use Modules\Users\Models\User;
-use Modules\Wallets\Enums\WalletStatus;
+use Modules\Wallets\Enums\WalletTransactionStatus;
 use Modules\Wallets\Models\Wallet;
 use Modules\Wallets\Services\WalletService;
 use Modules\Wallets\ValueObjects\WalletBalance;

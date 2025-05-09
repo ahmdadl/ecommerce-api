@@ -86,4 +86,6 @@ return [
             "cancelled" => "تم إلغاء طلبك",
         ],
     ],
+
+    "wallet_balance_not_enough" => "رصيد المحفظة غير كافي",
 ];

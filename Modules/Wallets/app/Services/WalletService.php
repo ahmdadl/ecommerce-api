@@ -5,9 +5,10 @@ namespace Modules\Wallets\Services;
 use Illuminate\Support\Facades\DB;
 use Modules\Core\Exceptions\ApiException;
 use Modules\Users\Models\User;
-use Modules\Wallets\Enums\WalletStatus;
-use Modules\Wallets\Enums\WalletType;
+use Modules\Wallets\Enums\WalletTransactionStatus;
+use Modules\Wallets\Enums\WalletTransactionType;
 use Modules\Wallets\Models\Wallet;
+use Modules\Wallets\Models\WalletTransaction;
 use Modules\Wallets\ValueObjects\WalletBalance;
 
 class WalletService
@@ -24,17 +25,17 @@ class WalletService
         float $amount,
         User $createdBy,
         ?string $notes = null
-    ): void {
-        DB::transaction(function () use ($amount, $createdBy, $notes) {
+    ): WalletTransaction {
+        return DB::transaction(function () use ($amount, $createdBy, $notes) {
             $this->wallet->balance = $this->wallet->balance->creditPending(
                 $amount
             );
             $this->wallet->save();
 
-            $this->wallet->transactions()->create([
+            return $this->wallet->transactions()->create([
                 "amount" => $amount,
-                "type" => WalletType::CREDIT,
-                "status" => WalletStatus::PENDING,
+                "type" => WalletTransactionType::CREDIT,
+                "status" => WalletTransactionStatus::PENDING,
                 "notes" => $notes,
                 "created_by" => $createdBy->id,
             ]);
@@ -54,8 +55,8 @@ class WalletService
 
             $this->wallet->transactions()->create([
                 "amount" => $amount,
-                "type" => WalletType::DEBIT,
-                "status" => WalletStatus::PENDING,
+                "type" => WalletTransactionType::DEBIT,
+                "status" => WalletTransactionStatus::PENDING,
                 "notes" => $notes,
                 "created_by" => $createdBy->id,
             ]);
@@ -78,8 +79,8 @@ class WalletService
 
             $this->wallet->transactions()->create([
                 "amount" => $amount,
-                "type" => WalletType::CREDIT,
-                "status" => WalletStatus::COMPLETED,
+                "type" => WalletTransactionType::CREDIT,
+                "status" => WalletTransactionStatus::COMPLETED,
                 "notes" => $notes,
                 "created_by" => $createdBy->id,
             ]);
@@ -102,8 +103,8 @@ class WalletService
 
             $this->wallet->transactions()->create([
                 "amount" => $amount,
-                "type" => WalletType::CREDIT,
-                "status" => WalletStatus::CANCELED,
+                "type" => WalletTransactionType::CREDIT,
+                "status" => WalletTransactionStatus::CANCELED,
                 "notes" => $notes,
                 "created_by" => $createdBy->id,
             ]);
@@ -126,8 +127,8 @@ class WalletService
 
             $this->wallet->transactions()->create([
                 "amount" => $amount,
-                "type" => WalletType::DEBIT,
-                "status" => WalletStatus::COMPLETED,
+                "type" => WalletTransactionType::DEBIT,
+                "status" => WalletTransactionStatus::COMPLETED,
                 "notes" => $notes,
                 "created_by" => $createdBy->id,
             ]);
@@ -150,8 +151,8 @@ class WalletService
 
             $this->wallet->transactions()->create([
                 "amount" => $amount,
-                "type" => WalletType::DEBIT,
-                "status" => WalletStatus::CANCELED,
+                "type" => WalletTransactionType::DEBIT,
+                "status" => WalletTransactionStatus::CANCELED,
                 "notes" => $notes,
                 "created_by" => $createdBy->id,
             ]);
@@ -172,8 +173,8 @@ class WalletService
 
             $this->wallet->transactions()->create([
                 "amount" => $amount,
-                "type" => WalletType::CREDIT,
-                "status" => WalletStatus::COMPLETED,
+                "type" => WalletTransactionType::CREDIT,
+                "status" => WalletTransactionStatus::COMPLETED,
                 "notes" => $notes,
                 "created_by" => $createdBy->id,
             ]);
@@ -194,8 +195,8 @@ class WalletService
 
             $this->wallet->transactions()->create([
                 "amount" => $amount,
-                "type" => WalletType::DEBIT,
-                "status" => WalletStatus::COMPLETED,
+                "type" => WalletTransactionType::DEBIT,
+                "status" => WalletTransactionStatus::COMPLETED,
                 "notes" => $notes,
                 "created_by" => $createdBy->id,
             ]);

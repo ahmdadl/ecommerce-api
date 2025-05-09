@@ -2,7 +2,7 @@
 
 namespace Modules\Wallets\Enums;
 
-enum WalletType: string
+enum WalletTransactionType: string
 {
     use \Modules\Core\Traits\HasEnumHelpers;
 

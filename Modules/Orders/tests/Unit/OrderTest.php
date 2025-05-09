@@ -3,7 +3,7 @@
 use Modules\Orders\Models\Order;
 use Modules\Orders\Models\OrderAddress;
 use Modules\Orders\Models\OrderCoupon;
-use Modules\Orders\Models\PaymentAttempt;
+use Modules\Payments\Models\PaymentAttempt;
 use Modules\Payments\Models\PaymentMethod;
 use Modules\Users\Models\User;
 

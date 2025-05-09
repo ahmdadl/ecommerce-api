@@ -14,6 +14,11 @@ use Modules\Wallets\Http\Controllers\WalletsController;
  *
  */
 
-// Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
-//     // Route::apiResource('wallets', WalletsController::class)->names('wallets');
-// });
+Route::middleware("auth:customer")
+    ->prefix("wallets")
+    ->name("wallets.")
+    ->controller(WalletsController::class)
+    ->group(function () {
+        Route::get("", "index")->name("index");
+        Route::post("credit", "credit")->name("credit");
+    });

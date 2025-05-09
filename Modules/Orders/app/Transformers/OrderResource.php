@@ -4,6 +4,7 @@ namespace Modules\Orders\Transformers;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Modules\Payments\Transformers\PaymentAttemptResource;
 
 class OrderResource extends JsonResource
 {
@@ -31,7 +32,7 @@ class OrderResource extends JsonResource
                 $this->whenLoaded("shippingAddress")
             ),
             "coupon" => new OrderCouponResource($this->whenLoaded("coupon")),
-            "paymentAttempts" => OrderPaymentAttemptsResource::collection(
+            "paymentAttempts" => PaymentAttemptResource::collection(
                 $this->whenLoaded("paymentAttempts")
             ),
         ];

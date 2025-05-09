@@ -76,7 +76,7 @@ class CreateOrderRequest extends FormRequest
                 if ($cart->items()->count() === 0) {
                     $validator
                         ->errors()
-                        ->add("cart", __("orders::t.cart_is_empty"));
+                        ->add("-", __("orders::t.cart_is_empty"));
                 }
 
                 if (!user()->isGuest) {
@@ -90,7 +90,7 @@ class CreateOrderRequest extends FormRequest
                             $validator
                                 ->errors()
                                 ->add(
-                                    "shipping_address",
+                                    "-",
                                     __("orders::t.shipping_address_not_found")
                                 );
                         }
@@ -100,6 +100,20 @@ class CreateOrderRequest extends FormRequest
                             ->add(
                                 "shipping_address",
                                 __("orders::t.shipping_address_is_required")
+                            );
+                    }
+                }
+
+                if ($paymentMethodRecord->isWallet()) {
+                    $cartTotal = cartService()->cart->totals->total;
+                    $walletBalance = walletService()->getBalance()->available;
+
+                    if ($cartTotal > $walletBalance) {
+                        $validator
+                            ->errors()
+                            ->add(
+                                "-",
+                                __("orders::t.wallet_balance_not_enough")
                             );
                     }
                 }

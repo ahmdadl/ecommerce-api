@@ -4,8 +4,8 @@ namespace Modules\Wallets\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Modules\Users\Models\User;
-use Modules\Wallets\Enums\WalletStatus;
-use Modules\Wallets\Enums\WalletType;
+use Modules\Wallets\Enums\WalletTransactionStatus;
+use Modules\Wallets\Enums\WalletTransactionType;
 use Modules\Wallets\Models\Wallet;
 
 class WalletTransactionFactory extends Factory
@@ -24,8 +24,9 @@ class WalletTransactionFactory extends Factory
             "wallet_id" => fn() => Wallet::factory(),
             "created_by" => fn() => User::factory()->customer(),
             "amount" => fake()->numberBetween(1, 100),
-            "type" => fake()->randomElement(WalletType::cases())->value,
-            "status" => WalletStatus::PENDING,
+            "type" => fake()->randomElement(WalletTransactionType::cases())
+                ->value,
+            "status" => WalletTransactionStatus::PENDING,
             "notes" => fake()->boolean() ? null : fake()->sentence(),
         ];
     }

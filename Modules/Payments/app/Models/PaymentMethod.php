@@ -15,6 +15,9 @@ class PaymentMethod extends Model
     public const CASH_ON_DELIVERY = "cod";
     public const FAWRY = "fawry";
     public const INSTAPAY = "instapay";
+    public const VODAFONE_CASH = "vodafoneCash";
+    public const ETISALAT_CASH = "etisalatCash";
+    public const WALLET = "wallet";
 
     protected $hidden = ["is_active"];
 
@@ -63,6 +66,15 @@ class PaymentMethod extends Model
             "require_receipt" => false,
             "is_online" => true,
             "image" => "etisalat-cash.png",
+        ],
+        [
+            "code" => "wallet",
+            "name_en" => "Pay with your wallet",
+            "name_ar" => "الدفع بمحفظتك ",
+            "is_active" => true,
+            "require_receipt" => false,
+            "is_online" => false,
+            "image" => "wallet.svg",
         ],
     ];
 
@@ -133,6 +145,36 @@ class PaymentMethod extends Model
     {
         return Attribute::make(
             get: fn() => $this->code === "instapay"
+        )->shouldCache();
+    }
+
+    /**
+     * @return Attribute<bool, void>
+     */
+    public function isVodafoneCash(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => $this->code === "vodafoneCash"
+        )->shouldCache();
+    }
+
+    /**
+     * @return Attribute<bool, void>
+     */
+    public function isEtisalatCash(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => $this->code === "etisalatCash"
+        )->shouldCache();
+    }
+
+    /**
+     * @return Attribute<bool, void>
+     */
+    public function isWallet(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => $this->code === "wallet"
         )->shouldCache();
     }
 }

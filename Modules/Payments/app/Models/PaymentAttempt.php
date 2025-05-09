@@ -1,16 +1,17 @@
 <?php
 
-namespace Modules\Orders\Models;
+namespace Modules\Payments\Models;
 
 use Illuminate\Database\Eloquent\Attributes\UseFactory;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Modules\Orders\Database\Factories\PaymentAttemptFactory;
 use Modules\Orders\Enums\OrderPaymentStatus;
+use Modules\Payments\Enums\PaymentAttemptType;
 use Modules\Payments\Models\PaymentMethod;
 use Modules\Uploads\Casts\UploadablePathCast;
 
@@ -26,6 +27,7 @@ class PaymentAttempt extends Model
             "status" => OrderPaymentStatus::class,
             "receipt" => UploadablePathCast::class,
             "payment_details" => "array",
+            "type" => PaymentAttemptType::class,
         ];
     }
 
@@ -44,26 +46,31 @@ class PaymentAttempt extends Model
     }
 
     /**
-     * @return BelongsTo<Order, $this>
+     * attempt owner
+     * @return MorphTo<Model, $this>
      */
-    public function order(): BelongsTo
+    public function payable()
     {
-        return $this->belongsTo(Order::class);
+        return $this->morphTo();
     }
 
+    /**
+     * update payment attempt to success
+     */
     public function updateToSuccess(): void
     {
         $this->update(["status" => OrderPaymentStatus::PAID]);
 
-        $this->order()->update(["payment_status" => OrderPaymentStatus::PAID]);
+        $this->payable->paymentCompleted();
     }
 
+    /**
+     * payment attempt failed
+     */
     public function updateToFailed(): void
     {
         $this->update(["status" => OrderPaymentStatus::FAILED]);
 
-        $this->order()->update([
-            "payment_status" => OrderPaymentStatus::FAILED,
-        ]);
+        $this->payable->paymentFailed();
     }
 }

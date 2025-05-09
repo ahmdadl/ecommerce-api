@@ -3,8 +3,9 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Modules\Wallets\Enums\WalletStatus;
-use Modules\Wallets\Enums\WalletType;
+use Modules\Orders\Enums\OrderPaymentStatus;
+use Modules\Wallets\Enums\WalletTransactionStatus;
+use Modules\Wallets\Enums\WalletTransactionType;
 
 return new class extends Migration {
     /**
@@ -23,8 +24,12 @@ return new class extends Migration {
             $table->string("type")->index();
             $table
                 ->string("status")
-                ->default(WalletStatus::PENDING->value)
+                ->default(WalletTransactionStatus::PENDING->value)
                 ->index();
+            $table
+                ->string("payment_status")
+                ->default(OrderPaymentStatus::PENDING->value);
+            $table->string("payment_method")->nullable();
             $table->string("notes", 250)->nullable();
             $table->timestamps();
             $table->softDeletes();

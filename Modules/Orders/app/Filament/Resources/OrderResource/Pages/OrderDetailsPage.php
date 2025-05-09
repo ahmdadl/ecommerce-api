@@ -16,7 +16,7 @@ use Modules\Orders\Actions\ChangeOrderPaymentStatusAction;
 use Modules\Orders\Actions\ChangeOrderStatusAction;
 use Modules\Orders\Enums\OrderPaymentStatus;
 use Modules\Orders\Enums\OrderStatus;
-use Modules\Orders\Models\PaymentAttempt;
+use Modules\Payments\Models\PaymentAttempt;
 
 class OrderDetailsPage extends Page
 {
