@@ -180,7 +180,7 @@ class Product extends Model
                     ->where("product_id", $this->id)
                     ->exists()
                 : false
-        )->shouldCache();
+        )->withoutObjectCaching();
     }
 
     /**
@@ -196,7 +196,7 @@ class Product extends Model
                     ->where("product_id", $this->id)
                     ->sum("quantity")
                 : 0
-        )->shouldCache();
+        )->withoutObjectCaching();
     }
 
     /** Relations */

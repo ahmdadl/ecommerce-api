@@ -22,6 +22,8 @@ class GetProductsAction
 
     public function handle(Request $request)
     {
+        user()->loadMissing(["cartItems", "wishlistItems"]);
+
         $productsQuery = Product::query()
             ->active()
             ->filter(new ProductFilter($request))

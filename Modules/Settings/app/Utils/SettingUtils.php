@@ -35,20 +35,10 @@ class SettingUtils
     {
         $currentLocale = app()->getLocale();
 
-        /** @var array<string> $locales */
-        $locales = config("app.supported_locales", []);
-        foreach ($locales as $locale) {
-            app()->setLocale($locale);
-            cache()->rememberForever(
-                "settings_$locale",
-                fn() => self::getGroupedSettings()
-            );
-        }
-
-        app()->setLocale($currentLocale);
-
-        /** @var array */
-        return cache("settings_" . $currentLocale, []);
+        return cache()->rememberForever(
+            "settings_$currentLocale",
+            fn() => self::getGroupedSettings()
+        );
     }
 
     public static function revalidateCachedSettings(): void
