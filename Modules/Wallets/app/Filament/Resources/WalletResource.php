@@ -27,7 +27,7 @@ class WalletResource extends Resource implements HasShieldPermissions
 
     public static function getNavigationGroup(): ?string
     {
-        return __("Commerce");
+        return __("Wallets");
     }
 
     public static function getPermissionPrefixes(): array
