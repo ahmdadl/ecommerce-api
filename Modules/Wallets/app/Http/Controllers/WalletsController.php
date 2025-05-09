@@ -36,6 +36,9 @@ class WalletsController extends Controller
         return api()->success($response);
     }
 
+    /**
+     * credit wallet
+     */
     public function credit(
         WalletCreditRequest $request,
         WalletCreditAction $action

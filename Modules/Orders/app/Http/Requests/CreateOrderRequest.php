@@ -104,7 +104,7 @@ class CreateOrderRequest extends FormRequest
                     }
                 }
 
-                if ($paymentMethodRecord->isWallet()) {
+                if ($paymentMethodRecord?->isWallet) {
                     $cartTotal = cartService()->cart->totals->total;
                     $walletBalance = walletService()->getBalance()->available;
 

@@ -11,7 +11,7 @@ test("order_has_relations", function () {
     $order = Order::factory()->create();
     $paymentAttempts = PaymentAttempt::factory()
         ->count(2)
-        ->for($order)
+        ->for($order, "payable")
         ->create();
 
     expect($order->user)

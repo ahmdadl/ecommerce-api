@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Modules\Orders\Database\Factories\PaymentAttemptFactory;
+use Modules\Payments\Database\Factories\PaymentAttemptFactory;
 use Modules\Orders\Enums\OrderPaymentStatus;
 use Modules\Payments\Enums\PaymentAttemptType;
 use Modules\Payments\Models\PaymentMethod;

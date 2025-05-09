@@ -23,7 +23,7 @@ test("service can credit the balance pending", function () {
     /** @var WalletService $service */
     $service = $this->service;
 
-    $service->credit(100, $this->createdBy);
+    $service->credit(100, $this->createdBy, null);
 
     expect($service->wallet->balance->available)->toBeFloat(0);
     expect($service->wallet->balance->pending)->toBeFloat(100);
@@ -36,7 +36,7 @@ test("service can confirm pending balance", function () {
     /** @var WalletService $service */
     $service = $this->service;
 
-    $service->credit(100, $this->createdBy);
+    $service->credit(100, $this->createdBy, null);
     expect($service->wallet->balance->pending)->toBeFloat(100);
 
     $service->completeCredit(100, $this->createdBy);
@@ -52,7 +52,7 @@ test("service can cancel pending balance", function () {
     /** @var WalletService $service */
     $service = $this->service;
 
-    $service->credit(100, $this->createdBy);
+    $service->credit(100, $this->createdBy, null);
     expect($service->wallet->balance->pending)->toBeFloat(100);
 
     $service->cancelCredit(100, $this->createdBy);
@@ -124,7 +124,7 @@ test("service fully cycle", function () {
     $service->fullyDebit(30, $this->createdBy);
     expect($service->wallet->balance->available)->toBeFloat(70);
 
-    $service->credit(50, $this->createdBy);
+    $service->credit(50, $this->createdBy, null);
     $service->completeCredit(50, $this->createdBy);
     expect($service->wallet->balance->available)->toBeFloat(120);
 

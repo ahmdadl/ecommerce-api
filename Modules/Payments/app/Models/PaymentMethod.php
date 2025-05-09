@@ -124,7 +124,7 @@ class PaymentMethod extends Model
     public function isCashOnDelivery(): Attribute
     {
         return Attribute::make(
-            get: fn() => $this->code === "cod"
+            get: fn() => $this->attributes["code"] === "cod"
         )->shouldCache();
     }
 
@@ -134,7 +134,7 @@ class PaymentMethod extends Model
     public function isFawry(): Attribute
     {
         return Attribute::make(
-            get: fn() => $this->code === "fawry"
+            get: fn() => $this->attributes["code"] === "fawry"
         )->shouldCache();
     }
 
@@ -144,7 +144,7 @@ class PaymentMethod extends Model
     public function isInstapay(): Attribute
     {
         return Attribute::make(
-            get: fn() => $this->code === "instapay"
+            get: fn() => $this->attributes["code"] === "instapay"
         )->shouldCache();
     }
 
@@ -154,7 +154,7 @@ class PaymentMethod extends Model
     public function isVodafoneCash(): Attribute
     {
         return Attribute::make(
-            get: fn() => $this->code === "vodafoneCash"
+            get: fn() => $this->attributes["code"] === "vodafoneCash"
         )->shouldCache();
     }
 
@@ -164,7 +164,7 @@ class PaymentMethod extends Model
     public function isEtisalatCash(): Attribute
     {
         return Attribute::make(
-            get: fn() => $this->code === "etisalatCash"
+            get: fn() => $this->attributes["code"] === "etisalatCash"
         )->shouldCache();
     }
 
@@ -174,7 +174,7 @@ class PaymentMethod extends Model
     public function isWallet(): Attribute
     {
         return Attribute::make(
-            get: fn() => $this->code === "wallet"
+            get: fn() => $this->attributes["code"] === "wallet"
         )->shouldCache();
     }
 }

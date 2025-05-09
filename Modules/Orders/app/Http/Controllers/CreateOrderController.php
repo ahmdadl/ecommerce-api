@@ -37,7 +37,7 @@ class CreateOrderController extends Controller
             if (!$paymentMethod->is_online) {
                 cartService()->destroy();
 
-                if ($paymentMethod->isWallet()) {
+                if ($paymentMethod->isWallet) {
                     $transaction = walletService()->debit(
                         $order->totals->total,
                         user(),
