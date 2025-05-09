@@ -8,6 +8,7 @@ use Modules\Carts\Models\Cart;
 use Modules\Carts\Models\CartItem;
 use Modules\Tags\Models\Tag;
 use Modules\Users\Models\User;
+use Modules\Wishlists\Models\Wishlist;
 use Modules\Wishlists\Services\WishlistService;
 
 use function Pest\Laravel\actingAs;
@@ -18,7 +19,7 @@ it("can be created with factory", function () {
     $product = Product::factory()->create([
         "title" => ["en" => "Whey Protein"],
         "price" => 29.99,
-        "salePrice" => 24.99,
+        "sale_price" => 24.99,
     ]);
 
     expect($product)
@@ -26,7 +27,7 @@ it("can be created with factory", function () {
         ->id->toBeString() // ULID
         ->title->toBe("Whey Protein")
         ->price->toBe(29.99)
-        ->salePrice->toBe(24.99);
+        ->sale_price->toBe(24.99);
 });
 
 it("generates a slug from title", function () {
@@ -37,27 +38,27 @@ it("generates a slug from title", function () {
     expect($product->slug)->toBe("pre-workout-boost");
 });
 
-it("sets salePrice to price when not provided", function () {
+it("sets sale_price to price when not provided", function () {
     $product = Product::factory()->create([
         "title" => ["en" => "BCAA Powder"],
         "price" => 19.99,
-        "salePrice" => null,
+        "sale_price" => null,
     ]);
 
-    expect($product->salePrice)->toBe(19.99);
+    expect($product->sale_price)->toBe(19.99);
 });
 
 it("correctly determines if product has a discount", function () {
     $discounted = Product::factory()->create([
         "title" => ["en" => "Creatine"],
         "price" => 15.0,
-        "salePrice" => 12.0,
+        "sale_price" => 12.0,
     ]);
 
     $notDiscounted = Product::factory()->create([
         "title" => ["en" => "Protein Bar"],
         "price" => 10.0,
-        "salePrice" => 10.0,
+        "sale_price" => 10.0,
     ]);
 
     expect($discounted->isDiscounted)
@@ -70,13 +71,13 @@ it("calculates discounted price correctly", function () {
     $product = Product::factory()->create([
         "title" => ["en" => "Vegan Protein"],
         "price" => 39.99,
-        "salePrice" => 29.99,
+        "sale_price" => 29.99,
     ]);
 
     $noDiscount = Product::factory()->create([
         "title" => ["en" => "Energy Gel"],
         "price" => 5.0,
-        "salePrice" => 5.0,
+        "sale_price" => 5.0,
     ]);
 
     expect($product->discountedPrice)
@@ -89,13 +90,13 @@ it("scopes products with discounts", function () {
     Product::factory()->create([
         "title" => ["en" => "Whey Protein"],
         "price" => 30.0,
-        "salePrice" => 25.0, // Has discount
+        "sale_price" => 25.0, // Has discount
     ]);
 
     Product::factory()->create([
         "title" => ["en" => "Multivitamin"],
         "price" => 20.0,
-        "salePrice" => 20.0, // No discount
+        "sale_price" => 20.0, // No discount
     ]);
 
     $discounted = Product::hasDiscount()->get();
@@ -165,13 +166,13 @@ it("calculates discounted percentage correctly", function () {
     $product = Product::factory()->create([
         "title" => ["en" => "Vegan Protein"],
         "price" => 39.99,
-        "salePrice" => 29.99,
+        "sale_price" => 29.99,
     ]);
 
     $noDiscount = Product::factory()->create([
         "title" => ["en" => "Energy Gel"],
         "price" => 5.0,
-        "salePrice" => 5.0,
+        "sale_price" => 5.0,
     ]);
 
     expect($product->discountedPercentage)
@@ -181,13 +182,20 @@ it("calculates discounted percentage correctly", function () {
 });
 
 it("checks if product is wished by current user", function () {
-    $product = Product::factory()->create();
+    actingAs($user = User::factory()->customer()->create());
 
-    actingAs(User::factory()->customer()->create());
+    $service = new WishlistService(
+        Wishlist::factory()->for($user, "wishlistable")->create()
+    );
+
+    $product = Product::factory()->create();
 
     expect($product->isWished)->toBeFalse();
 
-    wishlistService()->addItem($product);
+    $service->addItem($product);
+
+    $user->refresh();
+    // dd($user->wishlistItems->pluck("product_id"));
 
     $product->refresh();
     expect($product->isWished)->toBeTrue();
@@ -204,14 +212,17 @@ it("calculates carted quantity for current user", function () {
     $product->refresh();
     expect($product->cartedQuantity)->toBe(0);
 
-    CartItem::factory()
+    $cartItem = CartItem::factory()
         ->for($product)
         ->for($cart)
         ->create([
             "quantity" => 2,
         ]); // same product for current user
 
+    $user->refresh();
+
     $product->refresh();
+
     expect($product->cartedQuantity)->toBe(2);
 });
 

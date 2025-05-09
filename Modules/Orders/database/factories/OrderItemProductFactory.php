@@ -40,7 +40,7 @@ class OrderItemProductFactory extends Factory
                 "/200/300",
             ],
             "price" => fake()->randomFloat(2, 0, 100),
-            "salePrice" => fake()->randomFloat(2, 0, 100),
+            "sale_price" => fake()->randomFloat(2, 0, 100),
             "sku" => fake()->sentence(),
         ];
     }

@@ -71,12 +71,12 @@ class ProductFilter extends ModelFilter
     // Filter by sale price range
     public function min_sale_price(float $value)
     {
-        return $this->builder->where("salePrice", ">=", $value);
+        return $this->builder->where("sale_price", ">=", $value);
     }
 
     public function max_sale_price(float $value)
     {
-        return $this->builder->where("salePrice", "<=", $value);
+        return $this->builder->where("sale_price", "<=", $value);
     }
 
     // Filter by stock availability
@@ -111,7 +111,7 @@ class ProductFilter extends ModelFilter
     {
         $priceRange = explode("-", $value);
 
-        return $this->builder->whereBetween("salePrice", $priceRange);
+        return $this->builder->whereBetween("sale_price", $priceRange);
     }
 
     /**

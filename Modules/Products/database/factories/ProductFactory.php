@@ -42,7 +42,7 @@ class ProductFactory extends Factory
                 "/600/600",
             ],
             "price" => $price,
-            "salePrice" => fake()->boolean(30) ? $price * 0.8 : null,
+            "sale_price" => fake()->boolean(30) ? $price * 0.8 : null,
             "stock" => fake()->numberBetween(10, 100),
             "sku" => "SKU-" . strtoupper(\Illuminate\Support\Str::random(6)),
             "is_active" => true,

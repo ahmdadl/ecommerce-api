@@ -32,7 +32,7 @@ return new class extends Migration {
 
             $table->json("images")->nullable();
             $table->decimal("price", 10, 2);
-            $table->decimal("salePrice", 10, 2)->nullable();
+            $table->decimal("sale_price", 10, 2)->nullable();
 
             $table->string("sku")->nullable();
 

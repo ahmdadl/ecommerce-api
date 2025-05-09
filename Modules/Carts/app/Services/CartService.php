@@ -343,7 +343,7 @@ final readonly class CartService
             "items.product" => fn($q) => $q->select(
                 "id",
                 "price",
-                "salePrice",
+                "sale_price",
                 "stock"
             ),
         ]);

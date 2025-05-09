@@ -115,7 +115,7 @@ class ProductResource extends Resource implements HasShieldPermissions
                                 ->prefix('$')
                                 ->step(0.01),
 
-                            Forms\Components\TextInput::make("salePrice")
+                            Forms\Components\TextInput::make("sale_price")
                                 ->label("Sale Price")
                                 ->numeric()
                                 ->minValue(0)
@@ -214,7 +214,7 @@ class ProductResource extends Resource implements HasShieldPermissions
                     ->sortable()
                     ->toggleable(),
 
-                TextColumn::make("salePrice")
+                TextColumn::make("sale_price")
                     ->translateLabel()
                     ->money("egp")
                     ->sortable(),

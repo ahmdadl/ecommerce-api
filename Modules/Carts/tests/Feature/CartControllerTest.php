@@ -9,7 +9,7 @@ use Modules\Users\Models\User;
 use function Pest\Laravel\actingAs;
 
 test("user_can_add_product_to_cart", function () {
-    $product = Product::factory()->create(["salePrice" => 300]);
+    $product = Product::factory()->create(["sale_price" => 300]);
     /** @var Authenticatable $user */
     $user = User::factory()->create();
 
@@ -21,7 +21,7 @@ test("user_can_add_product_to_cart", function () {
 });
 
 test("user_adding_twice_to_cart_will_update_quantity", function () {
-    $product = Product::factory()->create(["salePrice" => 300]);
+    $product = Product::factory()->create(["sale_price" => 300]);
     /** @var Authenticatable $user */
     $user = User::factory()->create();
 
@@ -36,7 +36,7 @@ test("user_adding_twice_to_cart_will_update_quantity", function () {
 });
 
 test("user_can_get_cart", function () {
-    $product = Product::factory()->create(["salePrice" => 300]);
+    $product = Product::factory()->create(["sale_price" => 300]);
     /** @var Authenticatable $user */
     $user = User::factory()->create();
 
@@ -51,7 +51,7 @@ test("user_can_get_cart", function () {
 });
 
 test("user_can_remove_product_from_cart", function () {
-    $product = Product::factory()->create(["salePrice" => 300]);
+    $product = Product::factory()->create(["sale_price" => 300]);
     /** @var Authenticatable $user */
     $user = User::factory()->create();
 
@@ -66,7 +66,7 @@ test("user_can_remove_product_from_cart", function () {
 });
 
 test("user_can_update_product_quantity_in_cart", function () {
-    $product = Product::factory()->create(["salePrice" => 300]);
+    $product = Product::factory()->create(["sale_price" => 300]);
     /** @var Authenticatable $user */
     $user = User::factory()->create();
 
@@ -83,7 +83,7 @@ test("user_can_update_product_quantity_in_cart", function () {
 });
 
 test("cart_address_can_be_set_only", function () {
-    $product = Product::factory()->create(["salePrice" => 300]);
+    $product = Product::factory()->create(["sale_price" => 300]);
     /** @var Authenticatable $user */
     $user = User::factory()->create();
 
@@ -100,7 +100,7 @@ test("cart_address_can_be_set_only", function () {
 });
 
 test("cart_coupon_can_be_set_and_removed", function () {
-    $product = Product::factory()->create(["salePrice" => 300]);
+    $product = Product::factory()->create(["sale_price" => 300]);
     /** @var Authenticatable $user */
     $user = User::factory()->create();
 
@@ -124,7 +124,7 @@ test("cart_coupon_can_be_set_and_removed", function () {
 });
 
 test("cart_cannot_apply_invalid_coupon", function () {
-    $product = Product::factory()->create(["salePrice" => 300]);
+    $product = Product::factory()->create(["sale_price" => 300]);
     /** @var Authenticatable $user */
     $user = User::factory()->create();
     actingAs($user)->postJson(route("api.cart.add", [$product]));
@@ -151,7 +151,7 @@ test("cart_cannot_apply_invalid_coupon", function () {
 });
 
 test("cart_automatically_selects_default_address", function () {
-    $product = Product::factory()->create(["salePrice" => 300]);
+    $product = Product::factory()->create(["sale_price" => 300]);
     /** @var Authenticatable $user */
     $user = User::factory()->create();
 
@@ -174,7 +174,7 @@ test("cart_automatically_selects_default_address", function () {
 });
 
 test("cart_automatically_selects_first_address_when_no_default", function () {
-    $product = Product::factory()->create(["salePrice" => 300]);
+    $product = Product::factory()->create(["sale_price" => 300]);
     /** @var Authenticatable $user */
     $user = User::factory()->create();
 

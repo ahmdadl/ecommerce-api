@@ -32,7 +32,7 @@ test("add_to_cart_success", function () {
         Product::factory()->create([
             "stock" => 2,
             "price" => 400,
-            "salePrice" => 100,
+            "sale_price" => 100,
         ]),
         2
     );

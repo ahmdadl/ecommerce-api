@@ -21,12 +21,12 @@ test("cart_totals_updated_after_adding_item", function () {
 
     $productA = Product::factory()->create([
         "price" => 100,
-        "salePrice" => 50,
+        "sale_price" => 50,
     ]);
 
     $productB = Product::factory()->create([
         "price" => 200,
-        "salePrice" => 100,
+        "sale_price" => 100,
     ]);
 
     $cartService->addItem($productA, 2);
@@ -55,7 +55,7 @@ it("cart_totals_updated_after_adding_items_to_old_cart", function () {
 
     $productA = Product::factory()->create([
         "price" => 100,
-        "salePrice" => 50,
+        "sale_price" => 50,
     ]);
 
     $cartService->addItem($productA);
@@ -71,7 +71,7 @@ test("cart_totals_calculate_after_coupon_applied", function () {
 
     $productA = Product::factory()->create([
         "price" => 100,
-        "salePrice" => 50,
+        "sale_price" => 50,
     ]);
 
     $cartService->addItem($productA);
@@ -102,7 +102,7 @@ test("cart_totals_calculate_after_coupon_removed", function () {
 
     $productA = Product::factory()->create([
         "price" => 100,
-        "salePrice" => 50,
+        "sale_price" => 50,
     ]);
 
     $cartService->addItem($productA);
@@ -126,7 +126,7 @@ test("calculate_shipping_fees_after_address", function () {
 
     $cartService->addItem(
         Product::factory()->create([
-            "salePrice" => 50,
+            "sale_price" => 50,
         ])
     );
 
@@ -172,12 +172,12 @@ test("wallet_amount_can_be_used_on_cart", function () {
     $cartService = new CartService($cart);
     $cartService->addItem(
         $productA = Product::factory()->create([
-            "salePrice" => 100,
+            "sale_price" => 100,
         ])
     );
     $cartService->addItem(
         $productB = Product::factory()->create([
-            "salePrice" => 200,
+            "sale_price" => 200,
         ])
     );
 

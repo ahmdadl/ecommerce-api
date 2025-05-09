@@ -20,7 +20,7 @@ return new class extends Migration {
             $table->boolean("is_main")->default(false);
             $table->json("images")->nullable();
             $table->decimal("price", 10, 2);
-            $table->decimal("salePrice", 10, 2)->nullable();
+            $table->decimal("sale_price", 10, 2)->nullable();
             $table->integer("stock");
             $table->string("sku")->nullable();
             $table->unsignedInteger("views")->default(0);

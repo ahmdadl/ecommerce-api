@@ -68,7 +68,7 @@ class OrderItemProduct extends Model
             "brand_title" => $product->brand->getTranslations("title"),
             "images" => $product->images,
             "price" => $product->price,
-            "salePrice" => $product->salePrice,
+            "sale_price" => $product->sale_price,
             "sku" => $product->sku,
         ]);
     }

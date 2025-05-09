@@ -71,7 +71,7 @@ class Product extends Model
         return [
             "is_main" => "boolean",
             "price" => "float",
-            "salePrice" => "float",
+            "sale_price" => "float",
             "images" => UploadableMultiplePathsCast::class,
         ];
     }
@@ -84,8 +84,8 @@ class Product extends Model
         parent::boot();
 
         static::creating(function (Product $product) {
-            if (empty($product->salePrice) || $product->salePrice <= 0) {
-                $product->salePrice = $product->price;
+            if (empty($product->sale_price) || $product->sale_price <= 0) {
+                $product->sale_price = $product->price;
             }
         });
 
@@ -99,8 +99,8 @@ class Product extends Model
     public function scopeHasDiscount(Builder $query): void
     {
         $query
-            ->whereNotNull("salePrice")
-            ->whereColumn("salePrice", "<", "price");
+            ->whereNotNull("sale_price")
+            ->whereColumn("sale_price", "<", "price");
     }
 
     /**
@@ -122,7 +122,7 @@ class Product extends Model
     public function isDiscounted(): Attribute
     {
         return Attribute::make(
-            get: fn() => $this->salePrice < $this->price
+            get: fn() => $this->sale_price < $this->price
         )->shouldCache();
     }
 
@@ -134,8 +134,8 @@ class Product extends Model
     public function discountedPrice(): Attribute
     {
         return Attribute::make(
-            get: fn() => $this->salePrice < $this->price
-                ? round($this->price - $this->salePrice, 2)
+            get: fn() => $this->sale_price < $this->price
+                ? round($this->price - $this->sale_price, 2)
                 : 0.0
         )->shouldCache();
     }
@@ -158,9 +158,9 @@ class Product extends Model
     public function discountedPercentage(): Attribute
     {
         return Attribute::make(
-            get: fn() => $this->salePrice < $this->price
+            get: fn() => $this->sale_price < $this->price
                 ? round(
-                    (($this->price - $this->salePrice) / $this->price) * 100
+                    (($this->price - $this->sale_price) / $this->price) * 100
                 )
                 : 0.0
         )->shouldCache();
@@ -181,9 +181,7 @@ class Product extends Model
 
                 user()->loadMissing(["wishlistItems"]);
 
-                return user()
-                    ->wishlistItems->where("product_id", $this->id)
-                    ->first();
+                return user()->wishlistItems->contains("product_id", $this->id);
             }
         );
     }

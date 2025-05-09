@@ -102,9 +102,9 @@ final class CartTotals
             subtotal: $product->price * $quantity,
             coupon: 0,
             shipping: 0,
-            taxes: ($product->salePrice * $quantity) / 1.15,
+            taxes: ($product->sale_price * $quantity) / 1.15,
             wallet: 0,
-            total: $product->salePrice * $quantity
+            total: $product->sale_price * $quantity
         );
     }
 

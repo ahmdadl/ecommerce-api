@@ -34,7 +34,7 @@ class OrderItemProductResource extends JsonResource
 
             "images" => $images,
             "price" => $this->price,
-            "salePrice" => $this->salePrice,
+            "sale_price" => $this->sale_price,
             "sku" => $this->sku,
 
             "product" => new ProductResource($this->whenLoaded("product")),

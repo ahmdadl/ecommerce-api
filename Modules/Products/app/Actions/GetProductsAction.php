@@ -118,8 +118,8 @@ class GetProductsAction
 
         if ($sortBy = $request->has("sortBy")) {
             $orderBy = match ($request->string("sortBy")->value()) {
-                "lowest_price" => ["salePrice", "asc"],
-                "highest_price" => ["salePrice", "desc"],
+                "lowest_price" => ["sale_price", "asc"],
+                "highest_price" => ["sale_price", "desc"],
                 // "lowest_stock" => ["stock", "asc"],
                 "newest" => ["id", "desc"],
                 "oldest" => ["id", "asc"],

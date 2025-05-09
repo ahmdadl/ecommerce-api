@@ -20,7 +20,7 @@ it("merges_cart_if_user_does_not_have_cart", function () {
     asGuest($guest);
     (new CartService($guest->cart))->addItem(
         $product = Product::factory()->create([
-            "salePrice" => 100,
+            "sale_price" => 100,
         ])
     );
 
@@ -54,13 +54,13 @@ it("merges_cart_if_user_has_cart", function () {
     $guestCartService = new CartService($guest->cart);
     $guestCartService->addItem(
         $productA = Product::factory()->create([
-            "salePrice" => 100,
+            "sale_price" => 100,
             "stock" => 150,
         ])
     );
     $guestCartService->addItem(
         $productB = Product::factory()->create([
-            "salePrice" => 200,
+            "sale_price" => 200,
         ])
     );
 
@@ -72,7 +72,7 @@ it("merges_cart_if_user_has_cart", function () {
     $userCartService = new CartService($user->cart);
     $userCartService->addItem(
         $productC = Product::factory()->create([
-            "salePrice" => 300,
+            "sale_price" => 300,
         ])
     );
     $userCartService->addItem($productA);
@@ -92,14 +92,14 @@ it("merges_cart_and_bypass_products_that_have_errors", function () {
     $guestCartService = new CartService($guest->cart);
     $guestCartService->addItem(
         $productA = Product::factory()->create([
-            "salePrice" => 100,
+            "sale_price" => 100,
             "stock" => 2,
         ]),
         2
     );
     $guestCartService->addItem(
         $productB = Product::factory()->create([
-            "salePrice" => 200,
+            "sale_price" => 200,
         ])
     );
 
@@ -111,7 +111,7 @@ it("merges_cart_and_bypass_products_that_have_errors", function () {
     $userCartService = new CartService($user->cart);
     $userCartService->addItem(
         $productC = Product::factory()->create([
-            "salePrice" => 300,
+            "sale_price" => 300,
         ])
     );
     // this one is already in guest cart but it uses full stock
