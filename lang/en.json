@@ -146,5 +146,6 @@
     "amount": "Amount",
     "payment attempts count": "Payment Attempts Count",
     "paymentAttempts": "Payment Attempts",
-    "Status": "Status"
+    "Status": "Status",
+    "Role": "Role"
 }

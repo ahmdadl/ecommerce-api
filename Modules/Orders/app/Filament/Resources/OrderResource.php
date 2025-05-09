@@ -284,7 +284,8 @@ class OrderResource extends Resource implements HasShieldPermissions
             ->actions([
                 A\ViewAction::make(),
                 a\ReplicateAction::make()->hidden(app()->isProduction()),
-            ]);
+            ])
+            ->defaultSort("created_at", "desc");
     }
 
     public static function getRelations(): array

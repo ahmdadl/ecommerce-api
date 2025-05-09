@@ -197,7 +197,7 @@ class WalletResource extends Resource implements HasShieldPermissions
                     })
                     ->requiresConfirmation(),
             ])
-            ->bulkActions([]);
+            ->defaultSort("created_at", "desc");
     }
 
     public static function getEloquentQuery(): Builder

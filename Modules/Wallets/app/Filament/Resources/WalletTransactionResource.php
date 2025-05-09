@@ -19,6 +19,7 @@ use Filament\Tables\Enums\FiltersLayout;
 use Modules\Orders\Enums\OrderPaymentStatus;
 use Modules\Payments\Models\PaymentAttempt;
 use Modules\Payments\Models\PaymentMethod;
+use Modules\Users\Enums\UserRole;
 use Modules\Wallets\Enums\WalletTransactionStatus;
 use Modules\Wallets\Enums\WalletTransactionType;
 
@@ -70,9 +71,19 @@ class WalletTransactionResource extends Resource implements HasShieldPermissions
                     ->label(__("phone"))
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                C\TextColumn::make("created_by")
+                C\TextColumn::make("createdBy.name")
                     ->translateLabel()
                     ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                C\TextColumn::make("createdBy.role")
+                    ->label(__("Role"))
+                    ->badge()
+                    ->color(
+                        fn(UserRole $state): string => $state ===
+                        UserRole::ADMIN
+                            ? "danger"
+                            : "warning"
+                    )
                     ->toggleable(isToggledHiddenByDefault: true),
                 C\TextColumn::make("amount")->numeric()->sortable(),
                 C\TextColumn::make("type")
@@ -123,7 +134,10 @@ class WalletTransactionResource extends Resource implements HasShieldPermissions
                             WalletTransaction $record
                         ): string => $record->payment_method_record->name
                     ),
-                C\TextColumn::make("notes")->translateLabel()->searchable(),
+                C\TextColumn::make("notes")
+                    ->translateLabel()
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 C\TextColumn::make("created_at")
                     ->translateLabel()
                     ->dateTime()
@@ -356,13 +370,14 @@ class WalletTransactionResource extends Resource implements HasShieldPermissions
                         $record->save();
                     })
                     ->requiresConfirmation(),
-            ]);
+            ])
+            ->defaultSort("created_at", "desc");
     }
 
     public static function getEloquentQuery(): Builder
     {
         return parent::getEloquentQuery()
-            ->with("wallet.user")
+            ->with(["wallet.user", "createdBy"])
             ->withCount("paymentAttempts");
     }
 
