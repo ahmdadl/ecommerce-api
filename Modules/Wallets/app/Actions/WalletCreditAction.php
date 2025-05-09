@@ -17,7 +17,12 @@ class WalletCreditAction extends BaseWalletAction
     ) {
         $this->validateNonNegativeAmount($amount);
 
-        $transaction = $this->walletService->credit($amount, user(), $notes);
+        $transaction = $this->walletService->credit(
+            $amount,
+            user(),
+            $paymentMethod->code,
+            $notes
+        );
 
         $paymentAttempt = $transaction->paymentAttempts()->create([
             "payment_method" => $paymentMethod->code,

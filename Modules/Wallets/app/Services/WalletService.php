@@ -24,9 +24,15 @@ class WalletService
     public function credit(
         float $amount,
         User $createdBy,
+        ?string $paymentMethod,
         ?string $notes = null
     ): WalletTransaction {
-        return DB::transaction(function () use ($amount, $createdBy, $notes) {
+        return DB::transaction(function () use (
+            $amount,
+            $createdBy,
+            $notes,
+            $paymentMethod
+        ) {
             $this->wallet->balance = $this->wallet->balance->creditPending(
                 $amount
             );
@@ -36,6 +42,7 @@ class WalletService
                 "amount" => $amount,
                 "type" => WalletTransactionType::CREDIT,
                 "status" => WalletTransactionStatus::PENDING,
+                "payment_method" => $paymentMethod,
                 "notes" => $notes,
                 "created_by" => $createdBy->id,
             ]);

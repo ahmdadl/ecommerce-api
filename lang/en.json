@@ -137,5 +137,14 @@
     "available": "Available",
     "pending": "Pending",
     "total": "Total",
-    "transactions_count": "Transactions Count"
+    "transactions_count": "Transactions Count",
+    "Wallets": "Wallets",
+    "Wallet": "Wallet",
+    "change wallet transaction status": "Change Wallet Transaction Status",
+    "view payment attempts": "View Payment Attempts",
+    "User": "User",
+    "amount": "Amount",
+    "payment attempts count": "Payment Attempts Count",
+    "paymentAttempts": "Payment Attempts",
+    "Status": "Status"
 }

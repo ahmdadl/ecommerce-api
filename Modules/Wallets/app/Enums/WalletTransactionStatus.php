@@ -9,4 +9,16 @@ enum WalletTransactionStatus: string
     case PENDING = "pending";
     case COMPLETED = "completed";
     case CANCELED = "canceled";
+
+    /**
+     * get status color
+     */
+    public function color(): string
+    {
+        return match ($this) {
+            self::PENDING => "warning",
+            self::COMPLETED => "success",
+            self::CANCELED => "danger",
+        };
+    }
 }

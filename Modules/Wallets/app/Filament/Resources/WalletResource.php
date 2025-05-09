@@ -23,7 +23,7 @@ class WalletResource extends Resource implements HasShieldPermissions
 {
     protected static ?string $model = Wallet::class;
 
-    protected static ?string $navigationIcon = "heroicon-o-rectangle-stack";
+    protected static ?string $navigationIcon = "heroicon-o-wallet";
 
     public static function getNavigationGroup(): ?string
     {
@@ -150,7 +150,7 @@ class WalletResource extends Resource implements HasShieldPermissions
                     ->icon("heroicon-o-plus-circle")
                     ->translateLabel()
                     ->closeModalByClickingAway(false)
-                    ->disabled(user()->cannot("credit_wallet"))
+                    ->hidden(user()->cannot("credit_wallet"))
                     ->form([
                         I\TextInput::make("amount")
                             ->required()
@@ -169,12 +169,14 @@ class WalletResource extends Resource implements HasShieldPermissions
                             $data["notes"]
                         );
                     })
-                    ->requiresConfirmation(),
+                    ->requiresConfirmation()
+                    ->color("success"),
                 A\Action::make("debit")
                     ->icon("heroicon-o-minus-circle")
                     ->translateLabel()
                     ->closeModalByClickingAway(false)
-                    ->disabled(user()->cannot("debit_wallet"))
+                    ->hidden(user()->cannot("debit_wallet"))
+                    ->color("danger")
                     ->form([
                         I\TextInput::make("amount")
                             ->required()
@@ -195,9 +197,7 @@ class WalletResource extends Resource implements HasShieldPermissions
                     })
                     ->requiresConfirmation(),
             ])
-            ->bulkActions([
-                A\BulkActionGroup::make([A\DeleteBulkAction::make()]),
-            ]);
+            ->bulkActions([]);
     }
 
     public static function getEloquentQuery(): Builder

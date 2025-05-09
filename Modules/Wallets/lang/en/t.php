@@ -12,4 +12,13 @@ return [
     "pending_amount" => "Pending Amount",
     "available_amount" => "Available Amount",
     "total_amount" => "Total Amount",
+    "types" => [
+        "credit" => "Credit",
+        "debit" => "Debit",
+    ],
+    "transaction_statuses" => [
+        "pending" => "Pending",
+        "completed" => "Completed",
+        "canceled" => "Canceled",
+    ],
 ];

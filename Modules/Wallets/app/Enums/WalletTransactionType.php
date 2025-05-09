@@ -8,4 +8,12 @@ enum WalletTransactionType: string
 
     case CREDIT = "credit";
     case DEBIT = "debit";
+
+    public function color(): string
+    {
+        return match ($this) {
+            self::CREDIT => "success",
+            self::DEBIT => "danger",
+        };
+    }
 }
