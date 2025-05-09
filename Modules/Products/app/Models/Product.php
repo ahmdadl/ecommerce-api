@@ -174,12 +174,17 @@ class Product extends Model
     public function isWished(): Attribute
     {
         return Attribute::make(
-            get: fn() => user()
-                ? user()
-                    ->wishlistItems()
-                    ->where("product_id", $this->id)
-                    ->exists()
-                : false
+            get: function () {
+                if (!user()) {
+                    return false;
+                }
+
+                user()->loadMissing(["wishlistItems"]);
+
+                return user()
+                    ->wishlistItems->where("product_id", $this->id)
+                    ->first();
+            }
         )->withoutObjectCaching();
     }
 
@@ -190,12 +195,17 @@ class Product extends Model
     public function cartedQuantity(): Attribute
     {
         return Attribute::make(
-            get: fn() => user()
-                ? (int) user()
-                    ->cartItems()
-                    ->where("product_id", $this->id)
-                    ->sum("quantity")
-                : 0
+            get: function () {
+                if (!user()) {
+                    return 0;
+                }
+
+                user()->loadMissing(["cartItems"]);
+
+                return user()
+                    ->cartItems->where("product_id", $this->id)
+                    ->sum("quantity");
+            }
         )->withoutObjectCaching();
     }
 
