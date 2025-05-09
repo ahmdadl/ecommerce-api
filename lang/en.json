@@ -130,5 +130,12 @@
     "Catalog": "Catalog",
     "Privacy": "Privacy",
     "Terms": "Terms",
-    "Faq": "Faq"
+    "Faq": "Faq",
+    "available_balance": "Available Balance",
+    "pending_balance": "Pending Balance",
+    "total_balance": "Total Balance",
+    "available": "Available",
+    "pending": "Pending",
+    "total": "Total",
+    "transactions_count": "Transactions Count"
 }

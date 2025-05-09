@@ -32,7 +32,7 @@ class {{ resourceClass }} extends Resource implements HasShieldPermissions
     {
         return $form
             ->schema([
-                I\TextInput::make("is_active")
+                I\Toggle::make("is_active")
                                 ->translateLabel()
                                 ->default(true),
                             sortOrderInput(static::$model),
@@ -47,6 +47,7 @@ class {{ resourceClass }} extends Resource implements HasShieldPermissions
                 C\TextColumn::make("id")
                     ->translateLabel()
                     ->sortable()
+                    ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
 {{ tableColumns }}
             ])
