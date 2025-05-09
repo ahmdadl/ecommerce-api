@@ -56,13 +56,21 @@
                         {{ __('orders::t.coupon') }}
                     </td>
                     <td class="py-2 font-medium text-gray-900 dark:text-gray-100">
-                        {{ number_format($order->totals->coupon ?? 0, 2) }} EGP
+                        -{{ number_format($order->totals->coupon ?? 0, 2) }} EGP
                     </td>
                     <td class="py-2 text-gray-500 dark:text-gray-400">
                         {{ __('orders::t.shipping') }}
                     </td>
                     <td class="py-2 font-medium text-gray-900 dark:text-gray-100">
                         {{ number_format($order->totals->shipping ?? 0, 2) }} EGP
+                    </td>
+                </tr>
+                <tr>
+                    <td class="py-2 text-gray-500 dark:text-gray-400">
+                        {{ __('orders::t.wallet') }}
+                    </td>
+                    <td class="py-2 font-medium text-gray-900 dark:text-gray-100">
+                        -{{ number_format($order->totals->wallet ?? 0, 2) }} EGP
                     </td>
                 </tr>
                 <tr class="border-t border-gray-200 dark:border-gray-700 pt-3">
@@ -72,7 +80,6 @@
                     <td class="py-2 text-base font-bold text-gray-900 dark:text-gray-100">
                         {{ number_format($order->totals->total ?? 0, 2) }} EGP
                     </td>
-
                 </tr>
             </tbody>
         </table>

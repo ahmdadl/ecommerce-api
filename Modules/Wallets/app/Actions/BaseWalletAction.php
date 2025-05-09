@@ -14,12 +14,17 @@ abstract class BaseWalletAction
         $this->walletService = walletService();
     }
 
+    public static function new(): static
+    {
+        return new static();
+    }
+
     /**
      * validate non negative amount
      */
     protected function validateNonNegativeAmount(float $amount): void
     {
-        if ($amount < 0) {
+        if ($amount <= 0) {
             throw new ApiException(__("wallets::t.amount_must_be_positive"));
         }
     }

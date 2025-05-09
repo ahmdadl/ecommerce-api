@@ -17,11 +17,13 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Modules\Addresses\Http\Requests\CreateAddressRequest;
 use Modules\Addresses\Models\Address;
+use Modules\Carts\Actions\ApplyWalletAmountForCartAction;
 use Modules\Carts\Actions\CreateShippingAddressAction;
 use Modules\Carts\Actions\ResetCartAction;
 use Modules\Carts\Actions\SetShippingAddressAction;
 use Modules\Coupons\Models\Coupon;
 use Modules\Payments\Models\PaymentMethod;
+use Modules\Wallets\Transformers\WalletResource;
 
 class CartController extends Controller
 {
@@ -76,6 +78,10 @@ class CartController extends Controller
             $response["paymentMethods"] = PaymentMethodResource::collection(
                 PaymentMethod::active()->get()
             );
+        }
+
+        if (in_array("wallet", $loadedArray)) {
+            $response["wallet"] = new WalletResource(walletService()->wallet);
         }
 
         return api()->success($response);
@@ -218,5 +224,33 @@ class CartController extends Controller
         $action->handle($request->validated());
 
         return $this->index($request, $action->cartService);
+    }
+
+    /**
+     * apply wallet amount
+     */
+    public function applyWalletAmount(
+        Request $request,
+        ApplyWalletAmountForCartAction $action
+    ): JsonResponse {
+        $request->validate([
+            "amount" => "required|numeric|min:10",
+        ]);
+
+        $action->handle($request->float("amount"));
+
+        return $this->index($request, $action->service);
+    }
+
+    /**
+     * remove wallet amount
+     */
+    public function removeWalletAmount(
+        Request $request,
+        CartService $cartService
+    ): JsonResponse {
+        $cartService->removeWalletAmount();
+
+        return $this->index($request, $cartService);
     }
 }

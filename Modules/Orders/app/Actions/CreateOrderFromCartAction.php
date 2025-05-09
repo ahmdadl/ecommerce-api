@@ -23,6 +23,8 @@ class CreateOrderFromCartAction
         // check if order created before on cart then create payment attempt only
         if (!empty($cart->order_id)) {
             $this->createOrderPaymentAttempt(
+                // @phpstan-ignore-next-line
+                $cart,
                 $cart->order_id,
                 $paymentMethod,
                 $orderPaymentStatus,
@@ -77,6 +79,7 @@ class CreateOrderFromCartAction
         // create order payment attempt
         $this->createOrderPaymentAttempt(
             // @phpstan-ignore-next-line
+            $cart,
             $order->id,
             $paymentMethod,
             $orderPaymentStatus,
@@ -102,11 +105,21 @@ class CreateOrderFromCartAction
      * create order payment attempt
      */
     public function createOrderPaymentAttempt(
+        Cart $cart,
         string $orderId,
         string $paymentMethod,
         OrderPaymentStatus $orderPaymentStatus,
         ?string $receipt = null
     ): void {
+        $transaction = null;
+        if ($cart->wallet_amount) {
+            $transaction = walletService()->debit(
+                $cart->totals->wallet,
+                user(),
+                __("orders::t.orderId", ["id" => $orderId])
+            );
+        }
+
         PaymentAttempt::create([
             "payable_id" => $orderId,
             "payable_type" => Order::class,
@@ -114,6 +127,7 @@ class CreateOrderFromCartAction
             "status" => $orderPaymentStatus,
             "receipt" => $receipt,
             "type" => PaymentAttemptType::ORDERS,
+            "wallet_transaction_id" => $transaction?->id,
         ]);
     }
 }

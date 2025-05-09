@@ -274,6 +274,30 @@ final readonly class CartService
     }
 
     /**
+     * set wallet amount
+     */
+    public function setWalletAmount(float $amount): void
+    {
+        DB::transaction(function () use ($amount) {
+            $this->cart->wallet_amount = $amount;
+
+            $this->save();
+        });
+    }
+
+    /**
+     * remove wallet amount
+     */
+    public function removeWalletAmount(): void
+    {
+        DB::transaction(function () {
+            $this->cart->wallet_amount = 0;
+
+            $this->save();
+        });
+    }
+
+    /**
      * delete cart and cart items
      */
     public function destroy(): void
@@ -306,6 +330,8 @@ final readonly class CartService
         $this->cart->coupon()->associate(null);
 
         $this->cart->order()->associate(null);
+
+        $this->cart->wallet_amount = 0;
     }
 
     /**
@@ -375,5 +401,13 @@ final readonly class CartService
     private function init(): void
     {
         // $this->save();
+    }
+
+    /**
+     * get cart totals
+     */
+    public function getTotals(): CartTotals
+    {
+        return $this->cart->totals;
     }
 }

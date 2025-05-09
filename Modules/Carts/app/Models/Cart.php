@@ -28,6 +28,7 @@ class Cart extends Model
     {
         return [
             "totals" => CartTotalsCast::class,
+            "wallet_amount" => "float",
         ];
     }
 

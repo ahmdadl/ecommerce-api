@@ -18,6 +18,7 @@ final class CartTotals
         public float $subtotal,
         public float $coupon,
         public float $shipping,
+        public float $wallet,
         public float $total
     ) {}
 
@@ -43,6 +44,7 @@ final class CartTotals
             "subtotal" => $this->subtotal,
             "coupon" => $this->coupon,
             "shipping" => $this->shipping,
+            "wallet" => $this->wallet,
             "total" => $this->total,
         ];
     }
@@ -53,15 +55,16 @@ final class CartTotals
         self::validate($data);
 
         return new self(
-            original: $data["original"],
-            discount: $data["discount"],
-            taxes: $data["taxes"],
-            products: $data["products"],
-            items: $data["items"],
-            subtotal: $data["subtotal"],
-            coupon: $data["coupon"],
-            shipping: $data["shipping"],
-            total: $data["total"]
+            $data["original"],
+            $data["discount"],
+            $data["taxes"],
+            $data["products"],
+            $data["items"],
+            $data["subtotal"],
+            $data["coupon"],
+            $data["shipping"],
+            $data["wallet"] ?? 0,
+            $data["total"]
         );
     }
 
@@ -79,6 +82,7 @@ final class CartTotals
             subtotal: 0,
             coupon: 0,
             shipping: 0,
+            wallet: 0,
             total: 0
         );
     }
@@ -99,6 +103,7 @@ final class CartTotals
             coupon: 0,
             shipping: 0,
             taxes: ($product->salePrice * $quantity) / 1.15,
+            wallet: 0,
             total: $product->salePrice * $quantity
         );
     }
@@ -116,6 +121,7 @@ final class CartTotals
         $subtotal = 0;
         $coupon = 0;
         $shipping = 0;
+        $wallet = 0;
         $total = 0;
 
         foreach (
@@ -151,6 +157,11 @@ final class CartTotals
             $total = round($total + $shipping, 2);
         }
 
+        if ($cart->wallet_amount) {
+            $wallet = $cart->wallet_amount;
+            $total = round($total - $wallet, 2);
+        }
+
         return new self(
             original: $original,
             discount: $discount,
@@ -160,6 +171,7 @@ final class CartTotals
             coupon: $coupon,
             shipping: $shipping,
             taxes: round($total - $taxes, 2),
+            wallet: $wallet,
             total: round($total)
         );
     }

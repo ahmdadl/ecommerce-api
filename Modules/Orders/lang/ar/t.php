@@ -88,4 +88,6 @@ return [
     ],
 
     "wallet_balance_not_enough" => "رصيد المحفظة غير كافي",
+    "wallet" => "المحفظة",
+    "wallet_payment_cannot_be_used" => "لا يمكن استخدام طريقة الدفع المحفظة",
 ];

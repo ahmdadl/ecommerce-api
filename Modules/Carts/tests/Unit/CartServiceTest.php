@@ -1,6 +1,7 @@
 <?php
 
 use Modules\Addresses\Models\Address;
+use Modules\Carts\Actions\ApplyWalletAmountForCartAction;
 use Modules\Carts\Models\Cart;
 use Modules\Carts\Models\CartItem;
 use Modules\Carts\Services\CartService;
@@ -163,4 +164,32 @@ it("updates_user_total_cart_items", function () {
     $cartService->destroy();
 
     $validateCount(0);
+});
+
+test("wallet_amount_can_be_used_on_cart", function () {
+    $user = User::factory()->customer()->create();
+    $cart = Cart::factory()->for($user, "cartable")->create();
+    $cartService = new CartService($cart);
+    $cartService->addItem(
+        $productA = Product::factory()->create([
+            "salePrice" => 100,
+        ])
+    );
+    $cartService->addItem(
+        $productB = Product::factory()->create([
+            "salePrice" => 200,
+        ])
+    );
+
+    auth()->setUser($user);
+
+    expect($cart->totals->total)->toBe((float) 300);
+
+    walletService()->fullyCredit(101, $user);
+
+    ApplyWalletAmountForCartAction::new()->handle(100);
+
+    $cart->refresh();
+
+    expect($cart->totals->total)->toBe((float) 200);
 });

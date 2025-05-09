@@ -7,6 +7,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Modules\Addresses\Models\Address;
 use Modules\Core\Exceptions\ApiException;
 use Modules\Payments\Models\PaymentMethod;
+use Modules\Wallets\Actions\ValidateWalletAmountAction;
 
 class CreateOrderRequest extends FormRequest
 {
@@ -76,7 +77,7 @@ class CreateOrderRequest extends FormRequest
                 if ($cart->items()->count() === 0) {
                     $validator
                         ->errors()
-                        ->add("-", __("orders::t.cart_is_empty"));
+                        ->add("", __("orders::t.cart_is_empty"));
                 }
 
                 if (!user()->isGuest) {
@@ -90,7 +91,7 @@ class CreateOrderRequest extends FormRequest
                             $validator
                                 ->errors()
                                 ->add(
-                                    "-",
+                                    "",
                                     __("orders::t.shipping_address_not_found")
                                 );
                         }
@@ -104,6 +105,12 @@ class CreateOrderRequest extends FormRequest
                     }
                 }
 
+                if ($cart->wallet_amount) {
+                    ValidateWalletAmountAction::new()->handle(
+                        $cart->totals->wallet
+                    );
+                }
+
                 if ($paymentMethodRecord?->isWallet) {
                     $cartTotal = cartService()->cart->totals->total;
                     $walletBalance = walletService()->getBalance()->available;
@@ -112,8 +119,17 @@ class CreateOrderRequest extends FormRequest
                         $validator
                             ->errors()
                             ->add(
-                                "-",
+                                "",
                                 __("orders::t.wallet_balance_not_enough")
+                            );
+                    }
+
+                    if ($cart->wallet_amount) {
+                        $validator
+                            ->errors()
+                            ->add(
+                                "",
+                                __("orders::t.wallet_payment_cannot_be_used")
                             );
                     }
                 }

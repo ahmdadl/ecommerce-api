@@ -26,6 +26,12 @@ Route::controller(CartController::class)
             Route::post("address", "storeShippingAddress")->name(
                 "create-address"
             );
+
+            // wallet routes
+            Route::patch("wallet", "applyWalletAmount")->name("apply-wallet");
+            Route::delete("wallet", "removeWalletAmount")->name(
+                "remove-wallet"
+            );
         });
 
         Route::middleware(["auth:guest,customer"])->group(function () {

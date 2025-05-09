@@ -89,4 +89,7 @@ return [
     ],
 
     "wallet_balance_not_enough" => "Wallet balance not enough",
+    "wallet" => "Wallet",
+    "wallet_payment_cannot_be_used" =>
+        "Wallet payment cannot be used with partial payment",
 ];
