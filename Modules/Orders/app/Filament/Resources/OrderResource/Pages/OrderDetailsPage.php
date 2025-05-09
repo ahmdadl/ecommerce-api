@@ -92,6 +92,7 @@ class OrderDetailsPage extends Page
             Action::make("changePaymentStatus")
                 ->translateLabel()
                 ->color("danger")
+                ->hidden(true)
                 ->form([
                     Select::make("payment_status")
                         ->translateLabel()
@@ -119,5 +120,45 @@ class OrderDetailsPage extends Page
                         ->send();
                 }),
         ];
+    }
+
+    public function updatePaymentPaidAction(): Action
+    {
+        return Action::make("updatePaymentPaid")
+            ->label(__("Paid"))
+            ->color("success")
+            ->requiresConfirmation()
+            ->action(function (array $arguments) {
+                $paymentAttempt = PaymentAttempt::find(
+                    $arguments["attempt"]["id"]
+                );
+
+                $paymentAttempt->updateToSuccess();
+
+                Notification::make()
+                    ->title(__("orders::t.payment_status_updated_successfully"))
+                    ->success()
+                    ->send();
+            });
+    }
+
+    public function updatePaymentFailedAction(): Action
+    {
+        return Action::make("updatePaymentFailed")
+            ->label(__("Failed"))
+            ->color("danger")
+            ->requiresConfirmation()
+            ->action(function (array $arguments) {
+                $paymentAttempt = PaymentAttempt::find(
+                    $arguments["attempt"]["id"]
+                );
+
+                $paymentAttempt->updateToFailed();
+
+                Notification::make()
+                    ->title(__("orders::t.payment_status_updated_successfully"))
+                    ->success()
+                    ->send();
+            });
     }
 }

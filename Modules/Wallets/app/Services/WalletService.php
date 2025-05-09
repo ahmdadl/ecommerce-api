@@ -52,15 +52,18 @@ class WalletService
     /**
      * add pending debit
      */
-    public function debit(float $amount, User $createdBy, ?string $notes = null)
-    {
-        DB::transaction(function () use ($amount, $createdBy, $notes) {
+    public function debit(
+        float $amount,
+        User $createdBy,
+        ?string $notes = null
+    ): WalletTransaction {
+        return DB::transaction(function () use ($amount, $createdBy, $notes) {
             $this->wallet->balance = $this->wallet->balance->debitPending(
                 $amount
             );
             $this->wallet->save();
 
-            $this->wallet->transactions()->create([
+            return $this->wallet->transactions()->create([
                 "amount" => $amount,
                 "type" => WalletTransactionType::DEBIT,
                 "status" => WalletTransactionStatus::PENDING,

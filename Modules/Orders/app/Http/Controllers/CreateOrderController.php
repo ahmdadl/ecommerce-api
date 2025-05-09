@@ -37,6 +37,22 @@ class CreateOrderController extends Controller
             if (!$paymentMethod->is_online) {
                 cartService()->destroy();
 
+                if ($paymentMethod->isWallet()) {
+                    $transaction = walletService()->debit(
+                        $order->totals->total,
+                        user(),
+                        __("orders::t.orderId", ["id" => $order->id])
+                    );
+
+                    $order
+                        ->paymentAttempts()
+                        ->latest()
+                        ->first()
+                        ->update([
+                            "wallet_transaction_id" => $transaction->id,
+                        ]);
+                }
+
                 return api()->record(new OrderResource($order));
             }
 

@@ -4,6 +4,7 @@ namespace Modules\Payments\Transformers;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Modules\Wallets\Transformers\WalletTransactionResource;
 
 class PaymentAttemptResource extends JsonResource
 {
@@ -20,6 +21,9 @@ class PaymentAttemptResource extends JsonResource
             "status" => $this->status,
             "payment_details" => $this->payment_details,
             "payable" => $this->whenLoaded("payable"),
+            "wallet_transaction" => new WalletTransactionResource(
+                $this->whenLoaded("walletTransaction")
+            ),
         ];
     }
 }

@@ -51,6 +51,13 @@
                             </span>
                         </div>
                     </th>
+                    <th class="fi-ta-header-cell p-0">
+                        <div class="fi-ta-header-cell-wrapper flex items-center gap-x-2 p-3">
+                            <span class="fi-ta-header-cell-label font-semibold">
+                                {{ __('Actions') }}
+                            </span>
+                        </div>
+                    </th>
                 </tr>
             </thead>
             <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
@@ -60,7 +67,7 @@
                         <td class="fi-ta-cell p-0 first-of-type:ps-3 last-of-type:pe-3">
                             <div class="fi-ta-cell-wrapper flex items-center gap-x-2 p-3">
                                 <span class="text-sm font-medium text-gray-900 dark:text-white">
-                                    <x-orders::copy :content="$attempt->id" limit="5" />
+                                    <x-orders::copy :content="$attempt->id" />
                                 </span>
                             </div>
                         </td>
@@ -141,9 +148,23 @@
                                 </span>
                             </div>
                         </td>
+
+                        <!-- Actions Column -->
+                        <td class="fi-ta-cell p-0 first-of-type:ps-3 last-of-type:pe-3">
+                            <div class="fi-ta-cell-wrapper flex items-center gap-x-2 p-3">
+                                @if ($attempt->status === Modules\Orders\Enums\OrderPaymentStatus::PENDING)
+                                    {{ ($this->updatePaymentPaidAction)(['attempt' => $attempt]) }}
+                                @endif
+
+                                @if ($attempt->status === Modules\Orders\Enums\OrderPaymentStatus::PENDING)
+                                    {{ ($this->updatePaymentFailedAction)(['attempt' => $attempt]) }}
+                                @endif
+                            </div>
+                        </td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
+
     </div>
 </x-filament::card>

@@ -96,9 +96,12 @@ class WalletTransaction extends Model implements Payable
             "payment_status" => OrderPaymentStatus::PAID,
         ]);
 
-        $this->wallet->balance = $this->wallet->balance->completePendingCredit(
-            $this->amount
-        );
+        $method =
+            $this->type === WalletTransactionType::CREDIT
+                ? "completePendingCredit"
+                : "completePendingDebit";
+
+        $this->wallet->balance = $this->wallet->balance->$method($this->amount);
         $this->wallet->save();
     }
 
@@ -112,10 +115,12 @@ class WalletTransaction extends Model implements Payable
             "payment_status" => OrderPaymentStatus::FAILED,
         ]);
 
-        $this->wallet->balance = $this->wallet->balance->cancelPendingCredit(
-            $this->amount
-        );
+        $method =
+            $this->type === WalletTransactionType::CREDIT
+                ? "cancelPendingCredit"
+                : "cancelPendingDebit";
 
+        $this->wallet->balance = $this->wallet->balance->$method($this->amount);
         $this->wallet->save();
     }
 }
