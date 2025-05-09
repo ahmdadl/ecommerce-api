@@ -13,6 +13,7 @@ use Modules\Payments\Models\PaymentMethod;
 use Modules\Products\Models\Product;
 use Modules\Uploads\Actions\StoreUploadAction;
 use Modules\Users\Models\User;
+use Modules\Wallets\Models\Wallet;
 
 use function Pest\Laravel\actingAs;
 
@@ -137,6 +138,91 @@ it("can_create_an_order_with_instapay", function () {
     $order = Order::firstWhere("id", $response["data"]["record"]["id"]);
 
     expect($order->totals->coupon)->toBe($cart->totals->coupon);
+    expect($order->totals->total)->toBe($cart->totals->total);
+    expect(OrderItem::count())->toBe(2);
+});
+
+it("can_create_an_order_with_wallet", function () {
+    $user = User::factory()->customer()->create();
+    $address = Address::factory()->for($user)->withShippingFee(0)->create();
+    $coupon = Coupon::factory()->percentage(50)->create();
+    $wallet = Wallet::factory()->for($user)->create();
+    $cart = Cart::factory()
+        ->for($user, "cartable")
+        ->for($address, "shippingAddress")
+        ->for($coupon)
+        ->create();
+    CartItem::factory()->for($cart)->count(2)->create();
+
+    $paymentMethod = PaymentMethod::WALLET;
+
+    $cartService = new CartService($cart);
+    $cartService->refresh();
+
+    actingAs($user)
+        ->postJson(route("api.orders.store"), [
+            "payment_method" => $paymentMethod,
+        ])
+        ->assertSee("Wallet balance not enough");
+
+    walletService(false, $user)->fullyCredit(
+        $cart->totals->total + 1,
+        $user,
+        null
+    );
+    $response = actingAs($user)
+        ->postJson(route("api.orders.store"), [
+            "payment_method" => $paymentMethod,
+            "receipt" => null,
+        ])
+        ->assertOk()
+        ->json();
+
+    $order = Order::firstWhere("id", $response["data"]["record"]["id"]);
+
+    expect($order->totals->coupon)->toBe($cart->totals->coupon);
+    expect($order->totals->total)->toBe($cart->totals->total);
+    expect(OrderItem::count())->toBe(2);
+});
+
+test("can_create_an_order_with_partial_wallet", function () {
+    $user = User::factory()->customer()->create();
+    $address = Address::factory()->for($user)->withShippingFee(0)->create();
+    $coupon = Coupon::factory()->percentage(50)->create();
+    $wallet = Wallet::factory()->for($user)->create();
+
+    $cart = Cart::factory()
+        ->for($user, "cartable")
+        ->for($address, "shippingAddress")
+        ->for($coupon)
+        ->create();
+    CartItem::factory()->for($cart)->count(2)->create();
+
+    $paymentMethod = PaymentMethod::CASH_ON_DELIVERY;
+
+    $cartService = new CartService($cart);
+    $cartService->refresh();
+
+    walletService(false, $user)->fullyCredit(
+        $cart->totals->total - 5,
+        $user,
+        null
+    );
+
+    $cartService->setWalletAmount($cart->totals->total / 2);
+
+    $response = actingAs($user)
+        ->postJson(route("api.orders.store"), [
+            "payment_method" => $paymentMethod,
+            "receipt" => null,
+        ])
+        ->assertOk()
+        ->json();
+
+    $order = Order::firstWhere("id", $response["data"]["record"]["id"]);
+
+    expect($order->totals->coupon)->toBe($cart->totals->coupon);
+    expect($order->totals->wallet)->toBe($cart->totals->wallet);
     expect($order->totals->total)->toBe($cart->totals->total);
     expect(OrderItem::count())->toBe(2);
 });
