@@ -366,8 +366,14 @@ class WalletTransactionResource extends Resource implements HasShieldPermissions
                         array $data,
                         WalletTransaction $record
                     ): void {
-                        $record->status = $data["status"];
-                        $record->save();
+                        if (
+                            $record->status ===
+                            WalletTransactionStatus::COMPLETED
+                        ) {
+                            $record->paymentCompleted();
+                        } else {
+                            $record->paymentFailed();
+                        }
                     })
                     ->requiresConfirmation(),
             ])
