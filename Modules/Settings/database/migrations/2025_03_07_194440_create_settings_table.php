@@ -13,7 +13,7 @@ return new class extends Migration {
     {
         Schema::create("settings", function (Blueprint $table) {
             $table->id();
-            $table->json("data")->index()->nullable();
+            $table->json("data")->nullable();
             $table->timestamps();
         });
 
