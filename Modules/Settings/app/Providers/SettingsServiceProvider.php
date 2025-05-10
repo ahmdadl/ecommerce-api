@@ -31,7 +31,7 @@ class SettingsServiceProvider extends ServiceProvider
         );
 
         if (!$this->app->runningUnitTests()) {
-            config()->set("app.name", settings("general")->name);
+            // config()->set("app.name", settings("general")->name);
         }
     }
 
