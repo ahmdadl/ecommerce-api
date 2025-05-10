@@ -22,6 +22,7 @@ return [
         env("FRONTEND_URL", "http://localhost:3000"),
         "http://front-supps-test.test",
         "http://localhost:4202",
+        "https://supps.crafted-internet.com",
     ],
 
     "allowed_origins_patterns" => [],
