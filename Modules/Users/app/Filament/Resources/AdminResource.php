@@ -26,7 +26,7 @@ class AdminResource extends Resource
 
     public static function form(Form $form): Form
     {
-        return $form->schema([UserResource::userFormSchema()]);
+        return $form->schema(UserResource::userFormSchema());
     }
 
     public static function table(Table $table): Table
@@ -58,13 +58,6 @@ class AdminResource extends Resource
             ]);
     }
 
-    public static function getRelations(): array
-    {
-        return [
-                //
-            ];
-    }
-
     public static function getPages(): array
     {
         return [
@@ -74,7 +67,7 @@ class AdminResource extends Resource
         ];
     }
 
-    public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
+    public static function getEloquentQuery(): Builder
     {
         return parent::getEloquentQuery()->role(Admin::$role);
     }
