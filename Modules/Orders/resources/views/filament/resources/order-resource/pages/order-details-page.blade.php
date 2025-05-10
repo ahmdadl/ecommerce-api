@@ -1,6 +1,6 @@
 <x-filament-panels::page>
     <div class="space-y-6">
-        @vite('resources/css/filament/admin/theme.css')
+        {{-- @vite('resources/css/filament/admin/theme.css') --}}
 
         <x-orders::order-summary :order="$order" :orderStatus="$orderStatus" :paymentStatus="$paymentStatus" />
 
