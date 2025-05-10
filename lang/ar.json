@@ -130,5 +130,22 @@
     "Catalog": "الفهرس",
     "Privacy": "الخصوصية",
     "Terms": "الشروط",
-    "Faq": "الأسئلة الشائعة"
+    "Faq": "الأسئلة الشائعة",
+    "available_balance": "الرصيد المتاح",
+    "pending_balance": "الرصيد المعلق",
+    "total_balance": "الرصيد الإجمالي",
+    "available": "متاح",
+    "pending": "معلق",
+    "total": "إجمالي",
+    "transactions_count": "عدد المعاملات",
+    "Wallets": "المحافظ",
+    "Wallet": "المحفظة",
+    "change wallet transaction status": "تغيير حالة معاملة المحفظة",
+    "view payment attempts": "عرض محاولات الدفع",
+    "User": "المستخدم",
+    "amount": "المبلغ",
+    "payment attempts count": "عدد محاولات الدفع",
+    "paymentAttempts": "محاولات الدفع",
+    "Status": "الحالة",
+    "Role": "الدور"
 }
