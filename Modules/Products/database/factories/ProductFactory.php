@@ -26,11 +26,11 @@ class ProductFactory extends Factory
             "brand_id" => fn() => Brand::factory(),
             "title" => [
                 "en" => fake()->sentence,
-                "ar" => fake()->sentence,
+                "ar" => "اسم المنتج" . random_int(1, 10000),
             ],
             "description" => [
                 "en" => fake()->paragraph(),
-                "ar" => fake()->paragraph,
+                "ar" => "وصف المنتج" . fake()->words(3, true),
             ],
             "is_main" => fake()->boolean(20),
             "images" => [
