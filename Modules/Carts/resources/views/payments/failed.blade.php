@@ -58,7 +58,7 @@
         function afterDone() {
             console.log("Countdown complete!");
 
-            window.location.href = "http://api-supps.test/payments/{{ $paymentAttempt->id }}/after-failed";
+            window.location.href = "{{ url('payments/' . $paymentAttempt->id . '/after-failed') }}";
         }
 
         let countdown = 3;

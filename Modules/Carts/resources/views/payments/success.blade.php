@@ -60,7 +60,7 @@
             console.log("Countdown complete!");
             // Add your redirect or other logic here
             // For example: window.location.href = 'https://your-redirect-url.com';
-            window.location.href = "http://api-supps.test/payments/{{ $paymentAttempt->id }}/after-success";
+            window.location.href = "{{ url('payments/' . $paymentAttempt->id . '/after-success') }}";
         }
 
         let countdown = 5;
