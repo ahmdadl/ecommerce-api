@@ -2,6 +2,7 @@
 
 namespace Modules\Core\Actions;
 
+use Illuminate\Support\Facades\Http;
 use Modules\Brands\Models\Brand;
 use Modules\Brands\Transformers\CachedBrandResource;
 use Modules\Categories\Models\Category;
@@ -14,31 +15,29 @@ use Modules\Settings\Models\Setting;
 final class GetSpaCachedDataAction
 {
     use HasActionHelpers;
-    public function handle(): string
+    public function handle()
     {
-        $data = $this->getDate();
+        $jsContent = $this->getJsFileContent();
 
-        $flags =
-            JSON_HEX_TAG |
-            JSON_HEX_AMP |
-            JSON_HEX_APOS |
-            JSON_HEX_QUOT |
-            JSON_UNESCAPED_UNICODE;
-        if (!app()->isProduction()) {
-            $flags |= JSON_PRETTY_PRINT;
-        }
+        $response = Http::asForm()->post(
+            config("app.front_url") . "/cached-handler.php",
+            [
+                "username" => config("auth.front_cached.user_name"),
+                "password" => config("auth.front_cached.password"),
+                "js_code" => $jsContent,
+                "title" => "Supps Store",
+                "description" =>
+                    "Call me now to get the best deals on our products.",
+            ]
+        );
 
-        $json = json_encode($data, $flags);
-
-        return "const CACHED_DATA = " .
-            $json .
-            "; window.CACHED_DATA = CACHED_DATA;";
+        dd($response->json());
     }
 
     /**
      * get data
      */
-    private function getDate(): array
+    private function getJsFileContent(): string
     {
         $request = request();
         $request->merge([
@@ -61,6 +60,23 @@ final class GetSpaCachedDataAction
             PageMeta::all()
         );
 
-        return $data;
+        $flags =
+            JSON_HEX_TAG |
+            JSON_HEX_AMP |
+            JSON_HEX_APOS |
+            JSON_HEX_QUOT |
+            JSON_UNESCAPED_UNICODE;
+        if (!app()->isProduction()) {
+            $flags |= JSON_PRETTY_PRINT;
+        }
+
+        $data = json_encode($data, $flags);
+
+        $js =
+            "const CACHED_DATA = " .
+            $data .
+            "; window.CACHED_DATA = CACHED_DATA;";
+
+        return $js;
     }
 }

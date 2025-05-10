@@ -156,4 +156,9 @@ return [
     "password_timeout" => env("AUTH_PASSWORD_TIMEOUT", 10800),
 
     "public-token" => env("AUTH_PUBLIC_TOKEN", "public"),
+
+    "front_cached" => [
+        "user_name" => env("AUTH_FRONT_CACHED_USER_NAME", "username"),
+        "password" => env("AUTH_FRONT_CACHED_PASSWORD", "password"),
+    ],
 ];
