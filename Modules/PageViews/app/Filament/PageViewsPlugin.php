@@ -12,12 +12,12 @@ class PageViewsPlugin implements Plugin
 
     public function getModuleName(): string
     {
-        return 'PageViews';
+        return "PageViews";
     }
 
     public function getId(): string
     {
-        return 'pageviews';
+        return "pageviews";
     }
 
     public function boot(Panel $panel): void
