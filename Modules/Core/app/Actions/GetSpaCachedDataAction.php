@@ -30,8 +30,6 @@ final class GetSpaCachedDataAction
                     "Call me now to get the best deals on our products.",
             ]
         );
-
-        dd($response->json());
     }
 
     /**
