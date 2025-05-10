@@ -17,8 +17,8 @@ class ProductsDatabaseSeeder extends Seeder
     public function run(): void
     {
         // create categories
-        $this->call(CategoriesDatabaseSeeder::class);
-        $this->call(BrandsDatabaseSeeder::class);
+        (new CategoriesDatabaseSeeder())->run();
+        (new BrandsDatabaseSeeder())->run();
 
         $categories = Category::all();
         $brands = Brand::all();
