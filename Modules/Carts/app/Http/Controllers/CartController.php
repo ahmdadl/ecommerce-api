@@ -80,7 +80,7 @@ class CartController extends Controller
             );
         }
 
-        if (in_array("wallet", $loadedArray)) {
+        if (in_array("wallet", $loadedArray) && user("customer")) {
             $response["wallet"] = new WalletResource(walletService()->wallet);
         }
 
