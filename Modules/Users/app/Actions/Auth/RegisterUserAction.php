@@ -6,6 +6,7 @@ use Modules\Carts\Actions\MergeGuestCartToUserAction;
 use Modules\Core\Services\Application;
 use Modules\Guests\Models\Guest;
 use Modules\Users\Enums\UserRole;
+use Modules\Users\Models\Customer;
 use Modules\Users\Models\User;
 use Modules\Users\Notifications\NewCustomerNotification;
 use Modules\Wishlists\Actions\MergeGuestWishlistToUserAction;
@@ -21,7 +22,7 @@ class RegisterUserAction
         $data["name"] = $data["first_name"] . " " . $data["last_name"];
         unset($data["first_name"], $data["last_name"]);
 
-        $user = User::create([...$data, "role" => UserRole::CUSTOMER]);
+        $user = Customer::create([...$data, "role" => UserRole::CUSTOMER]);
 
         $access_token = $user->createToken(Application::getApplicationType())
             ->plainTextToken;
@@ -33,7 +34,7 @@ class RegisterUserAction
         // merge guest wishlist to user wishlist
         MergeGuestWishlistToUserAction::new()->handle($guest, $user);
 
-        $user->notify(new NewCustomerNotification());
+        rescue(fn() => $user->notify(new NewCustomerNotification()));
 
         return [$user, $access_token];
     }
