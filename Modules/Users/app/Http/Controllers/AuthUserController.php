@@ -26,7 +26,7 @@ class AuthUserController extends Controller
         $user = $action->handle($request->validated());
 
         if (!$user) {
-            return api()->unauthorized(__("users::t.invalid_credentials"));
+            return api()->error(__("users::t.invalid_credentials"));
         }
 
         return api()->success([
