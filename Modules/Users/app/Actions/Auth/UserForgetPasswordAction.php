@@ -27,7 +27,7 @@ class UserForgetPasswordAction
         ]);
 
         // Send the email
-        $user->notify(new ForgetPasswordNotification($token));
+        rescue(fn() => $user->notify(new ForgetPasswordNotification($token)));
 
         return true;
     }

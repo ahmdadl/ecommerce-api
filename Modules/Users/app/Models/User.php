@@ -117,14 +117,6 @@ class User extends Authenticatable
     }
 
     /**
-     * @inheritDoc
-     */
-    public function notify($instance)
-    {
-        rescue(fn() => parent::notify($instance));
-    }
-
-    /**
      * is guest
      * @return Attribute<boolean, void>
      */
