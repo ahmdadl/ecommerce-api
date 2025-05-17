@@ -20,7 +20,7 @@ class CustomerResource extends JsonResource
             "totals" => $this->totals,
             "gender" => $this->gender,
             // "created_at" => $this->created_at,
-            "role" => $this->when(isset($this->withRole), $this->role),
+            "role" => "customer",
             "access_token" => $this->when(
                 !empty($this->access_token ?? ""),
                 $this->access_token ?? ""

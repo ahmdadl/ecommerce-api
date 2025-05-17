@@ -17,7 +17,7 @@ class GuestResource extends JsonResource
             "totals" => $this->totals,
             "created_at" => $this->created_at,
             "updated_at" => $this->updated_at,
-            "role" => $this->when(isset($this->role), $this->role ?? ""),
+            "role" => 'guest',
             "access_token" => $this->when(
                 isset($this->access_token),
                 $this->access_token ?? ""
