@@ -5,6 +5,7 @@ namespace Modules\Users\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Modules\Core\Actions\GetInitialDataAction;
 use Modules\Users\Actions\Auth\LoginUserAction;
 use Modules\Users\Actions\Auth\RegisterUserAction;
 use Modules\Users\Actions\Auth\UserForgetPasswordAction;
@@ -21,17 +22,22 @@ class AuthUserController extends Controller
      */
     public function login(
         LoginUserRequest $request,
-        LoginUserAction $action
+        LoginUserAction $loginUserAction,
+        GetInitialDataAction $getInitialDataAction
     ): JsonResponse {
-        $user = $action->handle($request->validated());
+        $user = $loginUserAction->handle($request->validated());
 
         if (!$user) {
             return api()->error(__("users::t.invalid_credentials"));
         }
 
-        return api()->success([
-            "record" => new CustomerResource($user),
-        ]);
+        $response = [];
+        $response["record"] = new CustomerResource($user);
+        if ($request->has("withInitialData")) {
+            $response["initialData"] = $getInitialDataAction->handle($user);
+        }
+
+        return api()->success($response);
     }
 
     /**
