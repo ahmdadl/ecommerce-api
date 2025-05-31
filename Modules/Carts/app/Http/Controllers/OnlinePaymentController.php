@@ -97,11 +97,13 @@ class OnlinePaymentController extends Controller
             PaymentAttemptType::ORDERS => config("app.front_url") .
                 "/" .
                 app()->getLocale() .
-                "/checkout?payment_failed=failed payment, please try again",
+                "/checkout?payment_failed=" .
+                __("carts::t.payment_failed"),
             PaymentAttemptType::WALLET => config("app.front_url") .
                 "/" .
                 app()->getLocale() .
-                "/profile/my-wallet?payment_failed=failed payment, please try again",
+                "/profile/my-wallet?payment_failed=" .
+                __("carts::t.payment_failed"),
         };
     }
 }
