@@ -81,7 +81,10 @@ class ModelFilter
             case "date":
                 return \Carbon\Carbon::parse($value)->toDateString();
             case "array":
-                return explode(",", $value);
+                return explode(
+                    ",",
+                    is_array($value) ? implode(",", $value) : $value
+                );
             default:
                 return $value; // Return as-is if type is unknown
         }
