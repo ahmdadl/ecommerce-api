@@ -4,6 +4,7 @@ namespace Modules\Categories\Transformers;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Modules\Core\Actions\GetModelImageAction;
 use Modules\Products\Transformers\ProductResource;
 
 class CategoryResource extends JsonResource
@@ -13,8 +14,10 @@ class CategoryResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $image = $this->image;
-        $image = "https://picsum.photos/seed/$this->id/600/600";
+        $image = GetModelImageAction::forCategory(
+            $this->getTranslation("title", "en")
+        );
+        // $image = $this->image;
 
         return [
             "id" => $this->id,

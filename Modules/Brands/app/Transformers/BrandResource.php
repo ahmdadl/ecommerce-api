@@ -4,6 +4,7 @@ namespace Modules\Brands\Transformers;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Modules\Core\Actions\GetModelImageAction;
 use Modules\Products\Transformers\ProductResource;
 
 class BrandResource extends JsonResource
@@ -13,7 +14,10 @@ class BrandResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $image = "https://picsum.photos/seed/$this->id/600/600";
+        $image = GetModelImageAction::forBrand(
+            $this->getTranslation("title", "en")
+        );
+        // $image = $this->image;
 
         return [
             "id" => $this->id,

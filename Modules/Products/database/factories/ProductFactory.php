@@ -19,7 +19,7 @@ class ProductFactory extends Factory
      */
     public function definition(): array
     {
-        $price = fake()->randomFloat(2, 1.0, 500.99);
+        $price = fake()->randomFloat(2, 600.0, 30000.99);
 
         return [
             "category_id" => fn() => Category::factory(),
@@ -43,7 +43,7 @@ class ProductFactory extends Factory
             ],
             "price" => $price,
             "sale_price" => fake()->boolean(30) ? $price * 0.8 : null,
-            "stock" => fake()->numberBetween(10, 100),
+            "stock" => fake()->numberBetween(10, 50),
             "sku" => "SKU-" . strtoupper(\Illuminate\Support\Str::random(6)),
             "is_active" => true,
             "meta_title" => [

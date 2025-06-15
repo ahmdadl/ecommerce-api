@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Modules\Brands\Transformers\BrandResource;
 use Modules\Categories\Transformers\CategoryResource;
+use Modules\Core\Actions\GetModelImageAction;
 use Modules\Tags\Transformers\TagResource;
 
 class ProductResource extends JsonResource
@@ -15,12 +16,18 @@ class ProductResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        // @phpstan-ignore-next-line
-        $images = collect($this->images)->map("uploads_url")->values();
+        $images = GetModelImageAction::forProduct(
+            $this->getTranslation("title", "en")
+        );
 
-        $images = [];
-        for ($i = 0; $i < 4; $i++) {
-            $images[] = "https://picsum.photos/seed/$this->id.$i/600/600";
+        if (empty($images)) {
+            // @phpstan-ignore-next-line
+            $images = collect($this->images)->map("uploads_url")->values();
+
+            $images = [];
+            for ($i = 0; $i < 4; $i++) {
+                $images[] = "https://picsum.photos/seed/$this->id.$i/600/600";
+            }
         }
 
         return [

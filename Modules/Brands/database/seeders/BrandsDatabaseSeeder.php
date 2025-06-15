@@ -9,73 +9,63 @@ class BrandsDatabaseSeeder extends Seeder
 {
     public function run()
     {
-        $brands = [
-            [
-                "title" => [
-                    "en" => "Optimum Nutrition",
-                    "ar" => "أوبتيموم نيوتريشن",
-                ],
-            ],
-            [
-                "title" => [
-                    "en" => "MuscleTech",
-                    "ar" => "ماسلتيك",
-                ],
-            ],
-            [
-                "title" => [
-                    "en" => "MyProtein",
-                    "ar" => "ماي بروتين",
-                ],
-            ],
-            [
-                "title" => [
-                    "en" => "BSN",
-                    "ar" => "بي إس إن",
-                ],
-            ],
-            [
-                "title" => [
-                    "en" => "Dymatize",
-                    "ar" => "ديماتايز",
-                ],
-            ],
-            [
-                "title" => [
-                    "en" => "Cellucor",
-                    "ar" => "سيلكور",
-                ],
-            ],
-            [
-                "title" => [
-                    "en" => "Grenade",
-                    "ar" => "غرينايد",
-                ],
-            ],
-            [
-                "title" => [
-                    "en" => "RSP Nutrition",
-                    "ar" => "آر إس بي نيوتريشن",
-                ],
-            ],
-            [
-                "title" => [
-                    "en" => "JYM Supplement Science",
-                    "ar" => "جيم سابيلمينت ساينس",
-                ],
-            ],
-            [
-                "title" => [
-                    "en" => "Ghost Lifestyle",
-                    "ar" => "غوست لايفستايل",
-                ],
-            ],
-        ];
+        $brands = $this->brands();
 
         Brand::query()->delete();
 
         foreach ($brands as $brand) {
-            Brand::factory()->create($brand);
+            Brand::factory()->create([
+                "title" => $brand["title"],
+                "description" => $brand["title"],
+            ]);
         }
+    }
+
+    private function brands(): array
+    {
+        return [
+            [
+                "title" => [
+                    "en" => "Apple",
+                    "ar" => "آبل",
+                ],
+            ],
+            [
+                "title" => [
+                    "en" => "Samsung",
+                    "ar" => "سامسونج",
+                ],
+            ],
+            [
+                "title" => [
+                    "en" => "Huawei",
+                    "ar" => "هواوي",
+                ],
+            ],
+            [
+                "title" => [
+                    "en" => "Honor",
+                    "ar" => "هونر",
+                ],
+            ],
+            [
+                "title" => [
+                    "en" => "Xiaomi",
+                    "ar" => "شاومي",
+                ],
+            ],
+            [
+                "title" => [
+                    "en" => "Motorola",
+                    "ar" => "موتورولا",
+                ],
+            ],
+            [
+                "title" => [
+                    "en" => "Tecno",
+                    "ar" => "تكنو",
+                ],
+            ],
+        ];
     }
 }

@@ -19,17 +19,21 @@ final class GetSpaCachedDataAction
     {
         $jsContent = $this->getJsFileContent();
 
-        $response = Http::asForm()->post(
-            config("app.front_url") . "/cached-handler.php",
-            [
-                "username" => config("auth.front_cached.user_name"),
-                "password" => config("auth.front_cached.password"),
-                "js_code" => $jsContent,
-                "title" => "Supps Store",
-                "description" =>
-                    "Call me now to get the best deals on our products.",
-            ]
-        );
+        try {
+            // $response = Http::asForm()->post(
+            //     config("app.front_url") . "/cached-handler.php",
+            //     [
+            //         "username" => config("auth.front_cached.user_name"),
+            //         "password" => config("auth.front_cached.password"),
+            //         "js_code" => $jsContent,
+            //         "title" => "Supps Store",
+            //         "description" =>
+            //             "Call me now to get the best deals on our products.",
+            //     ]
+            // );
+        } catch (\Exception $e) {
+            // nothing
+        }
     }
 
     /**

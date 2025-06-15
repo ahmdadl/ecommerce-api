@@ -12,62 +12,57 @@ class CategoriesDatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $categories = [
-            [
-                "title" => [
-                    "en" => "Protein Powders",
-                    "ar" => "جزر البروتين",
-                ],
-                "image" => "https://picsum.photos/400/300?random=1",
-            ],
-            [
-                "title" => [
-                    "en" => "Pre-Workout",
-                    "ar" => "قبل العملية",
-                ],
-                "image" => "https://picsum.photos/400/300?random=1",
-            ],
-            [
-                "title" => [
-                    "en" => "Post-Workout",
-                    "ar" => "بعد العملية",
-                ],
-                "image" => "https://picsum.photos/400/300?random=1",
-            ],
-            [
-                "title" => [
-                    "en" => "Vitamins",
-                    "ar" => "الفيتامينات",
-                ],
-                "image" => "https://picsum.photos/400/300?random=1",
-            ],
-            [
-                "title" => [
-                    "en" => "Minerals",
-                    "ar" => "المعادن",
-                ],
-                "image" => "https://picsum.photos/400/300?random=1",
-            ],
-            [
-                "title" => [
-                    "en" => "Amino Acids",
-                    "ar" => "الأمينواكيدات",
-                ],
-                "image" => "https://picsum.photos/400/300?random=1",
-            ],
-            [
-                "title" => [
-                    "en" => "Fat Burners",
-                    "ar" => "الفات بيرنرز",
-                ],
-                "image" => "https://picsum.photos/400/300?random=1",
-            ],
-        ];
+        $categories = $this->categories();
 
         Category::query()->delete();
 
         foreach ($categories as $category) {
-            Category::factory()->create($category);
+            Category::factory()->create([
+                "title" => $category["title"],
+                "description" => $category["title"],
+            ]);
         }
+    }
+
+    private function categories(): array
+    {
+        return [
+            [
+                "title" => [
+                    "en" => "Smartphones",
+                    "ar" => "الهواتف الذكية",
+                ],
+            ],
+            [
+                "title" => [
+                    "en" => "Tablets",
+                    "ar" => "الأجهزة اللوحية",
+                ],
+            ],
+            [
+                "title" => [
+                    "en" => "Smart Watches",
+                    "ar" => "الساعات الذكية",
+                ],
+            ],
+            [
+                "title" => [
+                    "en" => "Portable Audio",
+                    "ar" => "الصوتيات المحمولة",
+                ],
+            ],
+            [
+                "title" => [
+                    "en" => "Mobile Accessories",
+                    "ar" => "إكسسوارات الهواتف",
+                ],
+            ],
+            [
+                "title" => [
+                    "en" => "Tablet Accessories",
+                    "ar" => "إكسسوارات الأجهزة اللوحية",
+                ],
+            ],
+        ];
     }
 }
