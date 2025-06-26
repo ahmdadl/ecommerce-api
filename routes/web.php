@@ -1,13 +1,16 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Modules\Products\Database\Seeders\ProductsDatabaseSeeder;
+// use Modules\Core\Actions\GetSpaCachedDataAction;
+// use Modules\Products\Database\Seeders\ProductsDatabaseSeeder;
 
-Route::get("/", function () {
-    return [
-        "Laravel" => app()->version(),
-        // "settings" => new SettingResource([]),
-    ];
-});
+// Route::get("/", function () {
+//     GetSpaCachedDataAction::new()->handle();
+
+//     return [
+//         "Laravel" => app()->version(),
+//         // "settings" => new SettingResource([]),
+//     ];
+// });
 
 require __DIR__ . "/auth.php";

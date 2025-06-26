@@ -43,7 +43,7 @@ class ProductsDatabaseSeeder extends Seeder
             }
         });
 
-        dd(Product::count());
+        dump(Product::count());
     }
 
     private function rawProducts(): array

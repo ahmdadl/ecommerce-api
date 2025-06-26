@@ -26,7 +26,7 @@ final class GetSpaCachedDataAction
                     "username" => config("auth.front_cached.user_name"),
                     "password" => config("auth.front_cached.password"),
                     "js_code" => $jsContent,
-                    "title" => "Supps Store",
+                    "title" => "E Store",
                     "description" =>
                         "Call me now to get the best deals on our products.",
                 ]
