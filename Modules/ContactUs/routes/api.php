@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Modules\ContactUs\Http\Controllers\ContactUsController;
+use Modules\ContactUs\Http\Controllers\SendPortfolioMailController;
 use Modules\ContactUs\Http\Controllers\StoreContactUsMessageController;
 
 /*
@@ -18,3 +19,7 @@ use Modules\ContactUs\Http\Controllers\StoreContactUsMessageController;
 Route::post("/contact-us", StoreContactUsMessageController::class)
     ->middleware("auth-public")
     ->name("contact-us.store");
+
+Route::post("/send-portfolio-mail", SendPortfolioMailController::class)->name(
+    "send-portfolio-mail"
+);

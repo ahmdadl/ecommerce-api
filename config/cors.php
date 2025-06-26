@@ -23,6 +23,8 @@ return [
         "http://spa-supps.test",
         "http://localhost:4202",
         "https://supps.crafted-internet.com",
+        "http://localhost:5173",
+        "https://ahmdadl.github.io",
     ],
 
     "allowed_origins_patterns" => [],
