@@ -20,9 +20,44 @@ return new class extends Migration {
         DB::table("settings")->insert([
             "data" => json_encode([
                 "general" => [
-                    "name" => "Application Name",
-                    "description" => "",
+                    "name" => [
+                        "en" => "TechTrend Innovations",
+                        "ar" => "تك تريند إنوفيشنز",
+                    ],
+                    "description" => [
+                        "en" =>
+                            "TechTrend Innovations offers a curated selection of smartphones, tablets, smart watches, portable audio, and mobile and tablet accessories, delivering cutting-edge technology to enhance your digital lifestyle.",
+                        "ar" =>
+                            "تك تريند إنوفيشنز يقدم مجموعة مختارة من الهواتف الذكية، الأجهزة اللوحية، الساعات الذكية، الصوت المحمول، وإكسسوارات الهواتف والأجهزة اللوحية، لتعزيز أسلوب حياتك الرقمي بتكنولوجيا متطورة.",
+                    ],
                     "maintenance_mode" => false,
+                ],
+                "social" => [
+                    "facebook" => "https://www.facebook.com",
+                    "twitter" => "https://twitter.com",
+                    "instagram" => "https://www.instagram.com",
+                    "youtube" => "https://www.youtube.com",
+                    "whatsapp" => "https://wa.me/20123456789",
+                ],
+                "contact" => [
+                    "email" => "contact@techtrendinnovations.com",
+                    "phoneNumbers" => ["+20123456789", "+20123456789"],
+                    "address" => [
+                        "en" => "123 Main St, Anytown, USA",
+                        "ar" => "123 Main St, Anytown, USA",
+                    ],
+                    "googleMapUrl" => "https://www.google.com/maps",
+                ],
+                "top_header" => [
+                    "body" => [
+                        "en" =>
+                            "Unlock the Future! Get 15% OFF Smartphones, Tablets, Smart Watches & More at TechTrend Innovations. Shop Now!",
+                        "ar" =>
+                            "اكتشف المستقبل! احصل على خصم 15% على الهواتف الذكية، الأجهزة اللوحية، الساعات الذكية والمزيد في تك تريند إنوفيشنز. تسوق الآن!",
+                    ],
+                    "image" => "",
+                    "is_active" => true,
+                    "end_time" => now()->addDays(25),
                 ],
             ]),
         ]);
