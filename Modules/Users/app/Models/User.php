@@ -96,8 +96,10 @@ class User extends Authenticatable
      *
      * @param  Builder<User>  $query
      */
-    public function scopeRole(Builder $query, ?UserRole $userRole = null): void
-    {
+    public function scopeUserRole(
+        Builder $query,
+        ?UserRole $userRole = null
+    ): void {
         $query->where("role", $userRole ?? static::$role?->value);
     }
 

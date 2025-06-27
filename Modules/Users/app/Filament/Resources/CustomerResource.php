@@ -82,6 +82,6 @@ class CustomerResource extends Resource
 
     public static function getEloquentQuery(): \Illuminate\Database\Eloquent\Builder
     {
-        return parent::getEloquentQuery()->role(Customer::$role);
+        return parent::getEloquentQuery()->userRole(Customer::$role);
     }
 }

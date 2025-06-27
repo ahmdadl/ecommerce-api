@@ -11,7 +11,7 @@ class UserForgetPasswordAction
 {
     public function handle(string $email): bool
     {
-        $user = Customer::role()->active()->whereEmail($email)->first();
+        $user = Customer::userRole()->active()->whereEmail($email)->first();
 
         if (!$user) {
             return false;

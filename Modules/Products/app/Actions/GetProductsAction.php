@@ -27,8 +27,8 @@ class GetProductsAction
         $productsQuery = Product::query()
             ->active()
             ->filter(new ProductFilter($request))
-            ->with($this->getLazyLoadRelations($request));
-        // ->orderBy(...$this->getOrderBy($request));
+            ->with($this->getLazyLoadRelations($request))
+            ->orderBy(...$this->getOrderBy($request));
 
         $perPage = $request->integer("perPage", 15);
 
@@ -118,8 +118,8 @@ class GetProductsAction
 
         if ($sortBy = $request->has("sortBy")) {
             $orderBy = match ($request->string("sortBy")->value()) {
-                "lowest_price" => ["sale_price", "asc"],
-                "highest_price" => ["sale_price", "desc"],
+                // "lowest_price" => ["sale_price", "asc"],
+                // "highest_price" => ["sale_price", "desc"],
                 // "lowest_stock" => ["stock", "asc"],
                 "newest" => ["id", "desc"],
                 "oldest" => ["id", "asc"],

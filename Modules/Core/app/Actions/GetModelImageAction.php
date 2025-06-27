@@ -6,12 +6,12 @@ final class GetModelImageAction
 {
     public static function forCategory(string $title): string
     {
-        return self::categoryImages()[$title];
+        return self::categoryImages()[$title] ?? "";
     }
 
     public static function forBrand(string $title): string
     {
-        return self::brandImages()[$title];
+        return self::brandImages()[$title] ?? "";
     }
 
     public static function forProduct(string $title): array

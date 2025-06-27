@@ -69,6 +69,6 @@ class AdminResource extends Resource
 
     public static function getEloquentQuery(): Builder
     {
-        return parent::getEloquentQuery()->role(Admin::$role);
+        return parent::getEloquentQuery()->userRole(Admin::$role);
     }
 }

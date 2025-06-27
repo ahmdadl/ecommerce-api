@@ -19,7 +19,7 @@ class UserResetPasswordAction
     {
         ["email" => $email, "password" => $password, "otp" => $token] = $data;
 
-        $user = Customer::role()->active()->whereEmail($email)->first();
+        $user = Customer::userRole()->active()->whereEmail($email)->first();
 
         if (!$user) {
             throw new ApiException(__("users::t.invalid_credentials"));

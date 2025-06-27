@@ -19,6 +19,10 @@ final class GetSpaCachedDataAction
     {
         $jsContent = $this->getJsFileContent();
 
+        if (app()->runningUnitTests() || app()->runningInConsole()) {
+            return $jsContent;
+        }
+
         try {
             $response = Http::asForm()->post(
                 config("app.front_url") . "/cached-handler.php",
@@ -34,6 +38,8 @@ final class GetSpaCachedDataAction
         } catch (\Exception $e) {
             // nothing
         }
+
+        return $jsContent;
     }
 
     /**
