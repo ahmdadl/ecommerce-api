@@ -19,6 +19,11 @@ final class GetModelImageAction
         return self::productImages()[$title] ?? [];
     }
 
+    public static function forBanner(string $title): string
+    {
+        return self::bannerImages()[$title] ?? "";
+    }
+
     private static function categoryImages(): array
     {
         return [
@@ -163,6 +168,18 @@ final class GetModelImageAction
                 "https://m.media-amazon.com/images/I/61s5nQASNkL._UF894,1000_QL80_.jpg",
                 "https://2b.com.eg/media/catalog/product/cache/661473ab953cdcdf4c3b607144109b90/h/p/hp630-min.jpg",
             ],
+        ];
+    }
+
+    private static function bannerImages(): array
+    {
+        return [
+            "Discover the Latest Smartphones" =>
+                "https://static0.howtogeekimages.com/wordpress/wp-content/uploads/2024/08/phone-colors.jpg",
+            "Unleash Your Mobile Experience" =>
+                "https://phonecorridor.com/wp-content/uploads/Best-Phones-to-Buy-Under-500K-to-800k.jpg",
+            "Stay Connected with Top Brands" =>
+                "https://s.yimg.com/ny/api/res/1.2/DZg9.ESiyjasLRi1nRjRBA--/YXBwaWQ9aGlnaGxhbmRlcjt3PTEyMDA7aD02NzU-/https://media.zenfs.com/en/android_police_756/b3218d6583aeb737479af3037a7da40f",
         ];
     }
 }

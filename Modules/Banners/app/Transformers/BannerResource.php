@@ -8,6 +8,7 @@ use Modules\Banners\Enums\BannerActionType;
 use Modules\Banners\Models\Banner;
 use Modules\Brands\Transformers\BrandResource;
 use Modules\Categories\Transformers\CategoryResource;
+use Modules\Core\Actions\GetModelImageAction;
 use Modules\Products\Transformers\ProductResource;
 
 class BannerResource extends JsonResource
@@ -17,8 +18,9 @@ class BannerResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $media = $this->media;
-        $media = "https://picsum.photos/seed/{$this->id}/1920/1080";
+        $media = GetModelImageAction::forBanner(
+            $this->getTranslation("title", "en")
+        );
 
         return [
             "id" => $this->id,

@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Modules\Banners\Database\Seeders\BannersDatabaseSeeder;
 use Modules\Cities\Database\Seeders\CitiesDatabaseSeeder;
 use Modules\Cities\Filament\Clusters\Cities;
 use Modules\Governments\Database\Seeders\GovernmentsDatabaseSeeder;
@@ -27,6 +28,7 @@ class DatabaseSeeder extends Seeder
 
         // ! dev only seeders
         (new ProductsDatabaseSeeder())->run();
+        (new BannersDatabaseSeeder())->run();
         (new PrivacyPolicySeeder())->run();
     }
 }
