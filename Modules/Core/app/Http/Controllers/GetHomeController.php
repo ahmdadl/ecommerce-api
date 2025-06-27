@@ -32,9 +32,10 @@ class GetHomeController extends Controller
             "best-sellers_" . app()->getLocale(),
             fn() => ProductResource::collection(
                 Product::active()
-                    ->withSum("orderItems", "quantity")
-                    ->orderByDesc("order_items_sum_quantity")
-                    ->orderByDesc("stock")
+                    ->where("is_main", true)
+                    // ->withSum("orderItems", "quantity")
+                    // ->orderByDesc("order_items_sum_quantity")
+                    // ->orderByDesc("stock")
                     ->limit(8)
                     ->get()
             )

@@ -39,6 +39,7 @@ class ProductsDatabaseSeeder extends Seeder
                     "category_id" => $category->id,
                     "brand_id" => $brand->id,
                     "title" => $data["product"],
+                    "is_main" => true,
                 ]);
             }
         });
