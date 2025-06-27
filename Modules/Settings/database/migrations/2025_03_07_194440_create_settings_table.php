@@ -41,7 +41,7 @@ return new class extends Migration {
                 ],
                 "contact" => [
                     "email" => "contact@techtrendinnovations.com",
-                    "phoneNumbers" => ["+20123456789", "+20123456789"],
+                    "phoneNumbers" => ["+20123456789", "+20123456798"],
                     "address" => [
                         "en" => "123 Main St, Anytown, USA",
                         "ar" => "123 Main St, Anytown, USA",
