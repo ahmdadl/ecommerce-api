@@ -21,14 +21,14 @@ return new class extends Migration {
             "data" => json_encode([
                 "general" => [
                     "name" => [
-                        "en" => "TechTrend Innovations",
-                        "ar" => "تك تريند إنوفيشنز",
+                        "en" => "TechStore",
+                        "ar" => "تك ستور",
                     ],
                     "description" => [
                         "en" =>
-                            "TechTrend Innovations offers a curated selection of smartphones, tablets, smart watches, portable audio, and mobile and tablet accessories, delivering cutting-edge technology to enhance your digital lifestyle.",
+                            "TechStore offers a curated selection of smartphones, tablets, smart watches, portable audio, and mobile and tablet accessories, delivering cutting-edge technology to enhance your digital lifestyle.",
                         "ar" =>
-                            "تك تريند إنوفيشنز يقدم مجموعة مختارة من الهواتف الذكية، الأجهزة اللوحية، الساعات الذكية، الصوت المحمول، وإكسسوارات الهواتف والأجهزة اللوحية، لتعزيز أسلوب حياتك الرقمي بتكنولوجيا متطورة.",
+                            "تك ستور يقدم مجموعة مختارة من الهواتف الذكية، الأجهزة اللوحية، الساعات الذكية، الصوت المحمول، وإكسسوارات الهواتف والأجهزة اللوحية، لتقديم تكنولوجيا متطورة تعزز أسلوب حياتك الرقمي.",
                     ],
                     "maintenance_mode" => false,
                 ],
