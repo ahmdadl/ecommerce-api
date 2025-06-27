@@ -27,8 +27,8 @@ class GetProductsAction
         $productsQuery = Product::query()
             ->active()
             ->filter(new ProductFilter($request))
-            ->with($this->getLazyLoadRelations($request))
-            ->orderBy(...$this->getOrderBy($request));
+            // ->orderBy(...$this->getOrderBy($request))
+            ->with($this->getLazyLoadRelations($request));
 
         $perPage = $request->integer("perPage", 15);
 
