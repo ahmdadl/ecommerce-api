@@ -17,6 +17,7 @@ class BrandsDatabaseSeeder extends Seeder
             Brand::factory()->create([
                 "title" => $brand["title"],
                 "description" => $brand["title"],
+                "is_main" => true,
             ]);
         }
     }

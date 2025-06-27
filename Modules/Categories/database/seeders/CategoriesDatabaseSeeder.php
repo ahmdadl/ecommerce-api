@@ -20,6 +20,7 @@ class CategoriesDatabaseSeeder extends Seeder
             Category::factory()->create([
                 "title" => $category["title"],
                 "description" => $category["title"],
+                "is_main" => true,
             ]);
         }
     }

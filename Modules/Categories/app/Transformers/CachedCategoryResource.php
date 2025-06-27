@@ -23,7 +23,7 @@ class CachedCategoryResource extends JsonResource
             "title" => $this->getTranslations("title"),
             "description" => $this->getTranslations("description"),
             "slug" => $this->slug,
-            "image" => $this->image,
+            "image" => $image,
             "meta_title" => $this->getTranslations("meta_title"),
             "meta_description" => $this->getTranslations("meta_description"),
             "meta_keywords" => $this->meta_keywords,
