@@ -25,6 +25,8 @@ return [
         "https://supps.crafted-internet.com",
         "http://localhost:5173",
         "https://ahmdadl.github.io",
+        "https://techstore-spa.crafted-internet.com",
+        "https://techstore.crafted-internet.com",
     ],
 
     "allowed_origins_patterns" => [],
