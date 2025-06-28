@@ -75,8 +75,12 @@ class CartController extends Controller
         }
 
         if (in_array("paymentMethods", $loadedArray)) {
+            $paymentMethodsQuery = PaymentMethod::active();
+            if (user()->isGuest()) {
+                $paymentMethodsQuery->whereNot("code", PaymentMethod::WALLET);
+            }
             $response["paymentMethods"] = PaymentMethodResource::collection(
-                PaymentMethod::active()->get()
+                $paymentMethodsQuery->get()
             );
         }
 
