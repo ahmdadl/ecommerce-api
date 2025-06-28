@@ -13,6 +13,7 @@ use Modules\PageMetas\Database\Seeders\PageMetaSeeder;
 use Modules\PrivacyPolicies\Database\Seeders\PrivacyPolicySeeder;
 use Modules\Products\Database\Seeders\ProductsDatabaseSeeder;
 use Modules\Products\Models\Product;
+use Modules\Tags\Database\Seeders\TagsDatabaseSeeder;
 use Modules\Terms\Database\Seeders\TermsDatabaseSeeder;
 use Modules\Users\Database\Seeders\UsersDatabaseSeeder;
 
@@ -30,6 +31,7 @@ class DatabaseSeeder extends Seeder
 
         // ! dev only seeders
         (new ProductsDatabaseSeeder())->run();
+        (new TagsDatabaseSeeder())->run();
         (new BannersDatabaseSeeder())->run();
         (new PrivacyPolicySeeder())->run();
         (new FaqSeeder())->run();
