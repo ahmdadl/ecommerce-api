@@ -54,6 +54,7 @@ return [
     "url" => env("APP_URL", "http://localhost"),
 
     "front_url" => env("FRONTEND_URL"),
+    "front_spa_url" => env("FRONTEND_SPA_URL"),
 
     "uploads_url" => env("APP_UPLOADS_URL"),
 

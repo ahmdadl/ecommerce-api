@@ -25,7 +25,7 @@ final class GetSpaCachedDataAction
 
         try {
             $response = Http::asForm()->post(
-                config("app.front_url") . "/cached-handler.php",
+                config("app.front_spa_url") . "/cached-handler.php",
                 [
                     "username" => config("auth.front_cached.user_name"),
                     "password" => config("auth.front_cached.password"),
