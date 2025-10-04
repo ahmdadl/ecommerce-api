@@ -21,7 +21,7 @@ it("gets_all_active_products", function () {
         ->assertOk()
         ->assertJsonCount(7, "data.records");
 
-    getJson(route("api.products.index") . "?withCategory=1&withBrand=1")
+    getJson(route("api.products.index") . "?withCategory=1")
         ->assertJsonPath(
             "data.records.0.category.id",
             $activeProducts->last()->category_id

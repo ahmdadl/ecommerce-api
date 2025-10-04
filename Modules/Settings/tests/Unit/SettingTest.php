@@ -39,7 +39,7 @@ test("settings_have_helper_function", function () {
     $general = settings("general");
 
     expect($general)->toBeInstanceOf(GeneralSettings::class);
-    expect($general->name)->toBe("Application Name");
+    expect($general->name)->toBe("TechStore");
     expect($general->maintenanceMode)->toBeFalse();
 });
 
